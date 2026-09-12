@@ -1,0 +1,22 @@
+{
+  "apis": {
+    "brave_search": {
+      "api_key": "BSAqx7g5ob7ymEOAUfRduTetIOWPalN",
+      "base_url": "https://api.search.brave.com/res/v1",
+      "rate_limit": 2000,
+      "priority": 1
+    },
+    "tavily": {
+      "api_key": "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",
+      "base_url": "https://api.tavily.com",
+      "rate_limit": 1000,
+      "priority": 2,
+      "fallback_for": "brave_search"
+    }
+  },
+  "web_access": {
+    "enabled": true,
+    "default_search": "brave_search",
+    "fallback_enabled": true
+  }
+}

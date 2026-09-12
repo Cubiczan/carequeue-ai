@@ -1,0 +1,25 @@
+[accounts.impactquadrant]
+email = "zan@impactquadrant.info"
+display-name = "Zan"
+default = true
+
+[accounts.impactquadrant.backend]
+type = "imap"
+host = "imap.gmail.com"
+port = 993
+encryption.type = "tls"
+login = "zan@impactquadrant.info"
+auth.type = "password"
+auth.raw = "cqma sflq nsfv itke"
+
+[accounts.impactquadrant.message.send.backend]
+type = "smtp"
+host = "smtp.gmail.com"
+port = 587
+encryption.type = "start-tls"
+login = "zan@impactquadrant.info"
+auth.type = "password"
+auth.raw = "cqma sflq nsfv itke"
+
+[accounts.impactquadrant.folder.alias]
+sent = "[Gmail]/Sent Mail"

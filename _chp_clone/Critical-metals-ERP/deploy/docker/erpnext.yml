@@ -1,0 +1,246 @@
+
+services:
+  # ERPNext Backend
+  erpnext-backend:
+    image: frappe/erpnext:latest
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+      - ../erpnext:/home/frappe/frappe-bench/apps/recycling
+    environment:
+      - DB_HOST=erpnext-mariadb
+      - DB_PORT=3306
+      - REDIS_CACHE=redis://erpnext-redis:6379
+      - REDIS_QUEUE=redis://erpnext-redis:6379
+      - REDIS_SOCKETIO=redis://erpnext-redis:6379
+      - SOCKETIO_PORT=9000
+      - WEBSOCKET_PORT=9000
+      - WORKER_NUMBER=2
+      - SITES=erp.battery-recycling.local
+      - ADMIN_PASSWORD=${ERPNext_ADMIN_PASSWORD:-admin123}
+      - INSTALL_APPS=erpnext,hrms
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-mariadb
+      - erpnext-redis
+
+  # ERPNext Frontend (Nginx)
+  erpnext-frontend:
+    image: frappe/erpnext:latest
+    command:
+      - nginx-entrypoint.sh
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+    environment:
+      - BACKEND=erpnext-backend:8000
+      - FRAPPE_SITE_NAME_HEADER=erp.battery-recycling.local
+      - SOCKETIO=erpnext-socketio:9000
+      - UPDATER_WORKER=erpnext-updater:8000
+    ports:
+      - "${ERPNext_PORT:-8080}:8080"
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-backend
+      - erpnext-socketio
+
+  # ERPNext Socket.IO
+  erpnext-socketio:
+    image: frappe/erpnext:latest
+    command:
+      - node
+      - /home/frappe/frappe-bench/apps/frappe/socketio.js
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-mariadb
+      - erpnext-redis
+
+  # ERPNext Worker (Default)
+  erpnext-worker-default:
+    image: frappe/erpnext:latest
+    command:
+      - bench
+      - worker
+      - --queue
+      - default
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+      - ../erpnext:/home/frappe/frappe-bench/apps/recycling
+    environment:
+      - DB_HOST=erpnext-mariadb
+      - DB_PORT=3306
+      - REDIS_CACHE=redis://erpnext-redis:6379
+      - REDIS_QUEUE=redis://erpnext-redis:6379
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-mariadb
+      - erpnext-redis
+
+  # ERPNext Worker (Short)
+  erpnext-worker-short:
+    image: frappe/erpnext:latest
+    command:
+      - bench
+      - worker
+      - --queue
+      - short
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+      - ../erpnext:/home/frappe/frappe-bench/apps/recycling
+    environment:
+      - DB_HOST=erpnext-mariadb
+      - DB_PORT=3306
+      - REDIS_CACHE=redis://erpnext-redis:6379
+      - REDIS_QUEUE=redis://erpnext-redis:6379
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-mariadb
+      - erpnext-redis
+
+  # ERPNext Worker (Long)
+  erpnext-worker-long:
+    image: frappe/erpnext:latest
+    command:
+      - bench
+      - worker
+      - --queue
+      - long
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+      - ../erpnext:/home/frappe/frappe-bench/apps/recycling
+    environment:
+      - DB_HOST=erpnext-mariadb
+      - DB_PORT=3306
+      - REDIS_CACHE=redis://erpnext-redis:6379
+      - REDIS_QUEUE=redis://erpnext-redis:6379
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-mariadb
+      - erpnext-redis
+
+  # ERPNext Scheduler
+  erpnext-scheduler:
+    image: frappe/erpnext:latest
+    command:
+      - bench
+      - schedule
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+      - ../erpnext:/home/frappe/frappe-bench/apps/recycling
+    environment:
+      - DB_HOST=erpnext-mariadb
+      - DB_PORT=3306
+      - REDIS_CACHE=redis://erpnext-redis:6379
+      - REDIS_QUEUE=redis://erpnext-redis:6379
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-mariadb
+      - erpnext-redis
+
+  # ERPNext Updater (Migrations)
+  erpnext-updater:
+    image: frappe/erpnext:latest
+    command:
+      - bench
+      - --site
+      - all
+      - migrate
+    deploy:
+      restart_policy:
+        condition: none
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+      - erpnext-logs:/home/frappe/frappe-bench/logs
+      - ../erpnext:/home/frappe/frappe-bench/apps/recycling
+    environment:
+      - DB_HOST=erpnext-mariadb
+      - DB_PORT=3306
+      - REDIS_CACHE=redis://erpnext-redis:6379
+      - REDIS_QUEUE=redis://erpnext-redis:6379
+    networks:
+      - erpnext-network
+    depends_on:
+      - erpnext-mariadb
+      - erpnext-redis
+
+  # MariaDB Database
+  erpnext-mariadb:
+    image: mariadb:10.6
+    healthcheck:
+      test: mysqladmin ping -h localhost --password=admin
+      interval: 1s
+      retries: 15
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-mariadb-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+    networks:
+      - erpnext-network
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed
+
+  # Redis
+  erpnext-redis:
+    image: redis:alpine
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      retries: 15
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - erpnext-redis-data:/data
+    networks:
+      - erpnext-network
+
+networks:
+  erpnext-network:
+    driver: bridge
+
+volumes:
+  erpnext-sites:
+  erpnext-logs:
+  erpnext-mariadb-data:
+  erpnext-redis-data:

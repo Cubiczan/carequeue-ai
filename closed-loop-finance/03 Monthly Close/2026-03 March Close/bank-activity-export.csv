@@ -1,0 +1,6 @@
+Date,Account,Description,Counterparty,Debit,Credit,Balance,Reference
+2026-03-01,Operating - Bank A,Opening Balance,,,, ,
+2026-03-03,Operating - Bank A,Customer wire,[Customer 1],,0.00,,INV-####
+2026-03-05,Operating - Bank A,Vendor ACH,[Vendor 1],0.00,,,BILL-####
+2026-03-15,Payroll - Bank A,Payroll run,[PEO/Provider],0.00,,,PR-2026-03-1
+2026-03-31,Operating - Bank A,Closing Balance,,,,,

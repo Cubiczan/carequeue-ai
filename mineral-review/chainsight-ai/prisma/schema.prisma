@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model MonitoredAddress {
+  id        String   @id @default(cuid())
+  address   String   @unique
+  label     String
+  type      String   @default("whale") // whale, contract, mev_bot, suspicious
+  riskScore Int      @default(0) // 0-100
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OnchainTransaction {
+  id            String   @id @default(cuid())
+  txHash        String   @unique
+  blockNumber   Int
+  fromAddress   String
+  toAddress     String
+  token         String
+  amount        Float
+  usdValue      Float
+  dex           String   @default("unknown") // merchant_moe, agni_finance, fluxion
+  txType        String   @default("swap") // swap, transfer, flash_loan, liquidity
+  gasUsed       Float
+  timestamp     DateTime
+  createdAt     DateTime @default(now())
+}
+
+model Anomaly {
+  id          String   @id @default(cuid())
+  txId        String
+  txHash      String
+  type        String   // flash_loan, sandwich_attack, whale_accumulation, wash_trading, unusual_volume, mev_extraction
+  severity    String   @default("medium") // low, medium, high, critical
+  confidence  Float    @default(0.0) // 0-1
+  description String
+  metadata    String   @default("{}") // JSON string for extra data
+  isAnalyzed  Boolean  @default(false)
+  analyzedAt  DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model Alert {
+  id          String   @id @default(cuid())
+  anomalyId   String?
+  title       String
+  message     String
+  severity    String   @default("medium") // low, medium, high, critical
+  channel     String   @default("dashboard") // dashboard, telegram, discord
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model AIAnalysis {
+  id           String   @id @default(cuid())
+  anomalyId    String
+  summary      String
+  riskLevel    String   @default("medium") // low, medium, high, critical
+  recommendation String
+  rawResponse  String
+  createdAt    DateTime @default(now())
+}

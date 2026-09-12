@@ -1,0 +1,49 @@
+{
+  "apis": {
+    "brave_search": {
+      "api_key": "BSAqx7g5ob7ymEOAUfRduTetIOWPalN",
+      "base_url": "https://api.search.brave.com/res/v1",
+      "rate_limit": 2000,
+      "priority": 1
+    },
+    "tavily": {
+      "api_key": "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",
+      "base_url": "https://api.tavily.com",
+      "rate_limit": 1000,
+      "priority": 2,
+      "fallback_for": "brave_search"
+    },
+    "hunter": {
+      "api_key": "f701d171cf7decf7e730a6b1c6e9b74f29f39b6e",
+      "base_url": "https://api.hunter.io/v2",
+      "rate_limit": 500
+    },
+    "zyte": {
+      "api_key": "8d3e9c7af6e948b088e96ad15ca21719",
+      "base_url": "https://api.zyte.com/v1",
+      "rate_limit": 1000
+    },
+    "abstract": {
+      "api_key": "38aeec02e6f6469983e0856dfd147b10",
+      "base_url": "https://companyenrichment.abstractapi.com/v1",
+      "rate_limit": 500,
+      "docs": "https://app.abstractapi.com/api/company-enrichment"
+    }
+  },
+  "crawl4ai": {
+    "enabled": true,
+    "llm_provider": "zai",
+    "llm_model": "glm-4.7",
+    "api_key": "117440ed43074d7a81854e9ff489e51a.4mTGwEtHtr4JX8JR",
+    "browser_config": {
+      "headless": true,
+      "page_timeout": 30000
+    }
+  },
+  "web_access": {
+    "enabled": true,
+    "default_search": "brave_search",
+    "fallback_enabled": true,
+    "scraping_enabled": true
+  }
+}

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MineScope Cloud — 7 Expert AWS Prompts for Critical Mineral Intelligence</title>
+  <meta name="description" content="MineScope Cloud: 7 expert-grade AWS prompts that deploy a complete critical mineral supply chain intelligence platform — from data pipeline to AI risk analysis to interactive dashboards." />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="MineScope Cloud — AWS Prompts for Critical Mineral Intelligence" />
+  <meta property="og:description" content="Deploy a complete supply chain intelligence platform on AWS with 7 expert prompts." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/minescope-logo-1024x1024.png" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MineScope Cloud — AWS Prompts for Critical Mineral Intelligence" />
+  <meta name="twitter:description" content="7 expert AWS prompts for critical mineral supply chain intelligence." />
+  <meta name="twitter:image" content="assets/minescope-logo-1024x1024.png" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/minescope-logo-480x480.png" />
+  
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #050a15;
+      color: #f1f5f9;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── Hero ─── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      background: linear-gradient(180deg, #050a15 0%, #0a1628 100%);
+    }
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #FF9900, #FFC107);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+    }
+    .hero .tagline {
+      font-size: 20px;
+      color: #94a3b8;
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+    .badges {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid;
+    }
+    .badge-aws { color: #FF9900; border-color: #FF990040; background: #FF990010; }
+    .badge-prompts { color: #9C27B0; border-color: #9C27B040; background: #9C27B010; }
+    .badge-services { color: #14b8a6; border-color: #14b8a640; background: #14b8a610; }
+
+    /* ─── Prompts ─── */
+    .prompts { padding: 80px 0; }
+    .prompts h2 {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .prompts .subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 16px;
+      margin-bottom: 48px;
+    }
+    .prompts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .prompt-card {
+      background: #0d1520;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .prompt-card:hover {
+      border-color: #FF990080;
+      transform: translateY(-2px);
+    }
+    .prompt-number {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 8px;
+      background: #FF990020;
+      color: #FF9900;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .prompt-card h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+    .prompt-card .services {
+      color: #14b8a6;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .prompt-card p {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ─── Architecture ─── */
+    .architecture {
+      padding: 60px 0;
+      background: #0a0f1a;
+    }
+    .architecture h2 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .arch-layer {
+      background: #0d1520;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .arch-layer .layer-name {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .arch-layer .layer-services {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    /* ─── Stats ─── */
+    .stats { padding: 60px 0; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 40px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FF9900, #FFC107);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* ─── Cost ─── */
+    .cost { padding: 60px 0; background: #0a0f1a; }
+    .cost h2 { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 32px; }
+    .cost-table {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #0d1520;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .cost-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      padding: 14px 24px;
+      border-bottom: 1px solid #1e293b;
+      font-size: 14px;
+    }
+    .cost-row:last-child { border-bottom: none; }
+    .cost-row.header { font-weight: 600; color: #FF9900; background: #0d1520; }
+    .cost-row.total { font-weight: 700; color: #14b8a6; background: #0a1628; }
+
+    /* ─── CTA ─── */
+    .cta {
+      text-align: center;
+      padding: 60px 0;
+    }
+    .cta h2 { font-size: 32px; margin-bottom: 8px; }
+    .cta p { color: #64748b; margin-bottom: 24px; }
+    .cta-button {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #FF9900;
+      color: #000;
+      font-weight: 700;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+    .cta-button:hover { background: #FFC107; }
+
+    /* ─── Footer ─── */
+    .footer {
+      text-align: center;
+      padding: 32px 0;
+      font-size: 13px;
+      color: #475569;
+      border-top: 1px solid #1e293b;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .cost-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img src="assets/minescope-logo-480x480.png" alt="MineScope Logo" class="hero-logo" />
+    <h1>MineScope Cloud</h1>
+    <p class="tagline">
+      7 Expert AWS Prompts for Critical Mineral Supply Chain Intelligence.
+    </p>
+    <div class="badges">
+      <span class="badge badge-aws">AWS Prompt the Planet</span>
+      <span class="badge badge-prompts">7 Expert Prompts</span>
+      <span class="badge badge-services">20+ AWS Services</span>
+    </div>
+  </section>
+
+  <!-- Prompts -->
+  <section class="prompts container">
+    <h2>The 7 Prompts</h2>
+    <p class="subtitle">Copy. Paste. Deploy. Each prompt generates complete, production-grade infrastructure.</p>
+    
+    <div class="prompts-grid">
+      <div class="prompt-card">
+        <div class="prompt-number">1</div>
+        <h3>Real-Time Data Pipeline</h3>
+        <div class="services">Lambda + EventBridge + Kinesis + SQS + S3</div>
+        <p>Serverless data pipeline ingesting commodity price ticks, geopolitical events, and supply chain status — with OHLCV aggregation and automatic price spike detection.</p>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-number">2</div>
+        <h3>AI Risk Analysis with Claude</h3>
+        <div class="services">Bedrock + Claude 3.5 + Comprehend + Translate</div>
+        <p>NLP pipeline that analyzes global news articles, extracts entities with custom NER, and generates structured geopolitical risk scores using expert prompt engineering.</p>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-number">3</div>
+        <h3>Interactive Dashboard</h3>
+        <div class="services">QuickSight + Athena + Glue + S3</div>
+        <p>5-tab executive dashboard: market overview, price analytics, geopolitical risk intelligence, supply chain operations, and company benchmarking.</p>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-number">4</div>
+        <h3>Security & Compliance</h3>
+        <div class="services">Security Hub + IAM + Config + KMS + WAF + Shield</div>
+        <p>Multi-account security posture: least-privilege IAM, encryption, audit trails, DDoS protection, 14 Config rules, and automated incident response.</p>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-number">5</div>
+        <h3>FinOps Cost Optimization</h3>
+        <div class="services">Cost Explorer + Budgets + Anomaly Detection + CUR</div>
+        <p>Proactive budget alerts, auto cost-saving at 90% budget, Claude token governance, right-sizing analysis, and daily cost forecasting.</p>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-number">6</div>
+        <h3>Multi-Region Disaster Recovery</h3>
+        <div class="services">DynamoDB Global Tables + S3 CRR + Route 53 + CloudFront</div>
+        <p>Active-active replication across 3 AWS regions with RPO &lt; 1 minute and RTO &lt; 15 minutes for zero-downtime resilience.</p>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-number">7</div>
+        <h3>Full IaC Deployment</h3>
+        <div class="services">CDK (TypeScript) + CodePipeline + CodeBuild + X-Ray</div>
+        <p>Complete CI/CD pipeline deploying all 6 systems with environment configs, security gates (cdk-nag), and automated DR testing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section class="architecture">
+    <h2>Architecture Layers</h2>
+    <div class="arch-grid container">
+      <div class="arch-layer">
+        <div class="layer-name">Data Ingestion</div>
+        <div class="layer-services">Lambda · EventBridge · Kinesis · SQS</div>
+      </div>
+      <div class="arch-layer">
+        <div class="layer-name">AI/ML Analysis</div>
+        <div class="layer-services">Bedrock · Claude 3.5 · Comprehend</div>
+      </div>
+      <div class="arch-layer">
+        <div class="layer-name">Visualization</div>
+        <div class="layer-services">QuickSight · Athena · Glue</div>
+      </div>
+      <div class="arch-layer">
+        <div class="layer-name">Security</div>
+        <div class="layer-services">Security Hub · IAM · KMS · WAF</div>
+      </div>
+      <div class="arch-layer">
+        <div class="layer-name">FinOps</div>
+        <div class="layer-services">Cost Explorer · Budgets · Anomaly</div>
+      </div>
+      <div class="arch-layer">
+        <div class="layer-name">Infrastructure</div>
+        <div class="layer-services">CDK · CodePipeline · X-Ray</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-value">7</div>
+        <div class="stat-label">Expert Prompts</div>
+      </div>
+      <div>
+        <div class="stat-value">20+</div>
+        <div class="stat-label">AWS Services</div>
+      </div>
+      <div>
+        <div class="stat-value">3</div>
+        <div class="stat-label">Global Regions</div>
+      </div>
+      <div>
+        <div class="stat-value">$425</div>
+        <div class="stat-label">Est. Monthly Cost</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cost -->
+  <section class="cost">
+    <h2>Cost Breakdown</h2>
+    <div class="cost-table">
+      <div class="cost-row header">
+        <span>Component</span>
+        <span>Moderate</span>
+        <span>Peak</span>
+      </div>
+      <div class="cost-row">
+        <span>Data Pipeline</span>
+        <span>$45/mo</span>
+        <span>$165/mo</span>
+      </div>
+      <div class="cost-row">
+        <span>AI Analysis (Claude)</span>
+        <span>$65/mo</span>
+        <span>$300/mo</span>
+      </div>
+      <div class="cost-row">
+        <span>Dashboard (QuickSight)</span>
+        <span>$24/mo</span>
+        <span>$250/mo</span>
+      </div>
+      <div class="cost-row">
+        <span>Security & Compliance</span>
+        <span>$26/mo</span>
+        <span>$26/mo</span>
+      </div>
+      <div class="cost-row">
+        <span>Multi-Region DR</span>
+        <span>$95/mo</span>
+        <span>$190/mo</span>
+      </div>
+      <div class="cost-row total">
+        <span>Total</span>
+        <span>~$425/mo</span>
+        <span>~$1,750/mo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta container">
+    <h2>Open Source</h2>
+    <p>Explore the prompts and deploy your own critical mineral intelligence platform</p>
+    <a href="https://github.com/icohangar-ops/Minescope" class="cta-button">
+      ⛏️ View on GitHub →
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer container">
+    <p>
+      © 2026 MineScope Cloud · Open Source<br />
+      <span style="color: #FF9900;">#AWSPromptThePlanet</span> ·
+      <span style="color: #14b8a6;">#BuildOnAWS</span> ·
+      <span style="color: #9C27B0;">#CriticalMinerals</span>
+    </p>
+  </footer>
+
+</body>
+</html>

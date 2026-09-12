@@ -1,0 +1,144 @@
+name: CHP Artifact Validation
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'src/**'
+      - '.chp/**'
+      - '.github/workflows/chp-validation.yml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'src/**'
+      - '.chp/**'
+      - '.github/workflows/chp-validation.yml'
+
+jobs:
+  chp-validate:
+    name: Validate CHP Governance Artifacts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate CHP artifact existence
+        run: |
+          echo "=== CHP Artifact Validation ==="
+          ERRORS=0
+
+          # Required CHP artifacts
+          ARTIFACTS=(
+            ".chp/STATE_MACHINE.md"
+            ".chp/R0_CONFIG.yaml"
+            ".chp/ADVERSARIAL_PROMPTS.md"
+            ".chp/CHP_COMPLIANCE.md"
+          )
+
+          for artifact in "${ARTIFACTS[@]}"; do
+            if [ -f "$artifact" ]; then
+              echo "  [OK] $artifact"
+            else
+              echo "  [MISSING] $artifact"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+
+          # Validate STATE_MACHINE.md contains required states
+          if [ -f ".chp/STATE_MACHINE.md" ]; then
+            REQUIRED_STATES=("EXPLORING" "ADVISORY_LOCK" "PROVISIONAL_LOCK" "LOCKED")
+            for state in "${REQUIRED_STATES[@]}"; do
+              if rg -q "$state" .chp/STATE_MACHINE.md; then
+                echo "  [OK] STATE_MACHINE.md contains state: $state"
+              else
+                echo "  [MISSING] STATE_MACHINE.md missing state: $state"
+                ERRORS=$((ERRORS + 1))
+              fi
+            done
+
+            # Validate domain and threshold
+            if rg -q "blockchain_defi" .chp/STATE_MACHINE.md; then
+              echo "  [OK] STATE_MACHINE.md contains domain: blockchain_defi"
+            else
+              echo "  [WARN] STATE_MACHINE.md missing domain: blockchain_defi"
+            fi
+
+            if rg -q "threshold.*85|85.*threshold" .chp/STATE_MACHINE.md; then
+              echo "  [OK] STATE_MACHINE.md contains threshold: 85"
+            else
+              echo "  [WARN] STATE_MACHINE.md threshold not explicitly set to 85"
+            fi
+          fi
+
+          # Validate R0_CONFIG.yaml contains required keys
+          if [ -f ".chp/R0_CONFIG.yaml" ]; then
+            REQUIRED_KEYS=("similarity_threshold" "domain" "blockchain_defi")
+            for key in "${REQUIRED_KEYS[@]}"; do
+              if rg -q "$key" .chp/R0_CONFIG.yaml; then
+                echo "  [OK] R0_CONFIG.yaml contains key: $key"
+              else
+                echo "  [MISSING] R0_CONFIG.yaml missing key: $key"
+                ERRORS=$((ERRORS + 1))
+              fi
+            done
+          fi
+
+          # Validate ADVERSARIAL_PROMPTS.md contains domain-specific templates
+          if [ -f ".chp/ADVERSARIAL_PROMPTS.md" ]; then
+            TEMPLATE_COUNT=$(rg -c "^## Template" .chp/ADVERSARIAL_PROMPTS.md || echo "0")
+            echo "  [OK] ADVERSARIAL_PROMPTS.md contains $TEMPLATE_COUNT challenge templates"
+            if [ "$TEMPLATE_COUNT" -lt 5 ]; then
+              echo "  [WARN] Expected at least 5 adversarial templates, found $TEMPLATE_COUNT"
+            fi
+          fi
+
+          # Validate .gitignore contains CHP exclusions
+          if [ -f ".gitignore" ]; then
+            for exclusion in ".chp/local/" ".chp/sealed/"; do
+              if rg -q "$exclusion" .gitignore; then
+                echo "  [OK] .gitignore contains: $exclusion"
+              else
+                echo "  [WARN] .gitignore missing: $exclusion"
+              fi
+            done
+          fi
+
+          echo ""
+          echo "=== Validation Complete ==="
+          if [ $ERRORS -gt 0 ]; then
+            echo "  FAILED: $ERRORS error(s) found"
+            exit 1
+          else
+            echo "  PASSED: All CHP artifacts validated"
+          fi
+
+      - name: Validate YAML syntax
+        run: |
+          echo "=== YAML Syntax Check ==="
+          if command -v python3 &>/dev/null; then
+            python3 -c "
+              import yaml, sys
+              try:
+                with open('.chp/R0_CONFIG.yaml') as f:
+                  yaml.safe_load(f)
+                print('  [OK] R0_CONFIG.yaml is valid YAML')
+              except yaml.YAMLError as e:
+                print(f'  [ERROR] R0_CONFIG.yaml YAML error: {e}')
+                sys.exit(1)
+            "
+          else
+            echo "  [SKIP] python3 not available for YAML validation"
+          fi
+
+      - name: Check for sealed artifacts in commit
+        run: |
+          echo "=== Sealed Artifact Check ==="
+          if git diff --name-only HEAD~1 2>/dev/null | rg -q '^\.chp/sealed/'; then
+            echo "  [WARN] Sealed artifacts detected in commit diff"
+            echo "  Sealed artifacts should only be modified through CHP protocol"
+          else
+            echo "  [OK] No sealed artifacts modified"
+          fi

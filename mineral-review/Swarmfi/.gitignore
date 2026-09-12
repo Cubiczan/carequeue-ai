@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+.vercel
+=======
+# CHP session artifacts (local only)
+.chp_registry.json
+.chp/sessions/
+>>>>>>> 296955b (Apply CHP (Consensus Hardening Protocol) governance layer)

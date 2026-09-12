@@ -1,0 +1,36 @@
+{
+  "app": {
+    "name": "carbon-battery-erp",
+    "version": "1.0.0"
+  },
+  "database": {
+    "url": "postgresql://carbon:carbon123@carbon-db:5432/carbon"
+  },
+  "redis": {
+    "url": "redis://carbon-redis:6379"
+  },
+  "auth": {
+    "secret": "${CARBON_AUTH_SECRET:-change-me-in-production}",
+    "expiry": "24h"
+  },
+  "webhooks": {
+    "secret": "${CARBON_WEBHOOK_SECRET:-change-me-webhook-secret}",
+    "enabledEvents": [
+      "production_order.created",
+      "production_order.completed",
+      "quality_inspection.created",
+      "batch.updated"
+    ]
+  },
+  "sync": {
+    "erpnext": {
+      "enabled": true,
+      "intervalMs": 5000,
+      "batchSize": 100
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json"
+  }
+}

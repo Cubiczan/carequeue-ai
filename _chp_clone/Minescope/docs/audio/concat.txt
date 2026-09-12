@@ -1,0 +1,8 @@
+file 'slide01.wav'
+file 'slide02.wav'
+file 'slide03.wav'
+file 'slide04.wav'
+file 'slide05.wav'
+file 'slide06.wav'
+file 'slide07.wav'
+file 'slide08.wav'

@@ -1,0 +1,229 @@
+# Battery ERP - Third-Party Attributions
+
+This file contains attribution notices for third-party open-source software included in Battery ERP.
+
+---
+
+## Primary Integrations
+
+### ERPNext
+**Project**: https://github.com/frappe/erpnext  
+**License**: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)  
+**Copyright**: © 2008-2024 Frappe Technologies Pvt Ltd  
+**Changes Made**: 
+- Custom integration adapters for battery recycling workflows
+- Bi-directional sync service for work orders and inventory
+- Custom DocTypes for battery-specific data
+
+**Required Notice**:
+```
+ERPNext is a trademark of Frappe Technologies Pvt Ltd.
+ERPNext is licensed under GPL-3.0.
+This product includes software developed by Frappe Technologies (https://frappe.io).
+```
+
+### Carbon
+**Project**: https://github.com/crbnos/carbon  
+**License**: MIT (https://github.com/crbnos/carbon/blob/main/LICENSE)  
+**Copyright**: © 2023-2024 Carbon Contributors  
+**Changes Made**:
+- Integration service for manufacturing execution sync
+- Real-time production data synchronization
+- Quality inspection data exchange
+
+**Required Notice**:
+```
+Carbon is licensed under the MIT License.
+Copyright © 2023-2024 Carbon Contributors
+This product includes software from the Carbon project (https://github.com/crbnos/carbon).
+```
+
+---
+
+## Core Dependencies
+
+### React
+**Project**: https://github.com/facebook/react  
+**License**: MIT  
+**Copyright**: © Meta Platforms, Inc. and affiliates  
+**Usage**: Shop Floor UI framework
+
+### Express
+**Project**: https://github.com/expressjs/express  
+**License**: MIT  
+**Copyright**: © TJ Holowaychuk  
+**Usage**: Integration API server
+
+### Astra DB Client
+**Project**: https://github.com/datastax/astra-db-ts  
+**License**: Apache-2.0  
+**Copyright**: © DataStax, Inc.  
+**Usage**: Time-series data storage
+
+### Cassandra Driver
+**Project**: https://github.com/datastax/nodejs-driver  
+**License**: Apache-2.0  
+**Copyright**: © DataStax, Inc.  
+**Usage**: Astra DB connectivity
+
+---
+
+## Security Libraries
+
+### jsonwebtoken
+**Project**: https://github.com/auth0/node-jsonwebtoken  
+**License**: MIT  
+**Copyright**: © Auth0, Inc.  
+**Usage**: JWT token generation and validation
+
+### bcryptjs
+**Project**: https://github.com/dcodeIO/bcrypt.js  
+**License**: MIT  
+**Copyright**: © Daniel Wirtz  
+**Usage**: Password hashing
+
+### helmet
+**Project**: https://github.com/helmetjs/helmet  
+**License**: MIT  
+**Copyright**: © Adam Baldwin  
+**Usage**: Security headers
+
+### express-rate-limit
+**Project**: https://github.com/nfriedly/express-rate-limit  
+**License**: MIT  
+**Copyright**: © Nathan Friedly  
+**Usage**: Rate limiting
+
+### xss-clean
+**Project**: https://github.com/1000ch/xss-clean  
+**License**: MIT  
+**Copyright**: © 1000ch  
+**Usage**: XSS protection
+
+---
+
+## UI Libraries
+
+### @heroicons/react
+**Project**: https://github.com/tailwindlabs/heroicons  
+**License**: MIT  
+**Copyright**: © Tailwind Labs  
+**Usage**: Icon components
+
+### TailwindCSS
+**Project**: https://github.com/tailwindlabs/tailwindcss  
+**License**: MIT  
+**Copyright**: © Adam Wathan, Jonathan Reinink  
+**Usage**: Styling framework
+
+### react-barcode
+**Project**: https://github.com/kciter/react-barcode  
+**License**: MIT  
+**Copyright**: © Lee. chang jun  
+**Usage**: Barcode generation
+
+### html5-qrcode
+**Project**: https://github.com/mebjas/html5-qrcode  
+**License**: Apache-2.0  
+**Copyright**: © 2019-2024 minibhat  
+**Usage**: Barcode scanning
+
+### react-to-print
+**Project**: https://github.com/gregnb/react-to-print  
+**License**: MIT  
+**Copyright**: © Matthew Gregg  
+**Usage**: Label printing
+
+---
+
+## Data & State Management
+
+### @tanstack/react-query
+**Project**: https://github.com/TanStack/query  
+**License**: MIT  
+**Copyright**: © Tanner Linsley  
+**Usage**: Data fetching and caching
+
+### zustand
+**Project**: https://github.com/pmndrs/zustand  
+**License**: MIT  
+**Copyright**: © Poimandres  
+**Usage**: State management
+
+### redis
+**Project**: https://github.com/redis/node-redis  
+**License**: MIT  
+**Copyright**: © Redis Ltd  
+**Usage**: Caching and session storage
+
+---
+
+## Development Tools
+
+### TypeScript
+**Project**: https://github.com/microsoft/TypeScript  
+**License**: Apache-2.0  
+**Copyright**: © Microsoft Corporation  
+**Usage**: Type safety
+
+### Vite
+**Project**: https://github.com/vitejs/vite  
+**License**: MIT  
+**Copyright**: © Evan You  
+**Usage**: Build tool
+
+### ESLint
+**Project**: https://github.com/eslint/eslint  
+**License**: MIT  
+**Copyright**: © ESLint, Inc.  
+**Usage**: Code linting
+
+### Prettier
+**Project**: https://github.com/prettier/prettier  
+**License**: MIT  
+**Copyright**: © James Long  
+**Usage**: Code formatting
+
+---
+
+## License Compatibility Matrix
+
+| License | Component Count | Compatible with AGPL-3.0 |
+|---------|----------------|-------------------------|
+| MIT | 25+ | ✅ Yes |
+| Apache-2.0 | 5+ | ✅ Yes |
+| GPL-3.0 | 1 (ERPNext) | ✅ Yes (same copyleft) |
+| BSD-3-Clause | 2+ | ✅ Yes |
+| ISC | 3+ | ✅ Yes |
+
+---
+
+## How to Verify
+
+To verify all dependencies and their licenses:
+
+```bash
+# In integrations directory
+cd integrations
+npm install
+npm ls --license
+
+# In shop-floor directory
+cd ../shop-floor
+npm install
+npm ls --license
+```
+
+---
+
+## Contact
+
+For questions about third-party attributions:
+- Email: legal@battery-recycling.com
+- GitHub: Create an issue with label "attribution"
+
+---
+
+**Last Updated**: 2024-04-29
+
+**Note**: This NOTICE file is provided for informational purposes and does not modify the terms of the AGPL-3.0 license under which Battery ERP is distributed.

@@ -1,0 +1,182 @@
+[
+  {
+    "lead": {
+      "company": "Sapiom",
+      "website": "sapiom.ai",
+      "industry": "B2B SaaS / AI Infrastructure / Fintech",
+      "location": "San Francisco, CA",
+      "revenue_estimate": "$1M - $5M (Seed stage)",
+      "employees": "10-25 (estimated)",
+      "lead_score": 92,
+      "trigger_event": {
+        "type": "Seed funding",
+        "date": "2026-02-05",
+        "amount": "$15M",
+        "details": "Led by Accel with participation from Okta Ventures, Gradient Ventures, Menlo Ventures, Anthropic, and Coinbase Ventures"
+      },
+      "signals": [
+        "Funding announced within 72 hours",
+        "Top-tier investor syndicate (Accel, Menlo, Anthropic)",
+        "CEO is former Shopify Director of Engineering (Payments)",
+        "Enterprise B2B infrastructure focus",
+        "Building financial layer for AI agents"
+      ],
+      "pain_points": [
+        "Investor reporting for new Accel-led round",
+        "Financial controls at seed→Series A transition",
+        "FP&A for enterprise sales pipeline",
+        "Cash flow management with new capital injection"
+      ],
+      "decision_makers": [
+        {
+          "name": "Ilan Zerbib",
+          "title": "CEO & Co-founder",
+          "linkedin": "linkedin.com/in/ilanzerbib",
+          "background": "Former Shopify Director of Engineering (Payments), 5 years"
+        }
+      ],
+      "outreach_angle": "Hi Ilan, congrats on the Sapiom seed round! Building financial infrastructure for AI agents puts you at the intersection of fintech and AI - two sectors where financial operations complexity scales fast. I work with seed-stage B2B companies post-funding to set up investor reporting frameworks and financial controls before the Series A crunch.",
+      "recommended_action": "LinkedIn connection request to Ilan Zerbib within 48 hours while funding news is fresh",
+      "priority": "HIGH"
+    }
+  },
+  {
+    "lead": {
+      "company": "Duna",
+      "website": "duna.com",
+      "industry": "Fintech / KYB (Know Your Business)",
+      "location": "Germany / Netherlands",
+      "revenue_estimate": "$5M - $15M (Series A)",
+      "employees": "30-60 (estimated)",
+      "lead_score": 88,
+      "trigger_event": {
+        "type": "Series A funding",
+        "date": "2026-02-04",
+        "amount": "€30M (~$31M USD)",
+        "details": "Led by CapitalG (Alphabet's growth fund), with Index Ventures participating"
+      },
+      "signals": [
+        "Series A funding from top-tier growth fund",
+        "Stripe alumni founders (Duco van Lanschot, David Schreiber)",
+        "Enterprise customers including Plaid",
+        "Seven-figure contracts with Fortune 100 clients",
+        "Global expansion ambitions (digital passport vision)"
+      ],
+      "pain_points": [
+        "Multi-entity financial operations (Germany + Netherlands)",
+        "Series A investor reporting (CapitalG requirements)",
+        "FX/currency management for European operations",
+        "Compliance costs (fintech + identity verification)",
+        "Financial controls for enterprise sales"
+      ],
+      "decision_makers": [
+        {
+          "name": "Duco van Lanschot",
+          "title": "Co-founder & CEO",
+          "linkedin": "linkedin.com/in/ducovanlanschot",
+          "background": "Former Stripe (led KYB business)"
+        },
+        {
+          "name": "David Schreiber",
+          "title": "Co-founder",
+          "linkedin": "linkedin.com/in/davidschreiber",
+          "background": "Former Stripe"
+        }
+      ],
+      "outreach_angle": "Hi Duco, congrats on the Duna Series A! Building a global trust infrastructure for business identity is ambitious - and with CapitalG's involvement, the reporting bar just got higher. I help Series A fintechs set up multi-entity financial operations and investor-grade reporting systems. Given your dual HQ setup, might be worth a brief chat.",
+      "recommended_action": "LinkedIn connection to Duco van Lanschot. Reference his Stripe background and KYB expertise.",
+      "priority": "HIGH"
+    }
+  },
+  {
+    "lead": {
+      "company": "Fibr AI",
+      "website": "fibr.ai",
+      "industry": "AI / Marketing Tech / Website Personalization",
+      "location": "United States",
+      "revenue_estimate": "$1M - $3M (Seed stage)",
+      "employees": "15-30 (estimated)",
+      "lead_score": 78,
+      "trigger_event": {
+        "type": "Seed extension",
+        "date": "2026-02-04",
+        "amount": "$5.7M (total $7.5M)",
+        "details": "Accel doubling down after pre-seed in 2024"
+      },
+      "signals": [
+        "Accel backing and follow-on investment",
+        "Enterprise customers including banks and healthcare providers",
+        "3-5 year enterprise contracts (recurring revenue model)",
+        "Founded 2023 (2 years old, hitting scaling phase)",
+        "Replaces agency-heavy model with AI agents"
+      ],
+      "pain_points": [
+        "Enterprise sales financial operations (long sales cycles)",
+        "SaaS metrics for Accel reporting (ARR, NRR, CAC/LTV)",
+        "Cash flow management with multi-year contracts",
+        "Fundraising preparation for Series A"
+      ],
+      "decision_makers": [
+        {
+          "name": "Ankur Goyal",
+          "title": "Co-founder & CEO",
+          "linkedin": "linkedin.com/in/ankurgoyal",
+          "background": "Product/engineering background"
+        },
+        {
+          "name": "Pritam Roy",
+          "title": "Co-founder",
+          "linkedin": "linkedin.com/in/pritamroy",
+          "background": "Technical co-founder"
+        }
+      ],
+      "outreach_angle": "Hi Ankur, congrats on the Fibr AI seed extension! The shift from agency-driven personalization to autonomous AI agents is a massive opportunity - but enterprise sales cycles with banks and healthcare providers require tight financial operations. I work with Accel-backed startups to set up financial infrastructure that scales with enterprise growth.",
+      "recommended_action": "LinkedIn connection to Ankur Goyal. Reference the enterprise customer traction.",
+      "priority": "MEDIUM"
+    }
+  },
+  {
+    "lead": {
+      "company": "Resolve AI",
+      "website": "resolve.ai",
+      "industry": "AI / DevOps / Site Reliability Engineering",
+      "location": "United States",
+      "revenue_estimate": "$10M+ (Unicorn valuation)",
+      "employees": "50-100 (estimated)",
+      "lead_score": 72,
+      "trigger_event": {
+        "type": "Series A funding",
+        "date": "2026-02-04",
+        "amount": "$125M",
+        "details": "$1 billion valuation, led by Lightspeed Venture Partners"
+      },
+      "signals": [
+        "Unicorn valuation ($1B) at Series A",
+        "Founded by former Splunk executives",
+        "Strong investor syndicate (Lightspeed, Greylock)",
+        "Already have significant revenue"
+      ],
+      "pain_points": [
+        "Likely already have CFO given unicorn status",
+        "Complex cap table management"
+      ],
+      "decision_makers": [
+        {
+          "name": "Spiros Xanthos",
+          "title": "Co-founder",
+          "linkedin": "linkedin.com/in/spirosxanthos",
+          "background": "Former Splunk executive, founded Omnition (acquired by Splunk 2019)"
+        },
+        {
+          "name": "Mayank Agarwal",
+          "title": "Co-founder",
+          "linkedin": "linkedin.com/in/mayankagarwal",
+          "background": "Former Splunk executive"
+        }
+      ],
+      "outreach_angle": "Given unicorn valuation, likely have CFO in place. Lower priority unless CFO departure detected.",
+      "recommended_action": "Monitor for CFO changes. Skip for now.",
+      "priority": "LOW"
+    }
+  }
+]

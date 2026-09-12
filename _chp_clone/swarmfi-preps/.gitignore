@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+dist/
+build/
+
+# Database
+*.db
+*.db-journal
+prisma/migrations/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+dev.log
+server.log
+npm-debug.log*
+
+# Z-AI internal
+.zscripts/
+.zcache/
+skills/
+worklog.md
+search_*.json
+*_search.json
+
+# Misc
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+download/
+
+# CHP session artifacts (local only)
+.chp_registry.json
+.chp/sessions/

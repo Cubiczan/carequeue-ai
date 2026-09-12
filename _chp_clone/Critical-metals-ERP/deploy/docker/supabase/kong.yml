@@ -1,0 +1,28 @@
+_format_version: "1.1"
+
+services:
+  - name: carbon-api
+    url: http://carbon-app:3000
+    routes:
+      - name: carbon-api-route
+        strip_path: true
+        paths:
+          - /api
+    plugins:
+      - name: cors
+      - name: key-auth
+        config:
+          hide_credentials: false
+
+consumers:
+  - username: integration-api
+    keyauth_credentials:
+      - key: ${CARBON_API_KEY:-default-carbon-api-key}
+
+plugins:
+  - name: request-transformer
+    service: carbon-api
+    config:
+      add:
+        headers:
+          - X-Source:integration-gateway

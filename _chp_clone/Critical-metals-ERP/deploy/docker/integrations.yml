@@ -1,0 +1,164 @@
+
+services:
+  # Integration API Gateway
+  integration-api:
+    build:
+      context: ../../integrations
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../../integrations:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - REDIS_URL=redis://integration-redis:6379
+      - ERPNext_URL=http://erpnext-frontend:8080
+      - ERPNext_API_KEY=${ERPNext_API_KEY:-api-key}
+      - ERPNext_API_SECRET=${ERPNext_API_SECRET:-api-secret}
+      - CARBON_URL=http://carbon-app:3000
+      - CARBON_API_KEY=${CARBON_API_KEY:-carbon-api-key}
+      - XERO_CLIENT_ID=${XERO_CLIENT_ID:-}
+      - XERO_CLIENT_SECRET=${XERO_CLIENT_SECRET:-}
+      - XERO_TENANT_ID=${XERO_TENANT_ID:-}
+      - PRECORO_API_KEY=${PRECORO_API_KEY:-}
+      - PRECORO_COMPANY_ID=${PRECORO_COMPANY_ID:-}
+      - SYNC_BATCH_SIZE=100
+      - SYNC_INTERVAL_MS=5000
+    ports:
+      - "${INTEGRATION_PORT:-3001}:3001"
+    networks:
+      - integration-network
+      - erpnext-network
+      - carbon-network
+    depends_on:
+      - integration-redis
+
+  # Integration Redis (Sync State & Queue)
+  integration-redis:
+    image: redis:alpine
+    healthcheck:
+      test: redis-cli ping
+      interval: 5s
+      retries: 10
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - integration-redis-data:/data
+    networks:
+      - integration-network
+    command: redis-server --appendonly yes
+
+  # Xero Sync Service
+  xero-sync:
+    build:
+      context: ../../integrations/xero
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../../integrations/xero:/app
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://integration-redis:6379
+      - XERO_CLIENT_ID=${XERO_CLIENT_ID:-}
+      - XERO_CLIENT_SECRET=${XERO_CLIENT_SECRET:-}
+      - XERO_TENANT_ID=${XERO_TENANT_ID:-}
+      - XERO_WEBHOOK_SECRET=${XERO_WEBHOOK_SECRET:-webhook-secret}
+      - ERPNext_URL=http://erpnext-frontend:8080
+      - ERPNext_API_KEY=${ERPNext_API_KEY:-}
+      - ERPNext_API_SECRET=${ERPNext_API_SECRET:-}
+    networks:
+      - integration-network
+      - erpnext-network
+    depends_on:
+      - integration-redis
+
+  # Precoro Sync Service
+  precoro-sync:
+    build:
+      context: ../../integrations/precoro
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../../integrations/precoro:/app
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://integration-redis:6379
+      - PRECORO_API_KEY=${PRECORO_API_KEY:-}
+      - PRECORO_COMPANY_ID=${PRECORO_COMPANY_ID:-}
+      - PRECORO_WEBHOOK_SECRET=${PRECORO_WEBHOOK_SECRET:-webhook-secret}
+      - ERPNext_URL=http://erpnext-frontend:8080
+      - ERPNext_API_KEY=${ERPNext_API_KEY:-}
+      - ERPNext_API_SECRET=${ERPNext_API_SECRET:-}
+    networks:
+      - integration-network
+      - erpnext-network
+    depends_on:
+      - integration-redis
+
+  # ERPNext ↔ Carbon Sync Service
+  erpnext-carbon-sync:
+    build:
+      context: ../../integrations/sync
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../../integrations/sync:/app
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://integration-redis:6379
+      - ERPNext_URL=http://erpnext-frontend:8080
+      - ERPNext_API_KEY=${ERPNext_API_KEY:-}
+      - ERPNext_API_SECRET=${ERPNext_API_SECRET:-}
+      - CARBON_URL=http://carbon-app:3000
+      - CARBON_API_KEY=${CARBON_API_KEY:-}
+      - SYNC_INTERVAL_MS=5000
+      - ENABLE_PRODUCTION_SYNC=true
+      - ENABLE_INVENTORY_SYNC=true
+      - ENABLE_QUALITY_SYNC=true
+    networks:
+      - integration-network
+      - erpnext-network
+      - carbon-network
+    depends_on:
+      - integration-redis
+
+  # Integration Dashboard (UI)
+  integration-dashboard:
+    build:
+      context: ../../integrations/dashboard
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../../integrations/dashboard:/app
+    environment:
+      - NODE_ENV=development
+      - API_URL=http://integration-api:3001
+    ports:
+      - "${DASHBOARD_PORT:-3002}:3000"
+    networks:
+      - integration-network
+    depends_on:
+      - integration-api
+
+networks:
+  integration-network:
+    driver: bridge
+  erpnext-network:
+    external: true
+  carbon-network:
+    external: true
+
+volumes:
+  integration-redis-data:

@@ -1,0 +1,17 @@
+file 'frames_hd/frame_01.png'
+duration 33.36
+file 'frames_hd/frame_02.png'
+duration 32.92
+file 'frames_hd/frame_03.png'
+duration 22.62
+file 'frames_hd/frame_04.png'
+duration 22.96
+file 'frames_hd/frame_05.png'
+duration 25.60
+file 'frames_hd/frame_06.png'
+duration 27.18
+file 'frames_hd/frame_07.png'
+duration 22.68
+file 'frames_hd/frame_08.png'
+duration 35.36
+file 'frames_hd/frame_08.png'

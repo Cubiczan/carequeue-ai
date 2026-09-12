@@ -1,0 +1,209 @@
+{
+  "categories": [
+    {
+      "id": "geopolitical",
+      "name": "Geopolitical Risk",
+      "description": "Risk arising from political instability, trade restrictions, sanctions, and diplomatic tensions that can disrupt mineral supply chains.",
+      "weight": 0.25,
+      "indicators": [
+        {
+          "id": "trade_policy",
+          "name": "Trade Policy Restrictiveness",
+          "description": "Presence and severity of export bans, tariffs, quotas, or strategic stockpiling policies affecting mineral exports."
+        },
+        {
+          "id": "sanctions",
+          "name": "Sanctions Exposure",
+          "description": "Risk of economic or trade sanctions being imposed on producing country, affecting mineral exports."
+        },
+        {
+          "id": "political_stability",
+          "name": "Political Stability Index",
+          "description": "World Bank governance indicator measuring likelihood of political instability or politically motivated violence."
+        },
+        {
+          "id": "diplomatic_relations",
+          "name": "Diplomatic Relations",
+          "description": "State of bilateral/multilateral relations between producing country and major consuming nations."
+        },
+        {
+          "id": "conflict_risk",
+          "name": "Armed Conflict Risk",
+          "description": "Likelihood and impact of armed conflict or civil unrest disrupting mining operations."
+        }
+      ]
+    },
+    {
+      "id": "environmental",
+      "name": "Environmental Risk",
+      "description": "Risk arising from environmental degradation, water scarcity, climate vulnerability, and biodiversity impact that can constrain mining operations.",
+      "weight": 0.20,
+      "indicators": [
+        {
+          "id": "water_stress",
+          "name": "Water Stress Level",
+          "description": "World Resources Institute water stress index for mining regions. High water stress can limit processing capacity."
+        },
+        {
+          "id": "biodiversity",
+          "name": "Biodiversity Impact",
+          "description": "Proximity of mining operations to biodiversity hotspots and protected areas. IUCN Red List overlap."
+        },
+        {
+          "id": "carbon_footprint",
+          "name": "Carbon Footprint Intensity",
+          "description": "GHG emissions per ton of mineral produced. Relevant for Scope 3 reporting and carbon border adjustments."
+        },
+        {
+          "id": "climate_vulnerability",
+          "name": "Climate Vulnerability",
+          "description": "ND-GAIN Index score for producing country's vulnerability to climate change impacts on mining operations."
+        },
+        {
+          "id": "tailings_risk",
+          "name": "Tailings Management Risk",
+          "description": "Assessment of tailings dam safety and environmental liability based on global tailings standard compliance."
+        }
+      ]
+    },
+    {
+      "id": "regulatory",
+      "name": "Regulatory Risk",
+      "description": "Risk arising from changes in mining codes, tax policies, environmental regulations, and permitting processes that can increase costs or delay operations.",
+      "weight": 0.20,
+      "indicators": [
+        {
+          "id": "mining_code_stability",
+          "name": "Mining Code Stability",
+          "description": "Frequency and impact of changes to mining legislation, royalty rates, or fiscal terms."
+        },
+        {
+          "id": "permitting_timeline",
+          "name": "Permitting Timeline",
+          "description": "Average time from exploration license to production permit. Longer timelines increase development risk."
+        },
+        {
+          "id": "tax_policy",
+          "name": "Tax & Royalty Policy",
+          "description": "Effective tax and royalty burden on mining operations, including recent and proposed changes."
+        },
+        {
+          "id": "local_content",
+          "name": "Local Content Requirements",
+          "description": "Mandates for local processing, hiring, or procurement that may affect operational flexibility and costs."
+        },
+        {
+          "id": "esg_compliance",
+          "name": "ESG Regulatory Burden",
+          "description": "Number and complexity of ESG-related regulations (EU CSRD, SEC climate disclosure, local equivalents)."
+        }
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure Risk",
+      "description": "Risk arising from inadequate transport, energy, water, and digital infrastructure that can limit mining and processing capacity.",
+      "weight": 0.15,
+      "indicators": [
+        {
+          "id": "power_grid",
+          "name": "Power Grid Reliability",
+          "description": "Electricity supply reliability (SAIDI index) and cost for mining operations. Load shedding frequency in producing regions."
+        },
+        {
+          "id": "transport",
+          "name": "Transport Infrastructure",
+          "description": "Quality of road, rail, and port infrastructure serving mining regions. Logistics cost per ton-km."
+        },
+        {
+          "id": "water_access",
+          "name": "Water Access & Treatment",
+          "description": "Availability of process water and capacity for water treatment and recycling at mine sites."
+        },
+        {
+          "id": "digital_connectivity",
+          "name": "Digital Connectivity",
+          "description": "Internet and telecommunications infrastructure quality for remote monitoring and autonomous mining operations."
+        }
+      ]
+    },
+    {
+      "id": "labor",
+      "name": "Labor Risk",
+      "description": "Risk arising from labor disputes, skill shortages, safety incidents, and labor rights concerns that can disrupt operations.",
+      "weight": 0.10,
+      "indicators": [
+        {
+          "id": "skill_availability",
+          "name": "Skilled Labor Availability",
+          "description": "Availability of mining engineers, geologists, and skilled operators in producing regions."
+        },
+        {
+          "id": "labor_relations",
+          "name": "Labor Relations Climate",
+          "description": "Frequency and severity of strikes, union disputes, and collective bargaining outcomes."
+        },
+        {
+          "id": "safety_record",
+          "name": "Health & Safety Record",
+          "description": "Fatalities and lost-time injury frequency rates (LTIFR) relative to global industry benchmarks."
+        },
+        {
+          "id": "child_labor",
+          "name": "Child Labor Risk",
+          "description": "Prevalence of child labor in artisanal and small-scale mining (ASM) in producing regions. US DoL listings."
+        },
+        {
+          "id": "community_relations",
+          "name": "Community Relations",
+          "description": "Social license to operate strength. History of community opposition, protests, or blockades at mine sites."
+        }
+      ]
+    },
+    {
+      "id": "market_concentration",
+      "name": "Market Concentration Risk",
+      "description": "Risk arising from supply concentration in few countries, companies, or trade routes. Measured using the Herfindahl-Hirschman Index (HHI).",
+      "weight": 0.10,
+      "indicators": [
+        {
+          "id": "hhi_country",
+          "name": "Country-Level HHI",
+          "description": "Herfindahl-Hirschman Index measuring production concentration across countries. HHI > 2,500 = highly concentrated."
+        },
+        {
+          "id": "hhi_company",
+          "name": "Company-Level HHI",
+          "description": "Concentration of production among top mining companies. Higher HHI = more supply chain vulnerability."
+        },
+        {
+          "id": "processing_concentration",
+          "name": "Processing Concentration",
+          "description": "Share of mineral processing/refining controlled by top 3 countries. Especially relevant for rare earths."
+        },
+        {
+          "id": "trade_route_dependency",
+          "name": "Trade Route Dependency",
+          "description": "Reliance on specific maritime chokepoints (Strait of Malacca, Suez Canal, Panama Canal) for mineral shipments."
+        },
+        {
+          "id": "substitution_difficulty",
+          "name": "Substitution Difficulty",
+          "description": "Availability and economic viability of substitute minerals or recycling sources. Higher = greater supply chain rigidity."
+        }
+      ]
+    }
+  ],
+  "riskLevels": [
+    { "min": 0, "max": 20, "level": "Minimal", "color": "#14b8a6", "description": "Supply chain is highly diversified with minimal disruption risk." },
+    { "min": 21, "max": 40, "level": "Low", "color": "#22c55e", "description": "Some concentration exists but multiple supply sources are available." },
+    { "min": 41, "max": 60, "level": "Medium", "color": "#eab308", "description": "Moderate concentration risk. Monitor political and environmental developments." },
+    { "min": 61, "max": 80, "level": "High", "color": "#f97316", "description": "Significant concentration risk. Diversification strategies recommended." },
+    { "min": 81, "max": 100, "level": "Critical", "color": "#ef4444", "description": "Extreme supply chain vulnerability. Active risk mitigation required." }
+  ],
+  "hhiThresholds": [
+    { "max": 1500, "level": "Unconcentrated", "color": "#22c55e" },
+    { "max": 2500, "level": "Moderately Concentrated", "color": "#eab308" },
+    { "max": 10000, "level": "Highly Concentrated", "color": "#ef4444" }
+  ]
+}

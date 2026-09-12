@@ -1,0 +1,98 @@
+# CHP R0 Configuration
+# Domain: Blockchain/DeFi — Stellar Critical Metal Traceability
+# Threshold: 85
+
+r0_gate:
+  enabled: true
+  similarity_threshold: 0.85
+  domain: blockchain_defi
+
+  # R0 sub-gates — all must pass to advance from EXPLORING
+  checks:
+    solvable:
+      description: "The problem can be solved with available tools and information."
+      fail_action: "block — revert to EXPLORING with gap analysis"
+      auto_evaluate: true
+
+    scoped:
+      description: "The change is bounded and does not introduce uncontrolled blast radius."
+      fail_action: "block — require scope reduction plan"
+      auto_evaluate: true
+
+    valid:
+      description: "The approach is technically correct for the Stellar/Soroban stack."
+      fail_action: "block — require corrected approach or expert review"
+      auto_evaluate: false
+
+    worth_it:
+      description: "The benefit justifies the complexity, cost, and risk for a blockchain domain."
+      fail_action: "block — document why cost exceeds benefit or escalate"
+      auto_evaluate: false
+
+  # Sycophancy detection — flag when agent output too closely mirrors user input
+  sycophancy:
+    enabled: true
+    similarity_threshold: 0.85
+    action_on_flag: "require adversarial review before proceeding"
+    # Cosine similarity between user prompt and agent response
+    # Values >= 0.85 trigger mandatory independent challenge
+    metrics:
+      - type: cosine_similarity
+        threshold: 0.85
+        scope: "full_response"
+      - type: ngram_overlap
+        threshold: 0.70
+        scope: "key_claims"
+
+# Domain-specific calibration
+domain_config:
+  name: blockchain_defi
+  risk_level: critical
+  foundation_threshold: 85
+  rationale: >
+    Stellar/Soroban smart contract interactions, token mint/burn operations,
+    and compliance attestations for critical minerals supply chains carry
+    irreversible financial and regulatory consequences. A high threshold
+    ensures adversarial rigor before any governed-path changes.
+
+  # Additional checks for blockchain domain
+  extra_checks:
+    - name: immutability_impact
+      description: "Assess whether the change affects on-chain immutable data."
+      fail_action: "escalate to full advisory lock cycle"
+    - name: token_economics
+      description: "Evaluate impact on SEP-41 token mint/burn/transfer flows."
+      fail_action: "require economics review"
+    - name: compliance_integrity
+      description: "Verify no degradation to IRA/DPA/EO14017 attestation accuracy."
+      fail_action: "block — compliance regression is non-negotiable"
+    - name: supply_chain_continuity
+      description: "Ensure provenance graph integrity is preserved."
+      fail_action: "require provenance validation test suite run"
+
+# Foundation disclosure requirements
+foundation:
+  required_assumptions: 3
+  required_invalidation_conditions: 2
+  required_vulnerabilities: 1
+  min_confidence_score: 85
+
+# Adversarial configuration
+adversarial:
+  required_challenges: 1
+  challenge_source: ".chp/ADVERSARIAL_PROMPTS.md"
+  domain_templates_required: true
+
+# Third-party validation
+validation:
+  required: true
+  min_validators: 1
+  confirm_required: true
+  auto_lock_delay_seconds: 300  # 5-minute cooling period before LOCKED
+
+# Metadata
+metadata:
+  repository: Stellar-critical-metal-traceability
+  version: "0.1.0"
+  created: auto-generated
+  last_modified: auto-generated

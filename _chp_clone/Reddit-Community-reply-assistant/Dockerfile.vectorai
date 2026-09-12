@@ -1,0 +1,28 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies for building
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --no-cache-dir \
+    actian-vectorai>=0.1.0b2 \
+    sentence-transformers==2.2.2 \
+    flask==3.0.0 \
+    flask-cors==4.0.0 \
+    torch==2.1.2 --index-url https://download.pytorch.org/whl/cpu
+
+# Copy the bridge server (includes embedding endpoints)
+COPY vectorai-bridge.py .
+
+EXPOSE 27832
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
+    CMD curl -f http://localhost:27832/api/health || exit 1
+
+CMD ["python", "vectorai-bridge.py"]

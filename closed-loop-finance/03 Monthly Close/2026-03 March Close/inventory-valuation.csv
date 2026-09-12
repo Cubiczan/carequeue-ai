@@ -1,0 +1,5 @@
+SKU,Description,Location,On-Hand Qty,Unit Cost,Extended Cost,Method,Last Movement
+SKU-0001,[Item],[Warehouse 1],0,0.00,0.00,FIFO,2026-03-31
+SKU-0002,[Item],[Warehouse 1],0,0.00,0.00,FIFO,2026-03-31
+SKU-0003,[Item],[Warehouse 2],0,0.00,0.00,FIFO,2026-03-31
+TOTAL,,,,,0.00,,

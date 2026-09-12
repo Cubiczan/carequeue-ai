@@ -1,0 +1,42 @@
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Fabric notebooks (local)
+.ipynb_checkpoints/
+
+# Data files
+*.csv
+*.parquet
+*.delta
+data/raw/
+data/processed/
+
+# Logs
+*.log
+logs/

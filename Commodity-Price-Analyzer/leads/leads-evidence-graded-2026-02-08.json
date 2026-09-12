@@ -1,0 +1,208 @@
+[
+  {
+    "lead": {
+      "company": "Sapiom",
+      "website": "sapiom.ai",
+      "industry": "B2B SaaS / AI Infrastructure / Fintech",
+      "location": "San Francisco, CA",
+      "revenue_estimate": "$1M - $5M (Seed stage)",
+      "employees": "10-25 (estimated)",
+      "lead_score": 92,
+      "evidence_grade": "MODERATE (⊕⊕⊕○)",
+      "trigger_event": {
+        "type": "Seed funding",
+        "date": "2026-02-05",
+        "amount": "$15M",
+        "details": "Led by Accel with Okta Ventures, Gradient Ventures, Menlo Ventures, Anthropic, Coinbase Ventures",
+        "evidence": "TechCrunch article (single source)",
+        "evidence_grade": "⊕⊕○○"
+      },
+      "signals": [
+        {"signal": "Recent funding (within 72 hours)", "evidence": "TechCrunch Feb 5", "grade": "⊕⊕○○"},
+        {"signal": "Top-tier investor syndicate", "evidence": "TC + Accel portfolio confirmation", "grade": "⊕⊕⊕○"},
+        {"signal": "CEO is former Shopify Director of Engineering (Payments)", "evidence": "TC + LinkedIn", "grade": "⊕⊕⊕○"},
+        {"signal": "Enterprise B2B infrastructure focus", "evidence": "Company positioning", "grade": "⊕⊕⊕○"},
+        {"signal": "Building financial layer for AI agents", "evidence": "TC article", "grade": "⊕⊕○○"}
+      ],
+      "pain_points": [
+        {"point": "Investor reporting for new Accel-led round", "confidence": "Medium", "basis": "Inference from funding"},
+        {"point": "Financial controls at seed→Series A transition", "confidence": "Medium", "basis": "Stage-typical need"},
+        {"point": "FP&A for enterprise sales pipeline", "confidence": "Low", "basis": "Assumption"},
+        {"point": "Cash flow management with new capital injection", "confidence": "Medium", "basis": "Recent funding"}
+      ],
+      "decision_makers": [
+        {
+          "name": "Ilan Zerbib",
+          "title": "CEO & Co-founder",
+          "linkedin": "linkedin.com/in/ilanzerbib",
+          "background": "Former Shopify Director of Engineering (Payments), 5 years",
+          "evidence_grade": "⊕⊕⊕○"
+        }
+      ],
+      "certainties": [
+        "Recently funded ($15M seed)",
+        "Accel-backed with strong syndicate",
+        "CEO is Ilan Zerbib (ex-Shopify)"
+      ],
+      "suppositions": [
+        "Will need formal financial controls for Series A prep",
+        "CEO understands value of financial infrastructure (Shopify background)"
+      ],
+      "doubts": [
+        "Is Ilan already planning a full-time CFO hire?",
+        "Does Accel provide portfolio CFO resources?"
+      ],
+      "outreach_angle": "Hi Ilan, congrats on the Sapiom seed round! Building financial infrastructure for AI agents puts you at the intersection of fintech and AI - two sectors where financial operations complexity scales fast. I work with seed-stage B2B companies post-funding to set up investor reporting frameworks and financial controls before the Series A crunch.",
+      "recommended_action": "LinkedIn connection request to Ilan Zerbib within 48 hours while funding news is fresh",
+      "priority": "HIGH",
+      "confidence": "Medium",
+      "evidence_limitations": [
+        "Single-source funding data (TechCrunch)",
+        "CFO need inferred, not directly evidenced",
+        "No visibility into current finance team"
+      ]
+    }
+  },
+  {
+    "lead": {
+      "company": "Duna",
+      "website": "duna.com",
+      "industry": "Fintech / KYB (Know Your Business)",
+      "location": "Germany / Netherlands",
+      "revenue_estimate": "$5M - $15M (Series A)",
+      "employees": "30-60 (estimated)",
+      "lead_score": 88,
+      "evidence_grade": "MODERATE (⊕⊕⊕○)",
+      "trigger_event": {
+        "type": "Series A funding",
+        "date": "2026-02-04",
+        "amount": "€30M (~$31M USD)",
+        "details": "Led by CapitalG (Alphabet's growth fund), Index Ventures participating",
+        "evidence": "TechCrunch article",
+        "evidence_grade": "⊕⊕○○"
+      },
+      "signals": [
+        {"signal": "Series A funding from top-tier growth fund", "evidence": "TC + CapitalG portfolio", "grade": "⊕⊕⊕○"},
+        {"signal": "Stripe alumni founders", "evidence": "TC + LinkedIn", "grade": "⊕⊕⊕○"},
+        {"signal": "Enterprise customers including Plaid", "evidence": "TC quote from CEO", "grade": "⊕⊕○○"},
+        {"signal": "Seven-figure contracts with Fortune 100", "evidence": "TC article", "grade": "⊕⊕○○"},
+        {"signal": "Global expansion ambitions", "evidence": "CEO quotes in TC", "grade": "⊕⊕○○"}
+      ],
+      "pain_points": [
+        {"point": "Multi-entity financial operations (Germany + Netherlands)", "confidence": "High", "basis": "Dual HQ structure evidenced"},
+        {"point": "Series A investor reporting (CapitalG requirements)", "confidence": "High", "basis": "Growth fund expectations"},
+        {"point": "FX/currency management for European operations", "confidence": "Medium", "basis": "Inference from multi-entity"},
+        {"point": "Compliance costs (fintech + identity verification)", "confidence": "Medium", "basis": "Industry typical"},
+        {"point": "Financial controls for enterprise sales", "confidence": "Medium", "basis": "Enterprise customer inference"}
+      ],
+      "decision_makers": [
+        {
+          "name": "Duco van Lanschot",
+          "title": "Co-founder & CEO",
+          "linkedin": "linkedin.com/in/ducovanlanschot",
+          "background": "Former Stripe (led KYB business)",
+          "evidence_grade": "⊕⊕⊕○"
+        },
+        {
+          "name": "David Schreiber",
+          "title": "Co-founder",
+          "linkedin": "linkedin.com/in/davidschreiber",
+          "background": "Former Stripe",
+          "evidence_grade": "⊕⊕⊕○"
+        }
+      ],
+      "certainties": [
+        "Raised Series A with CapitalG leading",
+        "Founded by Stripe alumni",
+        "Dual HQ structure (Germany/Netherlands)"
+      ],
+      "suppositions": [
+        "Multi-entity operations create CFO complexity",
+        "Founders have high bar for financial operations (Stripe background)"
+      ],
+      "doubts": [
+        "Does European location make US fractional CFO less relevant?",
+        "Do they already have EU-based finance team?"
+      ],
+      "outreach_angle": "Hi Duco, congrats on the Duna Series A! Building a global trust infrastructure for business identity is ambitious - and with CapitalG's involvement, the reporting bar just got higher. I help Series A fintechs set up multi-entity financial operations and investor-grade reporting systems. Given your dual HQ setup, might be worth a brief chat.",
+      "recommended_action": "LinkedIn connection to Duco van Lanschot. Reference his Stripe background and KYB expertise. Test receptiveness to US-based advisor.",
+      "priority": "HIGH",
+      "confidence": "Medium",
+      "evidence_limitations": [
+        "European company assessed with US-centric lens",
+        "Customer traction self-reported by CEO",
+        "No visibility into current finance structure"
+      ]
+    }
+  },
+  {
+    "lead": {
+      "company": "Fibr AI",
+      "website": "fibr.ai",
+      "industry": "AI / Marketing Tech / Website Personalization",
+      "location": "United States",
+      "revenue_estimate": "$1M - $3M (Seed stage)",
+      "employees": "15-30 (estimated)",
+      "lead_score": 78,
+      "evidence_grade": "MODERATE-LOW (⊕⊕○○)",
+      "trigger_event": {
+        "type": "Seed extension",
+        "date": "2026-02-04",
+        "amount": "$5.7M (total $7.5M)",
+        "details": "Accel doubling down after 2024 pre-seed",
+        "evidence": "TechCrunch article",
+        "evidence_grade": "⊕⊕○○"
+      },
+      "signals": [
+        {"signal": "Accel backing and follow-on investment", "evidence": "TC + Accel confirmation", "grade": "⊕⊕⊕○"},
+        {"signal": "Enterprise customers (banks, healthcare)", "evidence": "TC quote from CEO", "grade": "⊕⊕○○"},
+        {"signal": "3-5 year enterprise contracts", "evidence": "TC article", "grade": "⊕⊕○○"},
+        {"signal": "Founded 2023 (2 years old)", "evidence": "TC article", "grade": "⊕⊕○○"},
+        {"signal": "Replaces agency-heavy model with AI agents", "evidence": "TC positioning", "grade": "⊕⊕○○"}
+      ],
+      "pain_points": [
+        {"point": "Enterprise sales financial operations", "confidence": "Medium", "basis": "Enterprise customer inference"},
+        {"point": "SaaS metrics for Accel reporting", "confidence": "Medium", "basis": "Investor expectations"},
+        {"point": "Cash flow management with multi-year contracts", "confidence": "Low", "basis": "Assumption"},
+        {"point": "Fundraising preparation for Series A", "confidence": "Medium", "basis": "Stage-typical"}
+      ],
+      "decision_makers": [
+        {
+          "name": "Ankur Goyal",
+          "title": "Co-founder & CEO",
+          "linkedin": "linkedin.com/in/ankurgoyal",
+          "background": "Product/engineering background",
+          "evidence_grade": "⊕⊕⊕○"
+        },
+        {
+          "name": "Pritam Roy",
+          "title": "Co-founder",
+          "linkedin": "linkedin.com/in/pritamroy",
+          "background": "Technical co-founder",
+          "evidence_grade": "⊕⊕⊕○"
+        }
+      ],
+      "certainties": [
+        "Accel-backed with follow-on investment",
+        "Has enterprise customer traction"
+      ],
+      "suppositions": [
+        "Enterprise sales require financial infrastructure",
+        "Seed-stage transitioning to scale phase"
+      ],
+      "doubts": [
+        "Is funding size ($5.7M) sufficient to justify fractional CFO spend?",
+        "Will they defer CFO decision until Series A?"
+      ],
+      "outreach_angle": "Hi Ankur, congrats on the Fibr AI seed extension! The shift from agency-driven personalization to autonomous AI agents is a massive opportunity - but enterprise sales cycles with banks and healthcare providers require tight financial operations. I work with Accel-backed startups to set up financial infrastructure that scales with enterprise growth.",
+      "recommended_action": "LinkedIn connection to Ankur Goyal. Reference enterprise customer traction. Lower priority than Sapiom/Duna.",
+      "priority": "MEDIUM",
+      "confidence": "Low-Medium",
+      "evidence_limitations": [
+        "Earlier stage = thinner evidence",
+        "Lower funding amount may not prioritize CFO spend",
+        "Customer traction self-reported"
+      ]
+    }
+  }
+]

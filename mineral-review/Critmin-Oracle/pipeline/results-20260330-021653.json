@@ -1,0 +1,70 @@
+{
+  "pipeline_version": "1.0.0",
+  "mode": "demo",
+  "timestamp": "2026-03-30T02:16:53.616018+00:00",
+  "minerals": {
+    "LITHIUM": {
+      "timestamp": "2026-03-30T02:16:53.615553+00:00",
+      "current_price_usd": 16314.17,
+      "forecast_price_usd": 15621.13,
+      "price_deviation_pct": -4.25,
+      "supply_sentiment": 0.5882,
+      "regulatory_risk": 24.0,
+      "forecast_direction_pct": -4.25,
+      "composite_score": 27.22,
+      "confidence_bps": 500,
+      "on_chain_scaled": {
+        "current_price": 1631417000000,
+        "forecast_price": 1562113000000,
+        "composite_score": 2722,
+        "price_deviation": -424,
+        "supply_sentiment": 5882,
+        "regulatory_risk": 2400,
+        "forecast_direction": -424,
+        "confidence": 500
+      }
+    },
+    "NICKEL": {
+      "timestamp": "2026-03-30T02:16:53.615768+00:00",
+      "current_price_usd": 19176.8,
+      "forecast_price_usd": 20410.76,
+      "price_deviation_pct": 6.43,
+      "supply_sentiment": 0.1818,
+      "regulatory_risk": 44.57,
+      "forecast_direction_pct": 6.43,
+      "composite_score": 18.73,
+      "confidence_bps": 500,
+      "on_chain_scaled": {
+        "current_price": 1917680000000,
+        "forecast_price": 2041075999999,
+        "composite_score": 1873,
+        "price_deviation": 643,
+        "supply_sentiment": 1818,
+        "regulatory_risk": 4457,
+        "forecast_direction": 643,
+        "confidence": 500
+      }
+    },
+    "COBALT": {
+      "timestamp": "2026-03-30T02:16:53.615969+00:00",
+      "current_price_usd": 30449.13,
+      "forecast_price_usd": 29108.03,
+      "price_deviation_pct": -4.4,
+      "supply_sentiment": -0.6667,
+      "regulatory_risk": 33.43,
+      "forecast_direction_pct": -4.4,
+      "composite_score": -21.65,
+      "confidence_bps": 500,
+      "on_chain_scaled": {
+        "current_price": 3044913000000,
+        "forecast_price": 2910803000000,
+        "composite_score": -2165,
+        "price_deviation": -440,
+        "supply_sentiment": -6666,
+        "regulatory_risk": 3342,
+        "forecast_direction": -440,
+        "confidence": 500
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+
+services:
+  # Carbon Main Application
+  carbon-app:
+    image: ghcr.io/crbnos/carbon:latest
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - carbon-data:/app/data
+      - ../config/carbon:/app/config
+    environment:
+      - DATABASE_URL=postgresql://carbon:carbon123@carbon-db:5432/carbon
+      - REDIS_URL=redis://carbon-redis:6379
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=${CARBON_AUTH_SECRET:-change-me-in-production}
+      - SUPABASE_URL=http://carbon-supabase:8000
+      - SUPABASE_ANON_KEY=${CARBON_SUPABASE_ANON_KEY:-anon-key}
+      - SUPABASE_SERVICE_KEY=${CARBON_SUPABASE_SERVICE_KEY:-service-key}
+      - INTEGRATION_WEBHOOK_SECRET=${CARBON_WEBHOOK_SECRET:-webhook-secret}
+    ports:
+      - "${CARBON_PORT:-3000}:3000"
+    networks:
+      - carbon-network
+    depends_on:
+      - carbon-db
+      - carbon-redis
+      - carbon-supabase
+
+  # Carbon Database (PostgreSQL via Supabase)
+  carbon-db:
+    image: supabase/postgres:15.1.0.117
+    healthcheck:
+      test: pg_isready -U carbon -d carbon
+      interval: 5s
+      retries: 10
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - carbon-postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=carbon
+      - POSTGRES_PASSWORD=carbon123
+      - POSTGRES_DB=carbon
+      - JWT_SECRET=${CARBON_JWT_SECRET:-jwt-secret-change-me}
+    networks:
+      - carbon-network
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_wal_senders=10
+      -c max_replication_slots=5
+
+  # Carbon Redis (Cache & Queue)
+  carbon-redis:
+    image: redis:alpine
+    healthcheck:
+      test: redis-cli ping
+      interval: 5s
+      retries: 10
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - carbon-redis-data:/data
+    networks:
+      - carbon-network
+    command: redis-server --appendonly yes
+
+  # Supabase Services (for Carbon's real-time features)
+  carbon-supabase:
+    image: supabase/kong:2.8.1
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/var/lib/kong/kong.yml
+      - KONG_DNS_ORDER=LAST,A,CNAME
+      - KONG_PLUGINS=request-transformer,cors,key-auth,acl
+    networks:
+      - carbon-network
+    volumes:
+      - ./supabase/kong.yml:/var/lib/kong/kong.yml:ro
+
+  # Carbon Worker (Background Jobs)
+  carbon-worker:
+    image: ghcr.io/crbnos/carbon:latest
+    command: npm run worker
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - carbon-data:/app/data
+    environment:
+      - DATABASE_URL=postgresql://carbon:carbon123@carbon-db:5432/carbon
+      - REDIS_URL=redis://carbon-redis:6379
+      - WORKER_MODE=true
+    networks:
+      - carbon-network
+    depends_on:
+      - carbon-db
+      - carbon-redis
+
+  # Carbon Queue Processor (Inngest)
+  carbon-queue:
+    image: ghcr.io/crbnos/carbon:latest
+    command: npm run queue
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - carbon-data:/app/data
+    environment:
+      - DATABASE_URL=postgresql://carbon:carbon123@carbon-db:5432/carbon
+      - REDIS_URL=redis://carbon-redis:6379
+      - QUEUE_MODE=true
+    networks:
+      - carbon-network
+    depends_on:
+      - carbon-db
+      - carbon-redis
+
+networks:
+  carbon-network:
+    driver: bridge
+
+volumes:
+  carbon-data:
+  carbon-postgres-data:
+  carbon-redis-data:

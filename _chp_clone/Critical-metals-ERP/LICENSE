@@ -1,0 +1,63 @@
+# GNU AFFERO GENERAL PUBLIC LICENSE
+
+Version 3, 19 November 2007
+
+Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+
+Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+
+## Preamble
+
+The GNU Affero General Public License is a free, copyleft license for software and other kinds of works, specifically designed to ensure cooperation with the community in the case of network server software.
+
+[Full license text follows...]
+
+---
+
+**Battery ERP - Battery Recycling Enterprise Resource Planning**
+
+Copyright (C) 2024 Battery Recycling Company
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+---
+
+## Additional Terms Under Section 7 of AGPL-3.0
+
+The following additional terms apply to this software:
+
+1. **Attribution Requirement**: When distributing this software or derivative works, you must maintain all copyright, patent, trademark, and attribution notices from the original source.
+
+2. **Commercial Use**: Commercial use is permitted. However, any SaaS offering based on this software must make the complete corresponding source code available to all users.
+
+3. **Trademark**: "Battery ERP" is a trademark of Battery Recycling Company. You may not use this trademark without explicit written permission.
+
+---
+
+## Third-Party Components
+
+This software includes components from the following projects:
+
+### ERPNext (https://erpnext.com)
+- License: GPL-3.0
+- Copyright: © Frappe Technologies Pvt Ltd
+- Changes: Integration adapters, custom workflows
+
+### Carbon (https://github.com/crbnos/carbon)
+- License: MIT
+- Copyright: © Carbon Contributors
+- Changes: Integration adapters, data sync services
+
+### React (https://reactjs.org)
+- License: MIT
+- Copyright: © Meta Platforms, Inc. and affiliates
+
+### Express (https://expressjs.com)
+- License: MIT
+- Copyright: © TJ Holowaychuk
+
+See the NOTICE file for detailed attribution information.

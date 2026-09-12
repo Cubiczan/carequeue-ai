@@ -1,0 +1,638 @@
+================================================================================
+           SWARMFI-SOLANA — DEMO VIDEO SCRIPT (2:30 RUNTIME)
+           AI Swarm Intelligence Oracle & Prediction Market Platform
+           Built on Solana | Powered by Bags SDK | $SWARM Token
+================================================================================
+
+TWO-COLUMN FORMAT:  [TIME] | [VISUAL / NARRATION]
+
+================================================================================
+
+[0:00]  | [VISUAL] Fade in from black. Animated particle swarm visualization
+        | fills the screen — hundreds of luminous dots self-organizing into
+        | emergent patterns, mimicking biological swarm behavior. Soft cyan and
+        | purple glow. The particles begin clustering around a central point.
+        |
+        | [NARRATION] "What if AI agents could think together — not as a
+        |  hive mind, but as an intelligent swarm? Welcome to SwarmFi on
+        |  Solana."
+
+--------------------------------------------------------------------------------
+
+[0:04]  | [VISUAL] Camera slowly zooms through the particle field. The hero
+        | text materializes with a glowing type-on effect:
+        |
+        |   "SwarmFi"
+        |   AI Swarm Intelligence Oracle & Predictions
+        |
+        | Below it, the tagline fades in:
+        |   "Stigmergy-powered coordination. Decentralized AI consensus.
+        |    Built on Solana."
+        |
+        | [NARRATION] "SwarmFi is a fully on-chain oracle and prediction
+        |  market platform where autonomous AI agents coordinate through
+        |  stigmergy — the same mechanism ants use to build colonies —
+        |  to deliver oracle data, predict market outcomes, and manage
+        |  capital, all on Solana."
+
+--------------------------------------------------------------------------------
+
+[0:09]  | [VISUAL] Smooth upward pan. Four animated stat cards slide in from
+        | the right in sequence, each with a count-up animation:
+        |
+        |   ┌─────────────┐ ┌─────────────────┐
+        |   │  $2.4M TVL  │ │  47 Active Mkt  │
+        |   └─────────────┘ └─────────────────┘
+        |   ┌─────────────┐ ┌─────────────────┐
+        |   │ 128 AI Agts │ │ 94.7% Accuracy  │
+        |   └─────────────┘ └─────────────────┘
+        |
+        | [NARRATION] "Right now, over 128 AI agents are live — managing
+        |  two point four million in TVL across forty-seven prediction
+        |  markets, with a ninety-four point seven percent oracle
+        |  accuracy rate."
+
+--------------------------------------------------------------------------------
+
+[0:13]  | [VISUAL] Three value proposition cards fan out horizontally with a
+        | spring animation. Each card has an icon, title, and bullet points:
+        |
+        |   [1] AI-Powered Oracles — 94%+ accuracy, 23+ data sources,
+        |       sub-20ms response, Arcium-encrypted submissions
+        |   [2] Prediction Markets — Decentralized AI consensus,
+        |       weighted by reputation and SOL stake
+        |   [3] Auto-Rebalancing Vaults — AI-driven portfolio management
+        |       with on-chain execution
+        |
+        | [NARRATION] "Three pillars power the platform. First,
+        |  AI-powered oracles aggregate twenty-three plus data sources
+        |  with sub-twenty-millisecond response times. Second,
+        |  decentralized prediction markets where outcomes are determined
+        |  by weighted AI consensus. And third, auto-rebalancing vaults
+        |  that let your SOL earn while AI agents manage risk."
+
+--------------------------------------------------------------------------------
+
+[0:17]  | [VISUAL] "How It Works" section. Four circular step nodes connected
+        | by an animated flowing line. Each node lights up sequentially:
+        |
+        |   (1) Agent Network    →  (2) Stigmergy Signals
+        |   (3) Consensus        →  (4) Execution
+        |
+        | Brief animation between each: agents emit pheromone dots →
+        | signals aggregate on-chain → consensus weight forms →
+        | transaction executes on Solana.
+        |
+        | [NARRATION] "Here's how it works. Agents in the network deposit
+        |  on-chain stigmergy signals that decay over time. These signals
+        |  aggregate into a weighted consensus — where reputation and
+        |  SOL stake determine influence — and the result executes
+        |  automatically through Anchor programs on Solana."
+
+--------------------------------------------------------------------------------
+
+[0:20]  | [TRANSITION] Quick wipe-left transition. The particle swarm
+        | fades to a dark dashboard background.
+        |
+        | [VISUAL] SwarmFi Dashboard loads. Top-right: Phantom wallet
+        | connected, showing real SOL balance (e.g., "14.82 SOL").
+        |
+        | [NARRATION] "Let's look at the dashboard."
+
+--------------------------------------------------------------------------------
+
+[0:22]  | [VISUAL] Eight oracle price feed cards populate in a grid, each
+        | with a horizontal confidence bar that fills on load:
+        |
+        |   SOL/USD  $187.42  ▲+3.2%  ████████░░ 96% confidence
+        |   BTC/USD  $68,240  ▲+1.8%  ███████░░░ 91% confidence
+        |   ETH/USD  $3,820   ▼-0.4%  ████████░░ 94% confidence
+        |   ... (JUP, BONK, JTO, RAY, ARB)
+        |
+        | Each card pulses subtly when the confidence bar is high.
+        |
+        | [NARRATION] "Eight oracle feeds stream live — SOL, BTC, ETH,
+        |  and more — each backed by swarm consensus with real-time
+        |  confidence scores. Ninety-six percent confidence on SOL.
+        |  That's not one model. That's over a hundred agents agreeing."
+
+--------------------------------------------------------------------------------
+
+[0:27]  | [VISUAL] Camera pans down-left. The $SWARM token widget loads,
+        | styled as a Bags SDK integration card with the Bags logo:
+        |
+        |   ┌─ $SWARM — Powered by Bags ─────────────┐
+        |   │  Price:  $0.00847                        │
+        |   │  Market Cap:  $4.23M                     │
+        |   │  24h Fees:  $1,247                       │
+        |   │  Fee-Sharing:  18.4% APR                 │
+        |   └──────────────────────────────────────────┘
+        |
+        | [NARRATION] "And right here — the SWARM token, integrated with
+        |  the Bags SDK. Holders earn real fees from oracle operations
+        |  and prediction market volume. Currently at eighteen point
+        |  four percent APR on fee-sharing alone."
+
+--------------------------------------------------------------------------------
+
+[0:31]  | [VISUAL] Camera pans right. Agent Consensus Metrics panel:
+        |
+        |   Consensus Rate:    87.3%
+        |   Signals (24h):     12,847
+        |   Coordination Events: 342
+        |   Swarm Efficiency:  94.1%
+        |
+        | Below: Swarm Activity AreaChart fills in with 7-day data,
+        | showing a smooth upward activity curve with coordinated spikes.
+        |
+        | [NARRATION] "Twelve thousand stigmergy signals in the last
+        |  twenty-four hours. Three hundred forty-two coordination events.
+        |  Swarm efficiency holding at ninety-four percent. This is
+        |  live coordination happening on-chain right now."
+
+--------------------------------------------------------------------------------
+
+[0:36]  | [VISUAL] Camera pans to the Top Markets table. Five rows with
+        | green/red PnL indicators:
+        |
+        |   Market                          | Vol.    | PnL
+        |   "SOL above $190 by June 30"    | 142 SOL  | +12.4 SOL
+        |   "BTC dominance above 54%"       |  89 SOL  |  -3.1 SOL
+        |   "Fed rate hold in July"         | 210 SOL  | +28.7 SOL
+        |   ...
+        |
+        | [NARRATION] "Top markets show real volume and real returns.
+        |  Solana price prediction markets alone have driven over
+        |  fourteen thousand SOL in volume. And every outcome resolves
+        |  through the ReputationRegistry Anchor program — no central
+        |  oracle, no trusted third party."
+
+--------------------------------------------------------------------------------
+
+[0:41]  | [VISUAL] Hover effect on "Fed rate hold" row. A mini pulse ring
+        | emanates from the row. Table rows subtly animate with live data.
+        |
+        | [NARRATION] "Notice the real PnL. These aren't simulations.
+        |  Every prediction is a Solana transaction. Every resolution is
+        |  on-chain and verifiable."
+
+--------------------------------------------------------------------------------
+
+[0:45]  | [TRANSITION] Morph transition — the table grid lines stretch and
+        | reform into a network graph.
+        |
+        | [VISUAL] Full-screen SVG swarm network graph. Twelve agent nodes
+        | arranged organically, connected by animated dashed edges that
+        | pulse with data flow. Nodes are color-coded:
+        |
+        |   ● Cyan   = Price Oracle agents (5 nodes)
+        |   ● Amber  = Risk Analyzer agents (3 nodes)
+        |   ● Purple = Market Maker agents (2 nodes)
+        |   ● Green  = Resolution agents (2 nodes)
+        |
+        | [NARRATION] "Now let's meet the swarm. This is the live agent
+        |  network — twelve active agents, each with a specialized role.
+        |  Cyan nodes are price oracles. Amber handles risk analysis.
+        |  Purple nodes make markets. And green nodes handle resolution."
+
+--------------------------------------------------------------------------------
+
+[0:49]  | [VISUAL] Reputation tier badges slide in on the left:
+        |
+        |   🥉 Bronze    —  1 SOL stake required
+        |   🥈 Silver    —  5 SOL stake required
+        |   🥇 Gold      — 20 SOL stake required
+        |   💎 Platinum  — 50 SOL stake required
+        |
+        | A few nodes on the graph pulse to match their tier.
+        |
+        | [NARRATION] "Agents earn reputation through accurate predictions
+        |  and stake SOL for economic security. Bronze agents stake one
+        |  SOL. Platinum agents stake fifty. Higher stake and higher
+        |  reputation means more influence in consensus. And yes —
+        |  slashing is real. Bad actors lose their stake."
+
+--------------------------------------------------------------------------------
+
+[0:53]  | [VISUAL] Click animation on a Gold-tier cyan node. Agent detail
+        | modal slides in:
+        |
+        |   Agent: ARIA-7 (Price Oracle)
+        |   Identity Token: 7xKf...3mPq (SPL token)
+        |   Accuracy: 96.2%  |  Uptime: 99.8%
+        |   Decisions: 4,281  |  Tier: Gold
+        |
+        |   Recent Decisions:
+        |     SOL $187.50 → Actual $187.42  ✓ (weight: 0.34)
+        |     BTC $68,300  → Actual $68,240  ✓ (weight: 0.28)
+        |     ETH $3,810   → Actual $3,820   ✗ (weight: 0.12)
+        |
+        | [NARRATION] "Each agent has a verifiable on-chain identity —
+        |  an SPL token — with full history. ARIA-7, a Gold-tier oracle,
+        |  has a ninety-six percent accuracy across over four thousand
+        |  decisions. Its reputation weight directly impacts consensus.
+        |  And oracle submissions are encrypted with Arcium — so even
+        |  during submission, no one can front-run the signal."
+
+--------------------------------------------------------------------------------
+
+[0:58]  | [VISUAL] Camera pans to the Stigmergy Signal Feed panel on the
+        | right. Signals scroll in real-time with strength bars:
+        |
+        |   [PHEROMONE] ARIA-7 → SOL bullish   ████████░░ 82%
+        |   [ALERT]     RISK-3 → Vol spike ETH  █████░░░░░ 64%
+        |   [CONSENSUS] 87% agents → SOL ↑       █████████░ 91%
+        |   [REBALANCE] VAULT-A → 15% → SOL      ████░░░░░░ 43%
+        |
+        | [NARRATION] "And here's where the magic happens — the stigmergy
+        |  signal feed. These are on-chain signal deposits. They decay
+        |  over time, just like pheromone trails in nature. Fresh signals
+        |  carry more weight. This is what drives coordination without
+        |  central control."
+
+--------------------------------------------------------------------------------
+
+[1:05]  | [TRANSITION] Signal strength bars sweep across the screen and
+        | reform as probability bars on prediction market cards.
+        |
+        | [VISUAL] Prediction Markets page. Market cards in a grid, each
+        | with:
+        |   - Outcome probability bars (YES/NO) with percentages
+        |   - Volume (SOL)
+        |   - Participant count
+        |   - Time remaining badge
+        |
+        |   ┌──────────────────────────────────────┐
+        |   │ "Will SOL reach $200 before July 15?" │
+        |   │ YES ██████████░░░░░░░░░  62%          │
+        |   │ NO  ████░░░░░░░░░░░░░░  38%          │
+        |   │ Vol: 847 SOL  |  214 participants     │
+        |   │ ⏱ 11d 4h remaining                     │
+        |   └──────────────────────────────────────┘
+        |
+        | [NARRATION] "Now for prediction markets. Each market shows
+        |  real-time probability driven by agent consensus — not just
+        |  crowd opinion, but AI-weighted conviction. This SOL price
+        |  market has sixty-two percent YES probability, backed by
+        |  eight hundred forty-seven SOL in volume."
+
+--------------------------------------------------------------------------------
+
+[1:10]  | [VISUAL] Click on the SOL market card. Market detail modal
+        | expands with three panels:
+        |
+        |   Left:   Price chart (30-day SOL with prediction zone overlay)
+        |   Center: Agent predictions
+        |     ARIA-7:  YES  94% confidence
+        |     BOLT-2:  YES  87% confidence
+        |     NOVA-11: NO   72% confidence
+        |   Right:  Order book with depth visualization
+        |
+        | [NARRATION] "Inside any market, you see which agents are
+        |  predicting what, with their confidence levels. ARIA-7 is
+        |  ninety-four percent confident SOL hits two hundred. You can
+        |  see the full order book and decide for yourself."
+
+--------------------------------------------------------------------------------
+
+[1:15]  | [VISUAL] "Submit Prediction" flow begins. A prominent button is
+        | clicked. Three-step modal:
+        |
+        |   Step 1: Select outcome → [YES] highlighted in cyan
+        |   Step 2: Enter stake  → Slider selects "5 SOL"
+        |   Step 3: TransactionStatus lifecycle appears:
+        |            ┌─────────────────────────────┐
+        |            │  🔑 Signing...     [spinner] │
+        |            │  📤 Sending...     [spinner] │
+        |            │  ⏳ Confirming...  [spinner] │
+        |            │  ✅ Confirmed!     [check]   │
+        |            │  Tx: 4kXm...82fQ (clickable)│
+        |            └─────────────────────────────┘
+        |
+        | Each status transitions with a smooth animation.
+        |
+        | [NARRATION] "Placing a prediction is simple. Choose your
+        |  outcome, stake your SOL, and confirm. This triggers a real
+        |  Anchor program call to the PredictionMarket contract. The
+        |  transaction signs through Phantom, hits the Solana network,
+        |  and confirms on-chain. Every step is verifiable. Every
+        |  outcome is trustless."
+
+--------------------------------------------------------------------------------
+
+[1:22]  | [VISUAL] Post-submission. The user's prediction appears in
+        | "My Positions" with a live PnL tracker. The probability bar
+        | shifts slightly to reflect the new volume.
+        |
+        | [NARRATION] "Once placed, you can track your position in
+        |  real-time. If the swarm consensus moves your way, your
+        |  position appreciates. This is the PredictionMarket Anchor
+        |  program at work — handling order matching, settlement,
+        |  and resolution entirely on-chain."
+
+--------------------------------------------------------------------------------
+
+[1:26]  | [VISUAL] Brief montage: Three market cards flip to show
+        | "RESOLVED" badges — one green (correct), one red (incorrect).
+        | Settlement amounts display next to each.
+        |
+        | [NARRATION] "Markets resolve when the swarm reaches consensus
+        |  threshold. Winnings auto-settle. No withdrawal requests.
+        |  No waiting. It's just Solana."
+
+--------------------------------------------------------------------------------
+
+[1:30]  | [TRANSITION] Dissolve transition — market cards scatter and
+        | reform as vault strategy cards.
+        |
+        | [VISUAL] Vaults page. Three strategy cards side by side,
+        | each with a distinct color accent:
+        |
+        |   [CONSERVATIVE] Green accent
+        |     Target APR: 12%  |  Risk: Low
+        |     Assets: 60% SOL, 25% USDC, 15% $SWARM
+        |
+        |   [BALANCED] Cyan accent
+        |     Target APR: 28%  |  Risk: Medium
+        |     Assets: 40% SOL, 20% USDC, 25% $SWARM, 15% Vol strats
+        |
+        |   [AGGRESSIVE] Purple accent
+        |     Target APR: 45%  |  Risk: High
+        |     Assets: 50% SOL, 30% Vol strats, 20% $SWARM
+        |
+        | [NARRATION] "Vaults are where passive earning meets active
+        |  AI management. Three strategies — Conservative, Balanced,
+        |  and Aggressive — each with different risk profiles and asset
+        |  allocations managed by the VaultManager Anchor program."
+
+--------------------------------------------------------------------------------
+
+[1:35]  | [VISUAL] Click on "Balanced" vault. Detail view shows:
+        |
+        |   Left: Donut/pie chart of asset allocation (animated draw-in)
+        |   Right: Performance line chart with toggle [24h] [7d] [30d]
+        |          Chart shows steady upward curve with mild drawdowns
+        |
+        | Time toggle clicked: 7d view shows weekly performance.
+        |
+        | [NARRATION] "Inside the Balanced vault, AI agents continuously
+        |  rebalance between SOL, USDC, SWARM tokens, and volatility
+        |  strategies. The thirty-day chart tells the story — steady
+        |  growth with controlled drawdowns. This isn't a static fund.
+        |  The swarm adapts to market conditions in real-time."
+
+--------------------------------------------------------------------------------
+
+[1:39]  | [VISUAL] Rebalance History timeline appears below the chart.
+        | Horizontal scrollable timeline with event nodes:
+        |
+        |   Jun 10 09:14 — Shifted 5% SOL → USDC (volatility signal)
+        |   Jun 11 14:32 — Increased $SWARM allocation +3% (fee APR)
+        |   Jun 12 08:01 — Reduced vol strategy -8% (risk alert)
+        |
+        | Each node has a small AI icon indicating automated execution.
+        |
+        | [NARRATION] "Every rebalance is logged on-chain with a reason.
+        |  On June tenth, stigmergy signals detected rising volatility,
+        |  so the swarm rotated five percent into USDC. On June twelfth,
+        |  a risk alert triggered an eight percent reduction in
+        |  volatility exposure. Fully transparent. Fully automated."
+
+--------------------------------------------------------------------------------
+
+[1:43]  | [VISUAL] "Deposit SOL" button clicked. Modal appears:
+        |   Amount: [10 SOL]  →  VaultManager deposit instruction
+        |   TransactionStatus: Signing → Sending → Confirming → ✅
+        |
+        | Balance updates in the vault card.
+        |
+        | [NARRATION] "Depositing is a single transaction. Ten SOL
+        |  into the Balanced vault. The VaultManager Anchor program
+        |  handles the deposit, mints your vault shares, and the
+        |  swarm starts earning for you immediately."
+
+--------------------------------------------------------------------------------
+
+[1:47]  | [VISUAL] Brief animation: Vault cards pulse with a subtle glow.
+        | Total TVL counter increments at the top.
+        |
+        | [NARRATION] "Four Anchor programs make this all possible:
+        |  SwarmOracle for data, PredictionMarket for outcomes,
+        |  ReputationRegistry for trust, and VaultManager for capital.
+        |  Every program composable. Every interaction on-chain."
+
+--------------------------------------------------------------------------------
+
+[1:50]  | [TRANSITION] Vault pie charts spin and reform as the $SWARM
+        | token bonding curve.
+        |
+        | [VISUAL] $SWARM Token page. Large bonding curve visualization
+        | at the top — a gradient progress bar with animated fill:
+        |
+        |   ████████████████████░░░░░░░░░░░░░░  73% Complete
+        |   "Migration to Meteora DAMM at 100%"
+        |
+        | Animated particles flow along the curve, representing buys.
+        |
+        | [NARRATION] "Now the engine behind it all — the SWARM token.
+        |  Currently on a bonding curve, seventy-three percent complete.
+        |  At one hundred percent, the liquidity migrates automatically
+        |  to a Meteora DAMM pool. Fair launch. No insider allocation."
+
+--------------------------------------------------------------------------------
+
+[1:54]  | [VISUAL] Live price chart loads with three toggle tabs:
+        |   [Price] [Market Cap] [Volume]
+        |
+        | Chart shows 30-day upward trend with volume spikes at key
+        | events. Hover tooltip shows exact price/volume at any point.
+        |
+        | [NARRATION] "The live chart tracks price, market cap, and
+        |  volume. Built entirely on the Bags SDK — version one point
+        |  three point seven — for token creation, fee distribution,
+        |  and partner revenue sharing."
+
+--------------------------------------------------------------------------------
+
+[1:58]  | [VISUAL] Fee-sharing model infographic animates in. A horizontal
+        | bar splits into four colored segments:
+        |
+        |   ██████████████████████  50%  Bags Protocol
+        |   ███████████████         30%  SwarmFi Treasury
+        |   ████████                15%  Oracle Signal Providers
+        |   ███                     5%   Ecosystem & Grants
+        |
+        | Each segment pulses with a count-up showing dollar values.
+        |
+        | [NARRATION] "Fifty percent of all platform fees go to Bags
+        |  Protocol. Thirty percent to the SwarmFi treasury for
+        |  development. Fifteen percent rewards oracle signal providers
+        |  — the AI agents and their operators who keep the system
+        |  accurate. And five percent funds ecosystem grants."
+
+--------------------------------------------------------------------------------
+
+[2:01]  | [VISUAL] Signal Provider Tiers animate in as a staircase:
+        |
+        |   💎 Diamond  (95+ rep)   → 50% of provider pool
+        |   🥇 Gold     (80-94 rep) → 30% of provider pool
+        |   🥈 Silver   (50-79 rep) → 15% of provider pool
+        |   🥉 Bronze   (0-49 rep)  →  5% of provider pool
+        |
+        | Each tier glows as it appears. A "path to Diamond" gradient
+        | arrow connects them.
+        |
+        | [NARRATION] "Signal provider rewards are tiered by reputation.
+        |  Diamond-tier providers with ninety-five-plus reputation earn
+        |  fifty percent of the provider reward pool. This creates a
+        |  powerful incentive — accuracy literally pays. The
+        |  ReputationRegistry Anchor program tracks every decision,
+        |  every score, every tier upgrade."
+
+--------------------------------------------------------------------------------
+
+[2:05]  | [VISUAL] Bags Platform Integration section. Three feature cards
+        | with the Bags logo:
+        |
+        |   [1] Token Launch
+        |       Arweave + Jito bundling for immutable metadata
+        |       Fair launch via bonding curve
+        |
+        |   [2] Fee Distribution (BPS)
+        |       Automated basis-point fee splits
+        |       Real-time settlement to holders
+        |
+        |   [3] Partner Revenue
+        |       25% revenue share for ecosystem partners
+        |       @bagsfm/bags-sdk v1.3.7 integration
+        |
+        | [NARRATION] "The Bags SDK integration is deep. Token launch
+        |  uses Arweave for immutable metadata with Jito bundling.
+        |  Fee distribution runs on a basis-point system for
+        |  precise automated splits. And ecosystem partners earn a
+        |  twenty-five percent revenue share. This is composable
+        |  DeFi infrastructure."
+
+--------------------------------------------------------------------------------
+
+[2:10]  | [VISUAL] Smooth zoom into the Bags SDK code snippet briefly
+        | visible: import { BagsClient } from "@bagsfm/bags-sdk"
+        | Then zoom back out to the integration cards.
+        |
+        | [NARRATION] "One import. Full Bags integration. The SDK
+        |  handles token operations, partner keys, and fee-sharing
+        |  so SwarmFi focuses on what matters — swarm intelligence."
+
+--------------------------------------------------------------------------------
+
+[2:15]  | [TRANSITION] The fee-sharing bar segments scatter and reform as
+        | a stacked bar chart.
+        |
+        | [VISUAL] Fee-Sharing Dashboard page. Two charts side by side:
+        |
+        |   Left: Provider earnings stacked bar chart (daily, last 14 days)
+        |         Each bar segmented by tier (Diamond/Gold/Silver/Bronze)
+        |         with a smooth upward trend
+        |
+        |   Right: Fee distribution donut chart
+        |          Bags 50% | Treasury 30% | Providers 15% | Ecosystem 5%
+        |          Center text: "$4,821 distributed this week"
+        |
+        | [NARRATION] "The fee-sharing dashboard gives full transparency.
+        |  This stacked chart shows daily provider earnings by tier.
+        |  Diamond providers consistently earn the most — and the gap
+        |  is widening as reputation scores compound."
+
+--------------------------------------------------------------------------------
+
+[2:18]  | [VISUAL] Provider table below the charts. Rows animate in:
+        |
+        |   Agent     | Tier    | Rep  | Signals | Accuracy | Earned   | Pending
+        |   ARIA-7    | Diamond | 97.2 | 1,247   | 96.2%    | 847 SWRM | 124 SWRM
+        |   BOLT-2    | Gold    | 91.4 |   892   | 93.8%    | 523 SWRM |  87 SWRM
+        |   NOVA-11   | Silver  | 68.1 |   654   | 88.1%    | 198 SWRM |  42 SWRM
+        |   EDGE-4    | Bronze  | 34.7 |   312   | 79.4%    |  47 SWRM |  11 SWRM
+        |
+        | [NARRATION] "Every provider is visible. ARIA-7 has earned
+        |  eight hundred forty-seven SWARM tokens this month with a
+        |  ninety-seven point two reputation score. That's real yield
+        |  from real accuracy."
+
+--------------------------------------------------------------------------------
+
+[2:21]  | [VISUAL] "Claim Fees" button on ARIA-7's row pulses with a
+        | glow. Click animation. TransactionStatus:
+        |
+        |   🔑 Signing → 📤 Sending → ⏳ Confirming → ✅ Confirmed
+        |   Tx: 7mPq...4kXr (Solscan link)
+        |
+        | [NARRATION] "Claiming is one click. The transaction hits
+        |  Solana, and tokens arrive in your wallet. No approval
+        |  process. No delay."
+
+--------------------------------------------------------------------------------
+
+[2:23]  | [VISUAL] Recent claims feed scrolls:
+        |
+        |   ARIA-7    claimed  124 SWRM  →  Solscan  [link]
+        |   BOLT-2    claimed   87 SWRM  →  Solscan  [link]
+        |   CIPHER-9  claimed   56 SWRM  →  Solscan  [link]
+        |
+        | Each row has a clickable Solscan link that opens in a new tab.
+        |
+        | [NARRATION] "A live feed of all recent claims with Solscan
+        |  verification. Full transparency. Full audibility. This is
+        |  what on-chain fee-sharing looks like."
+
+--------------------------------------------------------------------------------
+
+[2:27]  | [TRANSITION] All dashboard elements gracefully collapse into the
+        | center of the screen, forming the SwarmFi logo. The particle
+        | swarm returns, now more vibrant and organized than the opening.
+        |
+        | [VISUAL] Final CTA screen. Dark background. SwarmFi logo center.
+        | Below, two lines:
+        |
+        |   "Built on Solana via The Bags Program"
+        |
+        |   🔗 github.com/zan-maker/swarmfi-solana
+        |
+        | Then the tagline types on:
+        |
+        |   "AI agents don't just predict markets — they earn from them."
+        |
+        | The particle swarm pulses one final time and holds.
+        |
+        | [NARRATION] "SwarmFi — AI agents don't just predict markets...
+        |  they earn from them. Built on Solana via The Bags Program.
+        |  Check out the full code at github dot com slash zan-maker
+        |  slash swarmfi-solana."
+
+--------------------------------------------------------------------------------
+
+[2:30]  | [VISUAL] Fade to black. SwarmFi logo lingers for 1 second,
+        | then fades. End.
+        |
+        | [NARRATION] (end)
+
+================================================================================
+                              END OF SCRIPT
+================================================================================
+
+PRODUCTION NOTES:
+─────────────────
+• Total runtime: 2 minutes 30 seconds (150 seconds)
+• Pace: ~6.5 seconds per section average
+• Transitions: 7 transitions (wipe-left, morph, dissolve, scatter-reform)
+• On-screen text: Keep legible at 1080p; minimum 24px font for data
+• Animations: Particle swarm (Three.js or Canvas), chart animations (D3/
+  Recharts), transaction flows (custom Solana TX visualizer)
+• Audio: Background music — ambient electronic, builds intensity from
+  0:45 onward. Subtle "whoosh" on transitions. Gentle chime on
+  transaction confirmations.
+• Voice: Confident, technical but warm. Moderate pace. Slight emphasis
+  on key numbers and stats.
+• Screen recordings: Use real devnet/mainnet connections where possible;
+  Phantom wallet must show real SOL balance for authenticity.
+
+================================================================================

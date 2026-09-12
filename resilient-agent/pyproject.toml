@@ -1,0 +1,17 @@
+[project]
+name = "resilient-agent"
+version = "1.0.0"
+description = "Fault-tolerant multi-agent system on TrueFoundry AI Gateway"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.34.0",
+    "openai>=1.60.0",
+    "httpx>=0.28.0",
+    "pydantic>=2.10.0",
+    "python-dotenv>=1.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"

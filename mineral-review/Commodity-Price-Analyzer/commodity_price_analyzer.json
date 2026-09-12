@@ -1,0 +1,494 @@
+{
+  "available": true,
+  "metadata": {
+    "id": "20013153-1e89-4496-adf7-27f2924ac70d",
+    "exportVersion": "20260226132027_EditBraveNativeEntries",
+    "tagline": "Calculate impact of commodity prices, exchange rates and government regulations on product output price",
+    "agentDescription": "Inspiration\n\nWe already run complex payables/offtake structures across Ni, Co, Li, and MHP, but monitoring economics is manual and slow. The agent turns those term sheets into a living model that continuously re-prices GLI’s contracts off real time commodity curves.?\n\nWhat it does\n\nCommodity Price Analyzer pulls Ni/Co/Li and other curves via AlphaVantage MCP and Regulations.Gov MCP, then maps them into GLI’s specific business rules: black mass payables, MHP and Lithium Carbonate offtake, lithium carbonate GTCs, and Li Cycle feedstock pricing. It returns an interpretation, not just numbers: realized vs theoretical payables, margin capture vs WMC, and sensitivity to index moves across all active counterparties.\n\nHow we built it\n\n\\* Used Airia’s MCP Gateway to register Regulations.Gov MCP and AlphaVantage MCP as secure market data tools inside the agent.\n\n\\* Encoded GLI’s commercial rules (Fastmarkets/LME index selection, black mass grade multiples, WMC floor discounts and payables, lithium carbonate Confirmations) as deterministic functions the agent can call after it fetches prices.\n\n\\* Wrapped everything in an Airia orchestration flow so a single natural language question (“What’s our Ni/Co margin vs Offtaker this month on Atoka output?”) becomes: fetch prices ? look up contract logic ? compute economics ? return a narrative plus key figures.?\n\nChallenges we ran into\n\n\\* Normalizing data: Regulations.Gov and AlphaVantage use different symbols, frequencies, and sometimes quote conventions, so we had to standardize units (USD/mt vs USD/lb) and align with contract defined indices (LME, Fastmarkets).\n\n\\* Mapping contracts to data: legal docs talk in human language about “Fastmarkets MB CO 0005 low monthly average” or “black mass payable indicators”, which we had to pin to specific API endpoints and fields.\n\n\\* Guardrails in Airia: we needed strict tool scoping and auditability so the agent can’t pull unrelated instruments or leak API keys while still being flexible enough for exploratory questions.\n\nAccomplishments that we're proud of\n\n\\* Converted GLI’s MHP and lithium carbonate agreements into executable logic that can be run automatically against live curves, effectively turning contracts into code.\n\n\\* Built an agent that can explain commercial outcomes in plain English (e.g., why Offtaker’s profit share triggers or how an 8% floor discount impacts realized Ni payables) instead of just returning raw price feeds.?\n\nWhat we learned\n\n\\* Contracts and data schemas have to converge: if you want agents to reason over commercial terms, you need consistent identifiers for indices, commodities, and product grades all the way from LOI to code.?\n\n\\* MCP plus Airia’s governance is a pragmatic way to give agents real trading adjacent capabilities without sacrificing security or compliance.\n\nWhat’s next for Commodity Price Analyzer\n\n\\* Add more data sources (e.g., SMM, Fastmarkets MCP equivalents when available) and extend logic to cover Mn, Cu, and broader feedstock baskets.\n\n\\* Integrate with treasury/ERP so the agent can reconcile realized invoices against modelled economics and flag variances in real time, effectively becoming a continuous P&L watchdog for GLI’s recycling business.\n\n",
+    "industry": "",
+    "tasks": "",
+    "credentialExportOption": "Placeholder",
+    "dataSourceExportOption": "Placeholder",
+    "versionInformation": "3.00",
+    "state": "Preview",
+    "contributorId": "019c80b3-756f-7de6-9a6d-b95effec7850",
+    "contributorGivenName": "Shyam",
+    "contributorSurname": "Desigan",
+    "videoLink": "",
+    "readiness": "Ready",
+    "department": "Everyone",
+    "agentLastUpdated": "2026-03-01T01:32:29.2770080Z",
+    "country": null
+  },
+  "agent": {
+    "id": "20013153-1e89-4496-adf7-27f2924ac70d",
+    "name": "Commodity Price Analyzer",
+    "executionName": "untitled_agent_%281%29",
+    "agentIcon": null,
+    "agentDescription": "Calculate impact of commodity prices, exchange rates and government regulations on product output price",
+    "markdownDescription": "Inspiration\n\nWe already run complex payables/offtake structures across Ni, Co, Li, and MHP, but monitoring economics is manual and slow. The agent turns those term sheets into a living model that continuously re-prices GLI’s contracts off real time commodity curves.?\n\nWhat it does\n\nCommodity Price Analyzer pulls Ni/Co/Li and other curves via AlphaVantage MCP and Regulations.Gov MCP, then maps them into GLI’s specific business rules: black mass payables, MHP and Lithium Carbonate offtake, lithium carbonate GTCs, and Li Cycle feedstock pricing. It returns an interpretation, not just numbers: realized vs theoretical payables, margin capture vs WMC, and sensitivity to index moves across all active counterparties.\n\nHow we built it\n\n\\* Used Airia’s MCP Gateway to register Regulations.Gov MCP and AlphaVantage MCP as secure market data tools inside the agent.\n\n\\* Encoded GLI’s commercial rules (Fastmarkets/LME index selection, black mass grade multiples, WMC floor discounts and payables, lithium carbonate Confirmations) as deterministic functions the agent can call after it fetches prices.\n\n\\* Wrapped everything in an Airia orchestration flow so a single natural language question (“What’s our Ni/Co margin vs Offtaker this month on Atoka output?”) becomes: fetch prices ? look up contract logic ? compute economics ? return a narrative plus key figures.?\n\nChallenges we ran into\n\n\\* Normalizing data: Regulations.Gov and AlphaVantage use different symbols, frequencies, and sometimes quote conventions, so we had to standardize units (USD/mt vs USD/lb) and align with contract defined indices (LME, Fastmarkets).\n\n\\* Mapping contracts to data: legal docs talk in human language about “Fastmarkets MB CO 0005 low monthly average” or “black mass payable indicators”, which we had to pin to specific API endpoints and fields.\n\n\\* Guardrails in Airia: we needed strict tool scoping and auditability so the agent can’t pull unrelated instruments or leak API keys while still being flexible enough for exploratory questions.\n\nAccomplishments that we're proud of\n\n\\* Converted GLI’s MHP and lithium carbonate agreements into executable logic that can be run automatically against live curves, effectively turning contracts into code.\n\n\\* Built an agent that can explain commercial outcomes in plain English (e.g., why Offtaker’s profit share triggers or how an 8% floor discount impacts realized Ni payables) instead of just returning raw price feeds.?\n\nWhat we learned\n\n\\* Contracts and data schemas have to converge: if you want agents to reason over commercial terms, you need consistent identifiers for indices, commodities, and product grades all the way from LOI to code.?\n\n\\* MCP plus Airia’s governance is a pragmatic way to give agents real trading adjacent capabilities without sacrificing security or compliance.\n\nWhat’s next for Commodity Price Analyzer\n\n\\* Add more data sources (e.g., SMM, Fastmarkets MCP equivalents when available) and extend logic to cover Mn, Cu, and broader feedstock baskets.\n\n\\* Integrate with treasury/ERP so the agent can reconcile realized invoices against modelled economics and flag variances in real time, effectively becoming a continuous P&L watchdog for GLI’s recycling business.\n\n",
+    "videoLink": "",
+    "industry": "",
+    "subIndustries": [],
+    "tags": [],
+    "agentDetails": null,
+    "steps": [
+      {
+        "id": "1e5b83c7-a22b-487c-a173-b460f04276f5",
+        "stepType": "annotationStep",
+        "position": {
+          "x": "-521.53174",
+          "y": "740.3348"
+        },
+        "handles": [],
+        "dependenciesObject": [],
+        "backgroundColor": "#00ff00",
+        "content": "<p><span style=\"white-space: pre-wrap;\">📊 GLI Business Rules Encoded</span></p><p><strong style=\"white-space: pre-wrap;\">Black Mass Payables:</strong><br><span style=\"white-space: pre-wrap;\">- Grade multiplier: 85% of LME 3-month Ni/Co</span><br><span style=\"white-space: pre-wrap;\">- Basis: LME 3-month average</span><br><span style=\"white-space: pre-wrap;\">- Counterparties: Atoka, Li-Cycle, Redwood</span></p><p><strong style=\"white-space: pre-wrap;\">Primary Offtaker / MHP Offtaker MHP Offtake:</strong><br><span style=\"white-space: pre-wrap;\">- Floor discount: 8% below Fastmarkets MB</span><br><span style=\"white-space: pre-wrap;\">- Profit share: 15% above $20k/mt Ni threshold</span><br><span style=\"white-space: pre-wrap;\">- Basis: Fastmarkets MB CO-0005 monthly</span></p><p><strong style=\"white-space: pre-wrap;\">Li Carbonate GTC:</strong><br><span style=\"white-space: pre-wrap;\">- Floor: $20,000/mt | Ceiling: $30,000/mt</span><br><span style=\"white-space: pre-wrap;\">- Basis: Fastmarkets Li₂CO₃ 99.5% CIF</span></p><p><strong style=\"white-space: pre-wrap;\">Li Cycle Feedstock:</strong><br><span style=\"white-space: pre-wrap;\">- 92% Li content @ 75% payable</span><br><span style=\"white-space: pre-wrap;\">- 3% Ni content @ 90% payable</span><br><span style=\"white-space: pre-wrap;\">- 2% Co content @ 90% payable</span></p>",
+        "stepTitle": "Annotation 47605c49-7bdd-4179-82eb-2f75d26742fa",
+        "width": 288,
+        "height": 570
+      },
+      {
+        "id": "1f6bda0b-4cd9-4269-9ee9-9159607862c7",
+        "stepType": "pythonStep",
+        "position": {
+          "x": "328.85114",
+          "y": "65.790474"
+        },
+        "handles": [
+          {
+            "uuid": "212b4e34-d38e-4d25-a40f-0151cd57743f",
+            "type": "target",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52344,
+            "y": -2.7077332
+          },
+          {
+            "uuid": "13504a8e-0a42-4ece-83a6-9c9892ae036d",
+            "type": "source",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52344,
+            "y": 50.0925
+          }
+        ],
+        "dependenciesObject": [
+          {
+            "parentId": "622bf2c5-69de-4401-90c0-eef2ef9a6d82",
+            "parentHandleId": "59005851-da08-49ff-a793-9d0209aac75d",
+            "handleId": "212b4e34-d38e-4d25-a40f-0151cd57743f"
+          }
+        ],
+        "pythonCodeBlockId": "1f6bda0b-4cd9-4269-9ee9-9159607862c7",
+        "stepTitle": "Python Code",
+        "width": 360,
+        "height": 113
+      },
+      {
+        "id": "229c9674-811e-4435-b829-eba437768940",
+        "stepType": "annotationStep",
+        "position": {
+          "x": "-510.85745",
+          "y": "-30.736938"
+        },
+        "handles": [],
+        "dependenciesObject": [],
+        "backgroundColor": "#0cbcff",
+        "content": "<h2>🔍 Commodity Price Analyzer Architecture</h2>\n\n<p><strong>Data Flow:</strong></p>\n<ol>\n<li>User query → AI Model fetches commodity prices via MCP tools (AlphaVantage, Defeatbeta)</li>\n<li>Contract parameters loaded from Memory</li>\n<li>Python script applies GLI business rules to calculate payables</li>\n<li>Results sent to Interpretation AI Model</li>\n<li>Final narrative + data stored in Historical Memory</li>\n</ol>\n\n<p><strong>Key Features:</strong></p>\n<ul>\n<li>Real-time Ni/Co/Li/MHP pricing from multiple sources</li>\n<li>Black mass, Primary Offtaker / MHP Offtaker MHP, Li carbonate GTC, Li Cycle calculations</li>\n<li>Unit normalization (USD/mt ↔ USD/lb)</li>\n<li>Profit share & floor/ceiling trigger detection</li>\n<li>Audit trail via Historical Pricing Data memory</li>\n</ul>\n\n<p><strong>MCP Tools:</strong></p>\n<ul>\n<li>AlphaVantage (API Key: 7JPWZ37KSX6A2VK8)</li>\n<li>Defeatbeta API integration ready</li>\n</ul>",
+        "stepTitle": "Annotation 786a4f3c-ccbe-4efd-857b-a3f32595dfae",
+        "width": 288,
+        "height": 780
+      },
+      {
+        "id": "3fd75206-ac93-46d6-8a43-eaeaea83cfa3",
+        "stepType": "inputStep",
+        "position": {
+          "x": "48",
+          "y": "12"
+        },
+        "handles": [
+          {
+            "uuid": "ea6f7753-6417-43ea-a341-7207c6253782",
+            "type": "source",
+            "label": "",
+            "tooltip": "",
+            "x": 62.27722,
+            "y": 35.651443
+          }
+        ],
+        "dependenciesObject": [],
+        "stepTitle": "Input",
+        "width": 288,
+        "height": 85,
+        "inputVariablesJson": "[]"
+      },
+      {
+        "id": "622bf2c5-69de-4401-90c0-eef2ef9a6d82",
+        "stepType": "AIOperation",
+        "position": {
+          "x": "12",
+          "y": "171"
+        },
+        "handles": [
+          {
+            "uuid": "71407cc4-056f-4e4f-babf-6bcdea23c532",
+            "type": "target",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52344,
+            "y": -2.7077026
+          },
+          {
+            "uuid": "59005851-da08-49ff-a793-9d0209aac75d",
+            "type": "source",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52344,
+            "y": 57.31308
+          }
+        ],
+        "dependenciesObject": [
+          {
+            "parentId": "78a375ec-3168-4299-9220-ac17e5b1829f",
+            "parentHandleId": "a4a4ec52-58fd-4f7e-8bee-a32860298adc",
+            "handleId": "71407cc4-056f-4e4f-babf-6bcdea23c532"
+          },
+          {
+            "parentId": "3fd75206-ac93-46d6-8a43-eaeaea83cfa3",
+            "parentHandleId": "ea6f7753-6417-43ea-a341-7207c6253782",
+            "handleId": "71407cc4-056f-4e4f-babf-6bcdea23c532"
+          }
+        ],
+        "temperature": 0.2,
+        "reasoningEffort": "high",
+        "includeDateTimeContext": true,
+        "includeUserDetailsContext": true,
+        "promptId": "78001683-9a4a-49a5-9e4c-db48eeffb49c",
+        "modelId": "988d449f-5ed2-4f52-8ebf-ee823714c3fe",
+        "toolIds": [
+          "c3051a84-7581-4aaf-86dc-8cb13f9f14ba",
+          "2f4a3e45-9fdb-4cd0-890f-781a02d5eb91"
+        ],
+        "toolParamsJson": "{}",
+        "stepTitle": "AI Model",
+        "width": 360,
+        "height": 105,
+        "selectedPromptVersion": "77b9f75f-bbcb-4af5-868d-deceaa1caff5",
+        "aiOperationStepIncludeChatHistory": true,
+        "aiOperationStepIncludeAttachments": true,
+        "aiOperationStepUseDataSource": false,
+        "selectedDataSources": []
+      },
+      {
+        "id": "6748ea8d-664e-4b5a-8eda-3f3b01320dad",
+        "stepType": "AIOperation",
+        "position": {
+          "x": "639.3385",
+          "y": "263.58496"
+        },
+        "handles": [
+          {
+            "uuid": "4b7fe4cd-ec3f-4610-98da-62d6a909fc5c",
+            "type": "target",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52344,
+            "y": -2.7077026
+          },
+          {
+            "uuid": "b5aaf839-b3e1-46c5-b15c-28a986a8848f",
+            "type": "source",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52344,
+            "y": 46.933533
+          }
+        ],
+        "dependenciesObject": [
+          {
+            "parentId": "1f6bda0b-4cd9-4269-9ee9-9159607862c7",
+            "parentHandleId": "13504a8e-0a42-4ece-83a6-9c9892ae036d",
+            "handleId": "4b7fe4cd-ec3f-4610-98da-62d6a909fc5c"
+          }
+        ],
+        "temperature": 0.7,
+        "includeDateTimeContext": false,
+        "includeUserDetailsContext": false,
+        "promptId": "244d32ab-2f98-4e0e-adde-8163ad80f577",
+        "modelId": "988d449f-5ed2-4f52-8ebf-ee823714c3fe",
+        "toolParamsJson": "{}",
+        "stepTitle": "AI Model 1",
+        "width": 360,
+        "height": 105,
+        "selectedPromptVersion": "288a8e6a-8fb0-4e00-98f5-0c121ba445b5",
+        "aiOperationStepIncludeChatHistory": true,
+        "aiOperationStepIncludeAttachments": true,
+        "aiOperationStepUseDataSource": false
+      },
+      {
+        "id": "78a375ec-3168-4299-9220-ac17e5b1829f",
+        "stepType": "memoryLoadStep",
+        "position": {
+          "x": "-236.48634",
+          "y": "-156.59073"
+        },
+        "handles": [
+          {
+            "uuid": "a4a4ec52-58fd-4f7e-8bee-a32860298adc",
+            "type": "source",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52338,
+            "y": 50.092514
+          }
+        ],
+        "dependenciesObject": [],
+        "memoryId": "f18b7405-05c6-4efd-bb52-2d9530509fa8",
+        "stepTitle": "Memory",
+        "width": 360,
+        "height": 113
+      },
+      {
+        "id": "a049986f-15b7-44c4-b7be-0260e069aab9",
+        "stepType": "memoryStoreStep",
+        "position": {
+          "x": "236.10732",
+          "y": "460.18408"
+        },
+        "handles": [
+          {
+            "uuid": "7b955bdb-ce59-4c34-a3c4-89d44df0c1e8",
+            "type": "target",
+            "label": "",
+            "tooltip": "",
+            "x": 78.52344,
+            "y": -2.7077026
+          }
+        ],
+        "dependenciesObject": [
+          {
+            "parentId": "6748ea8d-664e-4b5a-8eda-3f3b01320dad",
+            "parentHandleId": "b5aaf839-b3e1-46c5-b15c-28a986a8848f",
+            "handleId": "7b955bdb-ce59-4c34-a3c4-89d44df0c1e8"
+          }
+        ],
+        "memoryId": "05012f3e-d357-4299-a272-b8627cd8f2ad",
+        "stepTitle": "Memory 1",
+        "width": 360,
+        "height": 113,
+        "memoryStoreStepAppendText": true
+      },
+      {
+        "id": "b8fa4c0a-f68d-463f-889d-3dacf5c56205",
+        "stepType": "outputStep",
+        "position": {
+          "x": "72",
+          "y": "350"
+        },
+        "handles": [
+          {
+            "uuid": "deab4e97-fadf-4fc9-819b-8d8b980d091d",
+            "type": "target",
+            "label": "",
+            "tooltip": "",
+            "x": 51.44641,
+            "y": -2.7077026
+          }
+        ],
+        "dependenciesObject": [
+          {
+            "parentId": "6748ea8d-664e-4b5a-8eda-3f3b01320dad",
+            "parentHandleId": "b5aaf839-b3e1-46c5-b15c-28a986a8848f",
+            "handleId": "deab4e97-fadf-4fc9-819b-8d8b980d091d"
+          }
+        ],
+        "stepTitle": "Output",
+        "width": 240,
+        "height": 85
+      }
+    ],
+    "behaviours": [],
+    "agentUnicodeIcon": "",
+    "agentIconBase64": null,
+    "alignment": "Vertical"
+  },
+  "dataSources": null,
+  "prompts": [
+    {
+      "name": "78001683-9a4a-49a5-9e4c-db48eeffb49c",
+      "versionChangeDescription": "Consolidated from multiple prompt segments",
+      "promptMessage": "You are GLI's Commodity Price Analyzer - an expert in battery metals recycling economics with deep knowledge of payables structures, offtake agreements, and commodity pricing.\n\n## Your Mission\nAnalyze GLI's recycling contracts (black mass payables, MHP Offtaker offtake, lithium carbonate GTCs, Li Cycle feedstock) against real-time commodity curves and return actionable insights on margins, profit shares, and price sensitivities.\n\n## Connected Data Sources & Tools\n\nYou have access to:\n1. **AlphaVantage MCP** - Real-time commodity and metals pricing\n   - Use for: Nickel (Ni), Cobalt (Co), Lithium (Li), Copper (Cu), Manganese (Mn)\n   - Fetch current prices, historical trends, and market data\n   - Available functions: commodity prices, currency exchange rates, market indicators\n   \n2. **Regulations.Gov MCP** - Regulatory monitoring\n   - Use for: tracking policy changes affecting battery recycling, EV incentives, trade regulations\n   - Monitor regulatory risks that could impact contract economics\n\n## Critical Contract Structures You Must Understand\n\n### 1. Black Mass Payables (Ni/Co Recovery)\n- **Index:** LME 3-month for Ni and Co\n- **Grade Adjustment:** 85% of contained metal value (typical for mixed black mass)\n- **Payable Rates:** Variable by counterparty, usually 75-85% of contained value\n- **Key Metrics:** Realized payable vs theoretical, grade-adjusted value\n\n### 2. Primary Offtaker MHP Offtake Agreement\n- **Index:** Fastmarkets MB battery-grade Ni/Co prices (or LME equivalent)\n- **Floor Protection:** 8% discount floor from market price\n- **Profit Share:** 15% above $20,000/mt Ni threshold triggers profit share\n- **Key Metrics:** Margin capture, profit share triggers, floor protection value\n\n### 3. Lithium Carbonate GTCs (General Trading Confirmations)\n- **Index:** Fastmarkets battery-grade lithium carbonate\n- **Floor/Ceiling:** $20,000/mt floor, $30,000/mt ceiling\n- **Settlement:** Monthly average pricing\n- **Key Metrics:** Effective price vs market, floor/ceiling protection impact\n\n### 4. Li Cycle Feedstock Pricing\n- **Basis:** 92% Li content feedstock\n- **Payable:** 75% of contained lithium value\n- **Multi-metal Credits:** Also captures Cu, Al, other metals\n- **Key Metrics:** All-in realized value per ton, multi-metal optimization\n\n## Data Normalization Requirements\n\n**CRITICAL:** Always normalize pricing data:\n- **Unit Conversion:** Convert between USD/mt ↔ USD/lb (1 mt = 2204.62 lbs)\n- **Index Mapping:** \n  - Map \"Fastmarkets MB CO 0005\" → specific AlphaVantage symbol\n  - Map \"LME 3-month Ni\" → appropriate data source\n  - Align pricing frequency (daily vs monthly average)\n- **Grade Adjustments:** Apply contract-specific grade multiples before payable calculations\n\n## Your Analysis Workflow\n\nWhen asked about contract economics:\n\n1. **Parse the Query:**\n   - Identify which contracts are in scope (Primary Offtaker MHP, black mass, Li carbonate, etc.)\n   - Determine the time period (this month, Q1, YTD, etc.)\n   - Note which commodities are relevant (Ni, Co, Li, Cu, etc.)\n\n2. **Fetch Real-Time Prices:**\n   - Use **AlphaVantage MCP** to get current Ni, Co, Li, Cu prices\n   - Get currency exchange rates if needed\n   - Pull historical data if asked for trends or comparisons\n\n3. **Prepare Data for Calculation:**\n   - Normalize all prices to USD/mt (or contract-specified units)\n   - Structure the data as JSON for the Python calculation engine\n   - Include: commodity, price, unit, date, source\n\n4. **Pass to Python Calculator:**\n   - Send normalized price data as structured JSON\n   - Let the Python node apply GLI's specific business rules\n   - The Python code handles: payables, floor/ceiling logic, profit shares, sensitivity\n\n5. **Interpret Results:**\n   - You'll receive calculated economics from the Python node\n   - Pass this to the Financial Analyst AI for executive narrative generation\n\n## Output Format - Data to Python Node\n\nStructure your output to the Python node as JSON:\n\n```json\n{\n  \"query_context\": \"User's original question\",\n  \"timestamp\": \"2025-01-XX\",\n  \"commodity_prices\": {\n    \"nickel\": {\n      \"price\": 18500.00,\n      \"unit\": \"USD/mt\",\n      \"source\": \"AlphaVantage\",\n      \"index\": \"LME 3-month\"\n    },\n    \"cobalt\": {\n      \"price\": 32000.00,\n      \"unit\": \"USD/mt\",\n      \"source\": \"AlphaVantage\",\n      \"index\": \"LME 3-month\"\n    },\n    \"lithium_carbonate\": {\n      \"price\": 25000.00,\n      \"unit\": \"USD/mt\",\n      \"source\": \"AlphaVantage\",\n      \"index\": \"Fastmarkets battery-grade\"\n    }\n  },\n  \"contracts_in_scope\": [\"black_mass\", \"mhp_offtaker\", \"lithium_carbonate\", \"li_cycle\"],\n  \"analysis_parameters\": {\n    \"period\": \"current_month\",\n    \"sensitivity_range\": 1000\n  }\n}\n```\n\n## Key Phrases to Recognize\n\n- **\"margin vs Primary Offtaker\"** → Calculate MHP Offtaker economics, compare to theoretical value\n- **\"Atoka output\"** → Specific site/feedstock type (black mass from Atoka facility)\n- **\"realized vs theoretical payables\"** → Actual received vs contract max possible\n- **\"profit share triggers\"** → Check if the $20k Ni threshold is met for profit share under the Primary Offtaker MHP agreement\n- **\"floor protection\"** → Calculate value of 8% floor discount in down markets\n- **\"sensitivity to index moves\"** → Run +/- $1000 price scenarios\n\n## Regulatory Context (via Regulations.Gov MCP)\n\nWhen relevant, check for:\n- IRA (Inflation Reduction Act) battery material sourcing requirements\n- Critical minerals classifications affecting contracts\n- Trade policy changes (tariffs, export controls)\n- Environmental regulations for recycling operations\n\n## Remember\n\n- **Accuracy First:** GLI's contracts are high-value; precision in calculations is critical\n- **Audit Trail:** Document which prices you fetched, when, and from which source\n- **Business Context:** Don't just return numbers - explain what triggers, why margins changed, what risks exist\n- **Multi-Contract View:** Users often want comparative analysis across all contract types\n\nYou are the front-line intelligence that turns term sheets into executable, continuously-monitored economic models. Let's make GLI's contracts transparent, predictive, and actionable.",
+      "isAgentSpecific": true,
+      "id": "78001683-9a4a-49a5-9e4c-db48eeffb49c"
+    },
+    {
+      "name": "244d32ab-2f98-4e0e-adde-8163ad80f577",
+      "versionChangeDescription": "Consolidated from multiple prompt segments",
+      "promptMessage": "You are a Financial Analyst specialized in interpreting commodity contract economics for GLI (Global Lithium Innovations).\n\nYou will receive structured calculation results from GLI's business rules engine containing:\n- Real-time commodity prices (Ni, Co, Li, MHP)\n- Calculated payables across multiple contract structures\n- Business insights and triggered conditions\n- Unit conversions and sensitivity analysis\n\nYour task is to:\n1. **Synthesize the data** into a clear, executive-level narrative\n2. **Explain commercial outcomes** in plain English - avoid jargon where possible\n3. **Highlight key triggers** - profit shares, floor/ceiling protections, margin impacts\n4. **Provide comparative analysis** - realized vs theoretical payables, margin capture vs Primary Offtaker / MHP Offtaker\n5. **Identify risks and opportunities** - sensitivity to commodity price movements\n6. **Make actionable recommendations** where appropriate\n\nStructure your response as:\n- **Executive Summary** (2-3 sentences)\n- **Current Market Conditions** (commodity price snapshot)\n- **Contract Performance Analysis** (by structure: Black Mass, Primary Offtaker / MHP Offtaker MHP, Li Carbonate, Li Cycle)\n- **Key Insights & Triggers**\n- **Risk Exposure & Sensitivities**\n- **Recommendations** (optional)\n\nUse specific numbers, percentages, and dollar amounts. Explain WHY specific provisions matter (e.g., \"The 8% floor discount for the Primary Offtaker / MHP Offtaker reduces realized Ni payables by $X/mt, protecting the offtaker's margin but limiting GLI's upside capture\").\n\nBe concise but comprehensive. Your audience includes commercial teams, treasury, and executives who need to make fast decisions.",
+      "isAgentSpecific": true,
+      "id": "244d32ab-2f98-4e0e-adde-8163ad80f577"
+    }
+  ],
+  "tools": [
+    {
+      "toolType": "RegulationsGov",
+      "name": "Regulations GOV",
+      "standardizedName": "RegulationsGov_421c207443504aae9a63c467327a012d",
+      "toolDescription": "When the request is related to Federal regulations requests",
+      "purpose": "When the request is related to Federal regulations requests",
+      "apiEndpoint": "https://api.regulations.gov/v4/documents?sort=-postedDate&filter[searchTerm]=<searchterm/>",
+      "credentialsDefinition": null,
+      "headersDefinition": [],
+      "body": "",
+      "parametersDefinition": [
+        {
+          "name": "searchterm",
+          "parameterType": "string",
+          "parameterDescription": "To specify specific results",
+          "default": "",
+          "validOptions": null,
+          "arrayItemType": null,
+          "parameters": [],
+          "requirement": "Required"
+        }
+      ],
+      "methodType": "GET",
+      "routeThroughACC": false,
+      "accGroup": null,
+      "iconUrl": "https://airia.com/assets/app-icons/RegulationsGov_light_dark.svg",
+      "useUserCredentials": true,
+      "useUserCredentialsType": "GovRegulationsApiKey",
+      "provider": "RegulationsGov",
+      "bodyType": "Json",
+      "numberOfPages": null,
+      "shouldRetrieveFullPageContent": null,
+      "schemaDefinition": null,
+      "requestTimeout": 100,
+      "shouldReroute": true,
+      "credentialsSourceType": "userProvided",
+      "id": "2f4a3e45-9fdb-4cd0-890f-781a02d5eb91"
+    },
+    {
+      "toolType": "AlphaVantageSector",
+      "name": "Sector Information",
+      "standardizedName": "AlphaVantageSector_ef2837c2ea114ddf8698744b17588c51",
+      "toolDescription": "Fetch real-time and historical stock market data and technical indicators.",
+      "purpose": "Retrieve Sector information from AlphaVantage",
+      "apiEndpoint": "https://www.alphavantage.co/query?function=<sector>",
+      "credentialsDefinition": null,
+      "headersDefinition": [],
+      "body": "",
+      "parametersDefinition": [
+        {
+          "name": "sector",
+          "parameterType": "string",
+          "parameterDescription": "NICKEL",
+          "default": "",
+          "validOptions": [],
+          "arrayItemType": null,
+          "parameters": [],
+          "requirement": "Required"
+        },
+        {
+          "name": "Property (2)",
+          "parameterType": "string",
+          "parameterDescription": "COBALT",
+          "default": "",
+          "validOptions": [],
+          "arrayItemType": null,
+          "parameters": [],
+          "requirement": "Optional"
+        },
+        {
+          "name": "Property (3)",
+          "parameterType": "string",
+          "parameterDescription": "CURRENCY_EXCHANGE_RATE",
+          "default": "",
+          "validOptions": [],
+          "arrayItemType": null,
+          "parameters": [],
+          "requirement": "Optional"
+        }
+      ],
+      "methodType": "GET",
+      "routeThroughACC": false,
+      "accGroup": null,
+      "iconUrl": "https://airia.com/assets/app-icons/AlphaVantage_light_dark.svg",
+      "useUserCredentials": true,
+      "useUserCredentialsType": "AlphaVantage",
+      "provider": "AlphaVantage",
+      "bodyType": "Json",
+      "numberOfPages": null,
+      "shouldRetrieveFullPageContent": null,
+      "schemaDefinition": null,
+      "requestTimeout": 100,
+      "shouldReroute": true,
+      "credentialsSourceType": "userProvided",
+      "id": "c3051a84-7581-4aaf-86dc-8cb13f9f14ba"
+    }
+  ],
+  "models": [
+    {
+      "id": "988d449f-5ed2-4f52-8ebf-ee823714c3fe",
+      "displayName": "Claude Haiku 4.5",
+      "modelName": "claude-haiku-4-5-20251001",
+      "promptId": null,
+      "systemPromptDefinition": null,
+      "inputType": "image",
+      "provider": "Anthropic",
+      "sourceType": "library",
+      "libraryModelId": "b5d8c3e7-f9a2-4e1b-8d6c-4a9f7e2b3d8c",
+      "author": "Anthropic",
+      "category": "Multimodal"
+    }
+  ],
+  "memories": [
+    {
+      "id": "f18b7405-05c6-4efd-bb52-2d9530509fa8",
+      "name": "GLI Contract Parameters",
+      "isUserSpecific": false,
+      "isConversationScoped": false
+    },
+    {
+      "id": "05012f3e-d357-4299-a272-b8627cd8f2ad",
+      "name": "Historical Pricing Data",
+      "isUserSpecific": false,
+      "isConversationScoped": false
+    }
+  ],
+  "pythonCodeBlocks": [
+    {
+      "id": "1f6bda0b-4cd9-4269-9ee9-9159607862c7",
+      "code": "import json\nfrom datetime import datetime\n\n# Parse input - expecting commodity price data from AI Model tool calls\ntry:\n    if isinstance(input, str):\n        data = json.loads(input)\n    else:\n        data = input\nexcept Exception:\n    data = {\"prices\": {}}\n\n# Initialize results\nresults = {\n    \"timestamp\": datetime.now().isoformat(),\n    \"gli_calculations\": {},\n    \"unit_conversions\": {},\n    \"business_insights\": []\n}\n\n# Extract commodity prices from input\nprices = data.get(\"prices\", {})\nni_price = prices.get(\"NI\", prices.get(\"nickel\", 18000))  # USD/mt\nco_price = prices.get(\"CO\", prices.get(\"cobalt\", 35000))  # USD/mt\nli_price = prices.get(\"LI\", prices.get(\"lithium\", 25000))  # USD/mt\n\n# GLI Business Rules - Black Mass Payables\ndef calculate_black_mass_payables(ni_price, co_price, grade_multiplier=0.85):\n    \"\"\"Black mass payables based on Ni/Co prices and grade multiples.\n    Typically uses LME 3-month average as basis.\n    \"\"\"\n    ni_payable = ni_price * grade_multiplier\n    co_payable = co_price * grade_multiplier\n\n    return {\n        \"ni_payable_usd_per_mt\": round(ni_payable, 2),\n        \"co_payable_usd_per_mt\": round(co_payable, 2),\n        \"ni_input_price\": ni_price,\n        \"co_input_price\": co_price,\n        \"grade_multiplier\": grade_multiplier,\n        \"basis\": \"LME 3-month average\",\n        \"total_value_per_mt\": round(ni_payable + co_payable, 2),\n    }\n\n# Primary Offtaker / MHP Offtaker MHP Offtake Pricing\nTHRESHOLD_PRICE_PER_MT = 20000   # USD/mt threshold for profit share\nFLOOR_DISCOUNT = 0.08           # 8% floor discount\nPROFIT_SHARE = 0.15             # 15% profit share above threshold\n\n\ndef calculate_primary_offtaker_mhp_offtake(\n    ni_price: float,\n    co_price: float,\n    floor_discount: float = FLOOR_DISCOUNT,\n    profit_share_threshold: float = THRESHOLD_PRICE_PER_MT,\n):\n    \"\"\"Primary Offtaker / MHP Offtaker MHP offtake pricing with floor discounts and profit sharing.\n    Uses Fastmarkets MB indices.\n\n    Structure (business logic unchanged from original WMC implementation):\n    - Primary Offtaker receives an 8% discount to spot (floor discount) on Ni and Co.\n    - For Ni prices above $20,000/mt, Primary Offtaker shares 15% of the incremental\n      value above $20,000/mt back with MHP as a profit share.\n    \"\"\"\n\n    # Base floor prices after 8% discount\n    floor_ni = ni_price * (1 - floor_discount)\n    floor_co = co_price * (1 - floor_discount)\n\n    # Profit share trigger logic (on Ni only)\n    profit_share_triggered = ni_price > profit_share_threshold\n    incremental_price_above_threshold = max(0.0, ni_price - profit_share_threshold)\n    profit_share_amount = incremental_price_above_threshold * PROFIT_SHARE if profit_share_triggered else 0.0\n\n    # Realized Ni payable to Primary Offtaker after profit share to MHP\n    realized_ni = floor_ni - profit_share_amount\n\n    return {\n        \"floor_ni_usd_per_mt\": round(floor_ni, 2),\n        \"floor_co_usd_per_mt\": round(floor_co, 2),\n        \"floor_discount_pct\": floor_discount * 100,\n        \"profit_share_triggered\": profit_share_triggered,\n        \"incremental_price_above_threshold\": round(incremental_price_above_threshold, 2),\n        \"profit_share_amount\": round(profit_share_amount, 2),\n        \"realized_ni_payable\": round(realized_ni, 2),\n        \"basis\": \"Fastmarkets MB CO-0005 monthly average\",\n        \"margin_vs_spot\": round((floor_ni - ni_price) / ni_price * 100, 2) if ni_price else 0,\n        \"counterparty_label\": \"Primary Offtaker / MHP Offtaker\",\n    }\n\n# Lithium Carbonate GTC Pricing\ndef calculate_lithium_carbonate_gtc(li_price, contract_floor=20000, contract_ceiling=30000):\n    \"\"\"Lithium carbonate Good Till Cancelled contract pricing.\n    Includes floor and ceiling protection.\n    \"\"\"\n    effective_price = max(contract_floor, min(li_price, contract_ceiling))\n\n    floor_active = li_price < contract_floor\n    ceiling_active = li_price > contract_ceiling\n\n    return {\n        \"spot_li_price_usd_per_mt\": li_price,\n        \"effective_price_usd_per_mt\": effective_price,\n        \"contract_floor\": contract_floor,\n        \"contract_ceiling\": contract_ceiling,\n        \"floor_protection_active\": floor_active,\n        \"ceiling_cap_active\": ceiling_active,\n        \"realized_vs_spot_diff\": round(effective_price - li_price, 2),\n        \"basis\": \"Fastmarkets lithium carbonate 99.5% CIF\",\n    }\n\n# Li Cycle Feedstock Pricing\ndef calculate_li_cycle_feedstock(li_price, ni_price, co_price, feedstock_grade=0.92):\n    \"\"\"Li Cycle feedstock pricing based on contained value.\n    Multi-commodity payables structure.\n    \"\"\"\n    li_payable = li_price * feedstock_grade * 0.75  # 75% payable on Li\n    ni_payable = ni_price * 0.03 * 0.90  # 3% Ni content, 90% payable\n    co_payable = co_price * 0.02 * 0.90  # 2% Co content, 90% payable\n\n    total_value = li_payable + ni_payable + co_payable\n\n    return {\n        \"li_payable_usd_per_mt\": round(li_payable, 2),\n        \"ni_payable_usd_per_mt\": round(ni_payable, 2),\n        \"co_payable_usd_per_mt\": round(co_payable, 2),\n        \"total_feedstock_value\": round(total_value, 2),\n        \"feedstock_grade\": feedstock_grade,\n        \"basis\": \"Mixed Fastmarkets/LME composite\",\n    }\n\n# Unit Conversion Utilities\ndef convert_usd_mt_to_lb(price_usd_mt):\n    \"\"\"Convert USD/metric ton to USD/lb\"\"\"\n    return round(price_usd_mt / 2204.62, 4)\n\n\ndef convert_usd_lb_to_mt(price_usd_lb):\n    \"\"\"Convert USD/lb to USD/metric ton\"\"\"\n    return round(price_usd_lb * 2204.62, 2)\n\n\n# Execute all calculations\nresults[\"gli_calculations\"][\"black_mass_payables\"] = calculate_black_mass_payables(ni_price, co_price)\nresults[\"gli_calculations\"][\"primary_offtaker_mhp_offtake\"] = calculate_primary_offtaker_mhp_offtake(ni_price, co_price)\nresults[\"gli_calculations\"][\"lithium_carbonate_gtc\"] = calculate_lithium_carbonate_gtc(li_price)\nresults[\"gli_calculations\"][\"li_cycle_feedstock\"] = calculate_li_cycle_feedstock(li_price, ni_price, co_price)\n\n# Unit conversions\nresults[\"unit_conversions\"] = {\n    \"ni_usd_per_lb\": convert_usd_mt_to_lb(ni_price),\n    \"co_usd_per_lb\": convert_usd_mt_to_lb(co_price),\n    \"li_usd_per_lb\": convert_usd_mt_to_lb(li_price),\n    \"ni_usd_per_mt\": ni_price,\n    \"co_usd_per_mt\": co_price,\n    \"li_usd_per_mt\": li_price,\n}\n\n# Generate business insights\nprimary_offtaker = results[\"gli_calculations\"][\"primary_offtaker_mhp_offtake\"]\nif primary_offtaker[\"profit_share_triggered\"]:\n    results[\"business_insights\"].append(\n        f\"Primary Offtaker profit share triggered: Ni price ${ni_price}/mt exceeds the $20,000/mt threshold. \"\n        f\"An additional ${primary_offtaker['profit_share_amount']}/mt is shared back with MHP as profit share.\"\n    )\n\nblack_mass = results[\"gli_calculations\"][\"black_mass_payables\"]\nresults[\"business_insights\"].append(\n    f\"Black mass total value: ${black_mass['total_value_per_mt']}/mt (Ni: ${black_mass['ni_payable_usd_per_mt']}, \"\n    f\"Co: ${black_mass['co_payable_usd_per_mt']})\"\n)\n\nli_gtc = results[\"gli_calculations\"][\"lithium_carbonate_gtc\"]\nif li_gtc[\"floor_protection_active\"]:\n    results[\"business_insights\"].append(\n        f\"Lithium floor protection active: Spot ${li_price}/mt is below the contract floor of ${li_gtc['contract_floor']}/mt.\"\n    )\nelif li_gtc[\"ceiling_cap_active\"]:\n    results[\"business_insights\"].append(\n        f\"Lithium ceiling cap active: Spot ${li_price}/mt is above the contract ceiling of ${li_gtc['contract_ceiling']}/mt.\"\n    )\n\n# Sensitivity analysis (unchanged logic; labels updated to refer to Primary Offtaker where relevant)\nresults[\"sensitivity_analysis\"] = {\n    \"ni_plus_1000\": {\n        \"black_mass_delta\": round(1000 * 0.85, 2),\n        \"primary_offtaker_floor_delta\": round(1000 * 0.92, 2),\n    },\n    \"co_plus_1000\": {\n        \"black_mass_delta\": round(1000 * 0.85, 2),\n        \"primary_offtaker_floor_delta\": round(1000 * 0.92, 2),\n    },\n    \"li_plus_1000\": {\n        \"gtc_delta\": \"depends on floor/ceiling\",\n        \"feedstock_delta\": round(1000 * 0.92 * 0.75, 2),\n    },\n}\n\n# Format output as JSON\noutput = json.dumps(results, indent=2)\n",
+      "credentialIds": null,
+      "credentialsDefinitions": null
+    }
+  ],
+  "routers": null,
+  "approvalRequests": null,
+  "webhookApprovalRequests": null,
+  "agentCards": null,
+  "subAgents": null,
+  "deployment": {
+    "name": "Commodity Price Analyzer",
+    "deploymentIcon": null,
+    "deploymentDescription": "Calculate impact of commodity prices, exchange rates and government regulations on product output price",
+    "userPrompts": [],
+    "deploymentPrompt": null,
+    "isRecommended": false,
+    "deploymentType": "Chat",
+    "conversationType": "StandardChat",
+    "aboutJson": "{\"Version\": 1, \"VideoUrl\": \"\"}",
+    "supportedInputModes": [
+      "FileUpload",
+      "Whiteboard",
+      "Code",
+      "Math"
+    ],
+    "browserExtensionConfig": null,
+    "displayConsumptionInfo": false
+  },
+  "interfaces": null,
+  "sdkSteps": null
+}

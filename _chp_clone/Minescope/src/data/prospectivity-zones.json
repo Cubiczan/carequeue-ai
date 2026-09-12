@@ -1,0 +1,87 @@
+[
+  {
+    "id": "pilbara-lithium-01",
+    "name": "Pilbara Lithium Corridor",
+    "region": "Western Australia",
+    "country": "Australia",
+    "mineralId": "lithium",
+    "depositModel": "Pegmatite-hosted lithium",
+    "evidenceLayers": {
+      "geology": 92,
+      "geochemistry": 84,
+      "geophysics": 76,
+      "infrastructure": 88,
+      "policy": 72
+    },
+    "confidence": 86,
+    "rationale": "Known pegmatite belts, strong road/port access, and stable permitting create a high-confidence target zone."
+  },
+  {
+    "id": "katanga-cobalt-01",
+    "name": "Katanga Cobalt Belt",
+    "region": "Copperbelt",
+    "country": "DRC",
+    "mineralId": "cobalt",
+    "depositModel": "Sediment-hosted copper-cobalt",
+    "evidenceLayers": {
+      "geology": 96,
+      "geochemistry": 91,
+      "geophysics": 68,
+      "infrastructure": 48,
+      "policy": 34
+    },
+    "confidence": 78,
+    "rationale": "Exceptional mineral evidence is offset by infrastructure, regulatory, and social-risk constraints."
+  },
+  {
+    "id": "mountain-pass-ree-01",
+    "name": "Mountain Pass Rare Earth Trend",
+    "region": "California/Nevada",
+    "country": "USA",
+    "mineralId": "rare_earths",
+    "depositModel": "Carbonatite rare earth elements",
+    "evidenceLayers": {
+      "geology": 88,
+      "geochemistry": 73,
+      "geophysics": 82,
+      "infrastructure": 81,
+      "policy": 86
+    },
+    "confidence": 82,
+    "rationale": "Carbonatite geology, domestic policy support, and existing processing interest make this a strategic resilience target."
+  },
+  {
+    "id": "sulawesi-nickel-01",
+    "name": "Sulawesi Nickel Laterite Arc",
+    "region": "Sulawesi",
+    "country": "Indonesia",
+    "mineralId": "nickel",
+    "depositModel": "Laterite nickel",
+    "evidenceLayers": {
+      "geology": 90,
+      "geochemistry": 79,
+      "geophysics": 62,
+      "infrastructure": 67,
+      "policy": 55
+    },
+    "confidence": 74,
+    "rationale": "Strong laterite potential and processing build-out, with policy/export volatility requiring scenario monitoring."
+  },
+  {
+    "id": "atacama-copper-01",
+    "name": "Atacama Copper Porphyry Belt",
+    "region": "Northern Chile",
+    "country": "Chile",
+    "mineralId": "copper",
+    "depositModel": "Porphyry copper",
+    "evidenceLayers": {
+      "geology": 94,
+      "geochemistry": 82,
+      "geophysics": 89,
+      "infrastructure": 76,
+      "policy": 63
+    },
+    "confidence": 84,
+    "rationale": "World-class porphyry setting and export infrastructure, with water stress and permitting as key constraints."
+  }
+]

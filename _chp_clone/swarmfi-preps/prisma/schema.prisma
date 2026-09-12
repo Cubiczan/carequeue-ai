@@ -1,0 +1,44 @@
+// SwarmFi Perps — Prisma Schema
+// AI Agent Swarm Trading Signals for Perpetual Markets
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model ConsensusSignal {
+  id          String   @id @default(cuid())
+  market      String   // e.g. "BTC-USD"
+  signal      String   // "LONG", "SHORT", "NEUTRAL"
+  confidence  Float    // 0-100
+  timestamp   DateTime @default(now())
+
+  // Store agent votes as JSON
+  agentVotes  String   // JSON array of agent votes
+
+  marketData  String   // JSON snapshot of key market data at signal time
+}
+
+model AgentState {
+  id        String   @id @default(cuid())
+  agentType String   // agent type name
+  market    String
+  lastVote  String   // "LONG", "SHORT", "NEUTRAL"
+  score     Float
+  timestamp DateTime @default(now())
+}
+
+model MarketSnapshot {
+  id        String   @id @default(cuid())
+  market    String
+  midPrice  Float
+  spread    Float
+  volume24h Float
+  oi        Float
+  funding1h Float
+  timestamp DateTime @default(now())
+}

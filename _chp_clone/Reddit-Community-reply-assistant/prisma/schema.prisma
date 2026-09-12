@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model BusinessProfile {
+  id          String   @id @default(cuid())
+  name        String
+  website     String
+  email       String
+  description String
+  buyerPersona      String
+  painPoints        String
+  valueProposition  String
+  subreddits        String   // JSON: ["smallbusiness", "startups", ...]
+  keywords          String   // JSON: ["fractional cfo", "cash flow", ...]
+  competitors       String   // JSON: ["Pilot", "Bench", ...]
+  replyTone         String   @default("helpful, knowledgeable, not salesy")
+  scoreWeightComments  Int @default(20)
+  scoreWeightUpvotes   Int @default(15)
+  scoreWeightRecency   Int @default(25)
+  scoreWeightKeywords  Int @default(40)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  threads     RedditThread[]
+  scanRuns    ScanRun[]
+  digests     EmailDigest[]
+}
+
+model RedditThread {
+  id            String   @id @default(cuid())
+  businessId    String
+  business      BusinessProfile @relation(fields: [businessId], references: [id])
+  redditId      String
+  subreddit     String
+  title         String
+  author        String
+  selftext      String
+  url           String
+  score         Int
+  numComments   Int
+  createdAtReddit DateTime
+  engagementScore Int
+  buyingIntentScore Int
+  totalScore       Int
+  matchedKeywords String
+  matchedCompetitors String
+  intentSignals    String
+  draftReply     String?
+  replyStatus    String   @default("pending")
+  isRelevant     Boolean  @default(true)
+  isProcessed    Boolean  @default(false)
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  scanRunId      String?
+  scanRun        ScanRun?  @relation(fields: [scanRunId], references: [id])
+}
+
+model ScanRun {
+  id            String   @id @default(cuid())
+  businessId    String
+  business      BusinessProfile @relation(fields: [businessId], references: [id])
+  status        String   @default("running")
+  threadsFound  Int      @default(0)
+  threadsScored Int      @default(0)
+  errorMessage  String?
+  startedAt     DateTime @default(now())
+  completedAt   DateTime?
+  threads       RedditThread[]
+}
+
+model EmailDigest {
+  id            String   @id @default(cuid())
+  businessId    String
+  business      BusinessProfile @relation(fields: [businessId], references: [id])
+  sentAt        DateTime @default(now())
+  subject       String
+  threadCount   Int
+  topThreads    String
+  status        String   @default("sent")
+}

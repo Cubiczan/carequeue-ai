@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id          String   @id @default(cuid())
+  name        String
+  age         Int
+  gender      String
+  conditions  String   @default("")
+  medications String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  vitals      VitalsReading[]
+  alerts      Alert[]
+}
+
+model VitalsReading {
+  id          String   @id @default(cuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  heartRate   Int      @default(72)
+  systolic    Int      @default(120)
+  diastolic   Int      @default(80)
+  temperature Float    @default(98.6)
+  spo2        Int      @default(98)
+  notes       String   @default("")
+  recordedAt  DateTime @default(now())
+}
+
+model Alert {
+  id           String   @id @default(cuid())
+  patientId    String
+  patient      Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  type         String
+  category     String
+  message      String
+  severity     Int      @default(1)
+  acknowledged Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model Incident {
+  id           String   @id @default(cuid())
+  severity     String
+  status       String   @default("open")
+  title        String
+  description  String
+  sourceIndex  String
+  assignedTeam String
+  rawEvent     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  userRole  String
+  action    String
+  resource  String
+  decision  String
+  reason    String
+  timestamp DateTime @default(now())
+}

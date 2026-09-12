@@ -1,0 +1,378 @@
+[
+  {
+    "name": "Australia",
+    "code": "AU",
+    "region": "Oceania",
+    "flag": "🇦🇺",
+    "minerals": ["lithium", "nickel", "copper"],
+    "productionVolume": {
+      "lithium": 38500,
+      "nickel": 165000,
+      "copper": 880000
+    },
+    "politicalStability": 92,
+    "regulatoryEnvironment": 88,
+    "infrastructureQuality": 95,
+    "esgScore": 85,
+    "topCompanies": ["BHP", "Rio Tinto", "Fortescue Metals", "South32", "Pilbara Minerals"],
+    "riskFactors": {
+      "geopolitical": 15,
+      "environmental": 35,
+      "regulatory": 20,
+      "infrastructure": 10,
+      "labor": 25,
+      "marketConcentration": 30
+    },
+    "description": "World's largest lithium producer and top nickel miner. Strong governance, stable regulations, and world-class mining infrastructure."
+  },
+  {
+    "name": "Chile",
+    "code": "CL",
+    "region": "South America",
+    "flag": "🇨🇱",
+    "minerals": ["lithium", "copper"],
+    "productionVolume": {
+      "lithium": 24600,
+      "copper": 5940000
+    },
+    "politicalStability": 68,
+    "regulatoryEnvironment": 72,
+    "infrastructureQuality": 78,
+    "esgScore": 71,
+    "topCompanies": ["Codelco", "SQM", "Antofagasta Minerals", "BHP (Chile)", "Collahuasi"],
+    "riskFactors": {
+      "geopolitical": 32,
+      "environmental": 55,
+      "regulatory": 45,
+      "infrastructure": 30,
+      "labor": 38,
+      "marketConcentration": 42
+    },
+    "description": "World's largest copper producer and second-largest lithium producer. Water scarcity in the Atacama Desert is a growing constraint."
+  },
+  {
+    "name": "China",
+    "code": "CN",
+    "region": "Asia",
+    "flag": "🇨🇳",
+    "minerals": ["lithium", "nickel", "rare_earths", "copper"],
+    "productionVolume": {
+      "lithium": 12300,
+      "nickel": 110000,
+      "rare_earths": 210000,
+      "copper": 1760000
+    },
+    "politicalStability": 78,
+    "regulatoryEnvironment": 55,
+    "infrastructureQuality": 85,
+    "esgScore": 45,
+    "topCompanies": ["China Northern Rare Earth", "Tianqi Lithium", "Ganfeng Lithium", "CMOC Group", "Zijin Mining"],
+    "riskFactors": {
+      "geopolitical": 82,
+      "environmental": 68,
+      "regulatory": 75,
+      "infrastructure": 18,
+      "labor": 35,
+      "marketConcentration": 95
+    },
+    "description": "Dominant player in rare earths (70% of production, 90% of processing). Controls critical mineral processing supply chains globally."
+  },
+  {
+    "name": "Democratic Republic of Congo",
+    "code": "CD",
+    "region": "Africa",
+    "flag": "🇨🇩",
+    "minerals": ["cobalt", "copper"],
+    "productionVolume": {
+      "cobalt": 137900,
+      "copper": 2420000
+    },
+    "politicalStability": 18,
+    "regulatoryEnvironment": 25,
+    "infrastructureQuality": 22,
+    "esgScore": 34,
+    "topCompanies": ["Glencore", "CMOC Group", "Eurasian Resources Group", "China Molybdenum", "Ivanhoe Mines"],
+    "riskFactors": {
+      "geopolitical": 88,
+      "environmental": 78,
+      "regulatory": 82,
+      "infrastructure": 85,
+      "labor": 92,
+      "marketConcentration": 72
+    },
+    "description": "World's largest cobalt producer (70% of global supply). Severe governance challenges, child labor concerns, and infrastructure deficits create extreme supply chain risk."
+  },
+  {
+    "name": "Indonesia",
+    "code": "ID",
+    "region": "Asia",
+    "flag": "🇮🇩",
+    "minerals": ["nickel", "copper"],
+    "productionVolume": {
+      "nickel": 1815000,
+      "copper": 850000
+    },
+    "politicalStability": 65,
+    "regulatoryEnvironment": 48,
+    "infrastructureQuality": 52,
+    "esgScore": 42,
+    "topCompanies": ["PT Vale Indonesia", "PT ANTAM", "Nickel Mines", "Tsingshan Holding", "Huayou Cobalt"],
+    "riskFactors": {
+      "geopolitical": 42,
+      "environmental": 72,
+      "regulatory": 65,
+      "infrastructure": 48,
+      "labor": 55,
+      "marketConcentration": 58
+    },
+    "description": "World's dominant nickel producer (55% of global supply). Export ban on raw nickel ore has reshaped the entire nickel supply chain."
+  },
+  {
+    "name": "Russia",
+    "code": "RU",
+    "region": "Europe/Asia",
+    "flag": "🇷🇺",
+    "minerals": ["cobalt", "nickel", "rare_earths", "copper"],
+    "productionVolume": {
+      "cobalt": 9850,
+      "nickel": 231000,
+      "rare_earths": 6000,
+      "copper": 920000
+    },
+    "politicalStability": 28,
+    "regulatoryEnvironment": 30,
+    "infrastructureQuality": 60,
+    "esgScore": 32,
+    "topCompanies": ["Nornickel", "Polymetal International", "Ural Mining", "Rusal"],
+    "riskFactors": {
+      "geopolitical": 95,
+      "environmental": 62,
+      "regulatory": 78,
+      "infrastructure": 42,
+      "labor": 48,
+      "marketConcentration": 55
+    },
+    "description": "Major producer of nickel, cobalt, and PGMs. Heavy sanctions since 2022 have disrupted global supply chains and created significant counterparty risk."
+  },
+  {
+    "name": "Peru",
+    "code": "PE",
+    "region": "South America",
+    "flag": "🇵🇪",
+    "minerals": ["copper"],
+    "productionVolume": {
+      "copper": 2200000
+    },
+    "politicalStability": 55,
+    "regulatoryEnvironment": 58,
+    "infrastructureQuality": 55,
+    "esgScore": 62,
+    "topCompanies": ["Freeport-McMoRan", "Southern Copper", "Antamina", "Las Bambas", "Cerro Verde"],
+    "riskFactors": {
+      "geopolitical": 38,
+      "environmental": 52,
+      "regulatory": 42,
+      "infrastructure": 55,
+      "labor": 58,
+      "marketConcentration": 32
+    },
+    "description": "World's second-largest copper producer. Frequent social conflicts and community opposition to mining create operational disruptions."
+  },
+  {
+    "name": "Argentina",
+    "code": "AR",
+    "region": "South America",
+    "flag": "🇦🇷",
+    "minerals": ["lithium"],
+    "productionVolume": {
+      "lithium": 4920
+    },
+    "politicalStability": 52,
+    "regulatoryEnvironment": 55,
+    "infrastructureQuality": 48,
+    "esgScore": 58,
+    "topCompanies": ["Livent", "Allkem (Arcadium)", "Lithium Americas", "Posco Holdings", "Ganfeng Lithium"],
+    "riskFactors": {
+      "geopolitical": 28,
+      "environmental": 48,
+      "regulatory": 38,
+      "infrastructure": 52,
+      "labor": 35,
+      "marketConcentration": 25
+    },
+    "description": "Fast-growing 'lithium triangle' nation with the world's second-largest lithium reserves. New government pursuing aggressive mining investment."
+  },
+  {
+    "name": "United States",
+    "code": "US",
+    "region": "North America",
+    "flag": "🇺🇸",
+    "minerals": ["rare_earths", "copper"],
+    "productionVolume": {
+      "rare_earths": 18000,
+      "copper": 1320000
+    },
+    "politicalStability": 85,
+    "regulatoryEnvironment": 72,
+    "infrastructureQuality": 90,
+    "esgScore": 78,
+    "topCompanies": ["MP Materials", "Freeport-McMoRan", "Rio Tinto (US)", "BHP (US)", "Albemarle"],
+    "riskFactors": {
+      "geopolitical": 12,
+      "environmental": 45,
+      "regulatory": 38,
+      "infrastructure": 12,
+      "labor": 22,
+      "marketConcentration": 18
+    },
+    "description": "Only rare earth miner in the Western hemisphere (Mountain Pass, CA). Critical mineral policy push under IRA and Defense Production Act."
+  },
+  {
+    "name": "Canada",
+    "code": "CA",
+    "region": "North America",
+    "flag": "🇨🇦",
+    "minerals": ["cobalt", "nickel", "copper"],
+    "productionVolume": {
+      "cobalt": 5910,
+      "nickel": 145000,
+      "copper": 520000
+    },
+    "politicalStability": 90,
+    "regulatoryEnvironment": 82,
+    "infrastructureQuality": 88,
+    "esgScore": 82,
+    "topCompanies": ["Vale Canada", "Glencore (Canada)", "Teck Resources", "First Quantum Minerals", "Sherritt International"],
+    "riskFactors": {
+      "geopolitical": 10,
+      "environmental": 32,
+      "regulatory": 25,
+      "infrastructure": 15,
+      "labor": 18,
+      "marketConcentration": 20
+    },
+    "description": "Stable mining jurisdiction with strong ESG performance. Critical Minerals Strategy prioritizing domestic processing and supply chain resilience."
+  },
+  {
+    "name": "Myanmar",
+    "code": "MM",
+    "region": "Asia",
+    "flag": "🇲🇲",
+    "minerals": ["rare_earths"],
+    "productionVolume": {
+      "rare_earths": 36000
+    },
+    "politicalStability": 8,
+    "regulatoryEnvironment": 12,
+    "infrastructureQuality": 15,
+    "esgScore": 15,
+    "topCompanies": ["Myanmar Rare Earth", "Various artisanal operations"],
+    "riskFactors": {
+      "geopolitical": 92,
+      "environmental": 85,
+      "regulatory": 90,
+      "infrastructure": 88,
+      "labor": 95,
+      "marketConcentration": 72
+    },
+    "description": "Second-largest rare earth producer (after China), but production comes from conflict-affected areas with severe ESG risks and military involvement."
+  },
+  {
+    "name": "Philippines",
+    "code": "PH",
+    "region": "Asia",
+    "flag": "🇵🇭",
+    "minerals": ["nickel", "cobalt"],
+    "productionVolume": {
+      "nickel": 363000,
+      "cobalt": 7880
+    },
+    "politicalStability": 58,
+    "regulatoryEnvironment": 45,
+    "infrastructureQuality": 42,
+    "esgScore": 48,
+    "topCompanies": ["Nickel Asia Corp", "Sumitomo Metal Mining", "DMCI Mining", "Rio Tinto (Philippines)"],
+    "riskFactors": {
+      "geopolitical": 35,
+      "environmental": 62,
+      "regulatory": 52,
+      "infrastructure": 58,
+      "labor": 45,
+      "marketConcentration": 35
+    },
+    "description": "Major nickel ore supplier, particularly to China. Frequent typhoons and environmental regulatory changes create operational uncertainty."
+  },
+  {
+    "name": "Zimbabwe",
+    "code": "ZW",
+    "region": "Africa",
+    "flag": "🇿🇼",
+    "minerals": ["lithium"],
+    "productionVolume": {
+      "lithium": 1640
+    },
+    "politicalStability": 22,
+    "regulatoryEnvironment": 28,
+    "infrastructureQuality": 25,
+    "esgScore": 28,
+    "topCompanies": ["Zimbabwe Lithium", "Bikita Minerals", "Prospect Resources", "Arcadia Lithium"],
+    "riskFactors": {
+      "geopolitical": 72,
+      "environmental": 65,
+      "regulatory": 68,
+      "infrastructure": 78,
+      "labor": 70,
+      "marketConcentration": 45
+    },
+    "description": "Growing lithium producer with significant untapped reserves. Political instability, currency crises, and export controls pose major risks."
+  },
+  {
+    "name": "Mongolia",
+    "code": "MN",
+    "region": "Asia",
+    "flag": "🇲🇳",
+    "minerals": ["copper"],
+    "productionVolume": {
+      "copper": 480000
+    },
+    "politicalStability": 55,
+    "regulatoryEnvironment": 50,
+    "infrastructureQuality": 38,
+    "esgScore": 45,
+    "topCompanies": ["Oyu Tolgoi (Rio Tinto)", "Erdenet Mining", "Mongolian Copper Corp"],
+    "riskFactors": {
+      "geopolitical": 55,
+      "environmental": 42,
+      "regulatory": 48,
+      "infrastructure": 65,
+      "labor": 40,
+      "marketConcentration": 38
+    },
+    "description": "Home to Oyu Tolgoi, one of the world's largest copper-gold mines. Geopolitical tension between China and West creates complex operating environment."
+  },
+  {
+    "name": "South Africa",
+    "code": "ZA",
+    "region": "Africa",
+    "flag": "🇿🇦",
+    "minerals": ["nickel", "copper"],
+    "productionVolume": {
+      "nickel": 42000,
+      "copper": 210000
+    },
+    "politicalStability": 52,
+    "regulatoryEnvironment": 48,
+    "infrastructureQuality": 45,
+    "esgScore": 52,
+    "topCompanies": ["Anglo American", "Sibanye-Stillwater", "Glencore (SA)", "Exxaro Resources", "Impala Platinum"],
+    "riskFactors": {
+      "geopolitical": 30,
+      "environmental": 45,
+      "regulatory": 42,
+      "infrastructure": 58,
+      "labor": 62,
+      "marketConcentration": 28
+    },
+    "description": "Major mining nation with well-developed regulatory framework but facing electricity crisis (load shedding) and labor union pressures."
+  }
+]

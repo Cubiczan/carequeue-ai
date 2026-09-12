@@ -1,0 +1,13 @@
+Account,Account Name,Type,Debit,Credit,Net
+1000,Cash - Operating,Asset,0,0,0
+1100,Accounts Receivable,Asset,0,0,0
+1200,Inventory,Asset,0,0,0
+2000,Accounts Payable,Liability,0,0,0
+2100,Accrued Expenses,Liability,0,0,0
+2200,Debt - Current,Liability,0,0,0
+3000,Common Stock,Equity,0,0,0
+3100,Retained Earnings,Equity,0,0,0
+4000,Revenue,Revenue,0,0,0
+5000,COGS,Expense,0,0,0
+6000,Operating Expenses,Expense,0,0,0
+TOTAL,,,0,0,0

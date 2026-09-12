@@ -1,0 +1,38 @@
+{
+  "name": "critmin-oracle",
+  "version": "1.0.0",
+  "description": "AI-Powered Critical Minerals Supply Chain Risk Oracle on HashKey Chain",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.ts --network hashkey-testnet",
+    "deploy:local": "hardhat run scripts/deploy.ts",
+    "node": "hardhat node",
+    "clean": "hardhat clean"
+  },
+  "keywords": [
+    "oracle",
+    "critical-minerals",
+    "hashkey-chain",
+    "defi",
+    "risk-score",
+    "blockchain",
+    "critical-minerals-risk"
+  ],
+  "author": "CritMin Oracle Team",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@types/node": "^25.5.0",
+    "dotenv": "^17.3.1",
+    "ethers": "^6.16.0",
+    "hardhat": "^2.28.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  }
+}

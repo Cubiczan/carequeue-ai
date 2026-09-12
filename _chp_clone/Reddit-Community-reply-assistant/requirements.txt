@@ -1,0 +1,14 @@
+# Actian VectorAI DB Python client (gRPC)
+actian-vectorai>=0.1.0b2
+
+# Embedding model
+sentence-transformers>=2.2.2
+torch>=2.1.2
+
+# Bridge HTTP server
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Reddit ingestion (optional, for ingest.py)
+praw>=7.7.0
+requests>=2.31.0
