@@ -1,7 +1,11 @@
 """Ensure scent GC deletes via bound parameters, not concatenated SQL."""
 
+import os
 import sqlite3
+import sys
 import time
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from orchestrator.stigmergy import GC_THRESHOLD, ScentField, ScentSignal, ScentType
 
