@@ -25,6 +25,10 @@
     "react-dom": "19.1.0",
     "recharts": "^3.8.1"
   },
+  "overrides": {
+    "@trezor/protobuf": "1.5.3",
+    "protobufjs": "7.6.5"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
