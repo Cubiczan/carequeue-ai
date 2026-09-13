@@ -20,6 +20,18 @@ logger = logging.getLogger(__name__)
 SCORE_WEIGHTS = {"supply_demand": 0.30, "price_momentum": 0.25, "geopolitical": 0.25, "seasonal": 0.20}
 
 
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    """Run Athena SQL with bound parameters (never interpolate user values)."""
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
+
 def compute_glacier_scores(event):
     """Compute composite Glacier scores for specified energy commodities.
 
@@ -41,27 +53,27 @@ def compute_glacier_scores(event):
     signals = []
     for code in commodity_codes:
         try:
-            query = f"""
+            query = """
             WITH latest_price AS (
-                SELECT price_value, price_date FROM scope_glacier.price_series
-                WHERE commodity_code = '{code}'
+                SELECT price_value, price_date FROM price_series
+                WHERE commodity_code = ?
                 ORDER BY price_date DESC LIMIT 1
             ),
             price_30d_ago AS (
-                SELECT price_value FROM scope_glacier.price_series
-                WHERE commodity_code = '{code}'
+                SELECT price_value FROM price_series
+                WHERE commodity_code = ?
                   AND price_date >= DATE_ADD('DAY', -35, CURRENT_DATE)
                 ORDER BY price_date ASC LIMIT 1
             ),
             vol AS (
                 SELECT
                     STDDEV(price_value) AS daily_std
-                FROM scope_glacier.price_series
-                WHERE commodity_code = '{code}'
+                FROM price_series
+                WHERE commodity_code = ?
                   AND price_date >= DATE_ADD('DAY', -25, CURRENT_DATE)
             )
             SELECT
-                '{code}' AS commodity_code,
+                ? AS commodity_code,
                 (SELECT price_value FROM latest_price) AS latest_price,
                 CASE
                     WHEN (SELECT price_value FROM latest_price) > 0
@@ -74,10 +86,8 @@ def compute_glacier_scores(event):
                 ROUND(COALESCE((SELECT daily_std FROM vol), 0) * (252.0 ** 0.5) * 100, 2) AS annualized_volatility_pct
             """
 
-            response = athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}glacier/scores/"},
+            response = _athena_start(
+                athena, query, database, f"{s3_output}glacier/scores/", [code, code, code, code]
             )
 
             # Compute component scores
@@ -175,27 +185,31 @@ def write_signals_to_iceberg(signals: list):
             signal_id = f"{code}_{ts}"
             analysis = signal.get("ai_analysis", "")[:4000].replace("'", "''")
 
-            query = f"""
-            INSERT INTO {database}.glacier_signals
+            query = """
+            INSERT INTO glacier_signals
             VALUES (
-                '{signal_id}',
-                '{code}',
-                TIMESTAMP '{datetime.utcnow().isoformat()}',
-                {signal.get('supply_demand_score', 50)},
-                {signal.get('price_momentum_score', 50)},
-                {signal.get('geopolitical_score', 50)},
-                {signal.get('seasonal_score', 50)},
-                {signal.get('glacier_score', 50)},
-                '{signal.get('signal_rating', 'Hold')}',
-                '{analysis}',
-                {signal.get('confidence_score', 0.5)},
-                '{json.dumps(signal.get('data_sources', [])).replace("'", "''")}'
+                ?, ?, CAST(? AS TIMESTAMP), ?, ?, ?, ?, ?, ?, ?, ?, ?
             )
             """
-            athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}signals/write/"},
+            _athena_start(
+                athena,
+                query,
+                database,
+                f"{s3_output}signals/write/",
+                [
+                    signal_id,
+                    code,
+                    datetime.utcnow().isoformat(),
+                    signal.get("supply_demand_score", 50),
+                    signal.get("price_momentum_score", 50),
+                    signal.get("geopolitical_score", 50),
+                    signal.get("seasonal_score", 50),
+                    signal.get("glacier_score", 50),
+                    signal.get("signal_rating", "Hold"),
+                    analysis,
+                    signal.get("confidence_score", 0.5),
+                    json.dumps(signal.get("data_sources", [])),
+                ],
             )
         except Exception as e:
             logger.error(f"Error writing signal for {code}: {e}")

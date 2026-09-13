@@ -233,10 +233,9 @@ class ScentField:
                 expired_ids.append(signal_id)
 
         if expired_ids:
-            placeholders = ",".join("?" * len(expired_ids))
-            conn.execute(
-                f"DELETE FROM scent_signals WHERE signal_id IN ({placeholders})",
-                expired_ids,
+            conn.executemany(
+                "DELETE FROM scent_signals WHERE signal_id = ?",
+                [(signal_id,) for signal_id in expired_ids],
             )
             conn.commit()
             logger.debug(f"[SCENT-GC] Purged {len(expired_ids)} expired signals")

@@ -15,6 +15,17 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
+
 def compute_infrastructure_metrics(event):
     """Compute pipeline and refinery utilization metrics.
 
@@ -38,7 +49,7 @@ def compute_infrastructure_metrics(event):
 
     if include_pipelines:
         try:
-            pipeline_query = f"""
+            pipeline_query = """
             SELECT
                 pipeline_id,
                 name,
@@ -55,15 +66,17 @@ def compute_infrastructure_metrics(event):
                 END AS is_disrupted,
                 length_miles,
                 CURRENT_TIMESTAMP AS computed_at
-            FROM {database}.pipelines
-            WHERE commodity = '{commodity}' OR '{commodity}' = 'All'
+            FROM pipelines
+            WHERE commodity = ? OR ? = 'All'
             ORDER BY is_disrupted DESC, utilization_pct DESC
             """
 
-            response = athena.start_query_execution(
-                QueryString=pipeline_query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}infrastructure/pipelines/"},
+            response = _athena_start(
+                athena,
+                pipeline_query,
+                database,
+                f"{s3_output}infrastructure/pipelines/",
+                [commodity, commodity],
             )
             results.append({
                 "type": "pipelines",
@@ -78,7 +91,7 @@ def compute_infrastructure_metrics(event):
 
     if include_refineries:
         try:
-            refinery_query = f"""
+            refinery_query = """
             SELECT
                 refinery_id,
                 name,
@@ -96,14 +109,12 @@ def compute_infrastructure_metrics(event):
                     ELSE 0
                 END AS estimated_offline_bpd,
                 CURRENT_TIMESTAMP AS computed_at
-            FROM {database}.refineries
+            FROM refineries
             ORDER BY estimated_offline_bpd DESC
             """
 
-            response = athena.start_query_execution(
-                QueryString=refinery_query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}infrastructure/refineries/"},
+            response = _athena_start(
+                athena, refinery_query, database, f"{s3_output}infrastructure/refineries/"
             )
             results.append({
                 "type": "refineries",
@@ -118,26 +129,28 @@ def compute_infrastructure_metrics(event):
 
     # Compute aggregate infrastructure summary
     try:
-        summary_query = f"""
-        INSERT INTO {database}.infrastructure_summary
+        summary_query = """
+        INSERT INTO infrastructure_summary
         SELECT
-            '{commodity}' AS commodity,
+            ? AS commodity,
             CURRENT_TIMESTAMP AS computed_at,
-            (SELECT COUNT(*) FROM {database}.pipelines
-                WHERE (commodity = '{commodity}' OR '{commodity}' = 'All')
+            (SELECT COUNT(*) FROM pipelines
+                WHERE (commodity = ? OR ? = 'All')
                 AND status IN ('Shutdown', 'Reduced Flow', 'Force Majeure')) AS disrupted_pipelines,
-            (SELECT COUNT(*) FROM {database}.pipelines
-                WHERE (commodity = '{commodity}' OR '{commodity}' = 'All')
+            (SELECT COUNT(*) FROM pipelines
+                WHERE (commodity = ? OR ? = 'All')
                 AND status = 'Operational') AS operational_pipelines,
-            (SELECT SUM(offline_bpd) FROM {database}.refineries
+            (SELECT SUM(offline_bpd) FROM refineries
                 WHERE status IN ('Shutdown', 'Maintenance')) AS total_refinery_offline_bpd,
-            (SELECT COUNT(*) FROM {database}.refineries
+            (SELECT COUNT(*) FROM refineries
                 WHERE status = 'Operating') AS operating_refineries
         """
-        athena.start_query_execution(
-            QueryString=summary_query,
-            QueryExecutionContext={"Database": database},
-            ResultConfiguration={"OutputLocation": f"{s3_output}infrastructure/summary/"},
+        _athena_start(
+            athena,
+            summary_query,
+            database,
+            f"{s3_output}infrastructure/summary/",
+            [commodity, commodity, commodity, commodity, commodity],
         )
     except Exception as e:
         logger.error(f"Error computing infrastructure summary: {e}")
