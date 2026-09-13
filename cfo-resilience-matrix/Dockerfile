@@ -11,4 +11,9 @@ COPY tests/ tests/
 
 ENV PYTHONPATH=src
 
+RUN groupadd --gid 10001 appuser \
+    && useradd --uid 10001 --gid 10001 --home-dir /app --shell /usr/sbin/nologin appuser \
+    && chown -R 10001:10001 /app
+USER 10001
+
 CMD ["python", "demo.py", "--fast"]
