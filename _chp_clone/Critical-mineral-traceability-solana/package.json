@@ -92,6 +92,7 @@
   },
   "overrides": {
     "bigint-buffer": "https://npm.aikido.io/241fc32efb444a7e76965/bigint-buffer@1.1.5-aikido.1",
+    "brace-expansion": "1.1.18",
     "lodash": "https://npm.aikido.io/241fc32efb444a7e76965/lodash@4.17.21-aikido.2",
     "browserslist": "4.28.7"
   }
