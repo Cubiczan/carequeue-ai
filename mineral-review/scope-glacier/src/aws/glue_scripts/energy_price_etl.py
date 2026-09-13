@@ -14,6 +14,17 @@ sys.path.insert(0, "/opt/python")
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
 # Energy commodities tracked by Scope.Glacier
 ENERGY_SERIES = {
     "WTI": {"series": "PET.RWTC.D", "name": "West Texas Intermediate", "unit": "USD/barrel"},
@@ -49,25 +60,26 @@ def ingest_eia_prices(event):
 
         try:
             # Compute price statistics for the commodity
-            query = f"""
+            lookback_days = int(days)
+            query = """
             WITH daily_prices AS (
                 SELECT
                     price_date,
                     price_value,
                     LAG(price_value) OVER (ORDER BY price_date) AS prev_price
-                FROM {database}.price_series
-                WHERE commodity_code = '{code}'
-                  AND price_date >= DATE_ADD('DAY', -{days}, CURRENT_DATE)
+                FROM price_series
+                WHERE commodity_code = ?
+                  AND price_date >= DATE_ADD('DAY', ?, CURRENT_DATE)
                 ORDER BY price_date DESC
             )
             SELECT
-                '{code}' AS commodity_code,
-                '{config["name"]}' AS commodity_name,
+                ? AS commodity_code,
+                ? AS commodity_name,
                 CURRENT_DATE AS analysis_date,
                 (SELECT price_value FROM daily_prices WHERE ROWNUM = 1) AS latest_price,
-                (SELECT price_value FROM daily_prices WHERE ROWNUM = {days}) AS price_{days}_days_ago,
-                ROUND(AVG(price_value) OVER (), 2) AS avg_price_{days}d,
-                ROUND(STDDEV(price_value) OVER (), 2) AS std_dev_{days}d,
+                (SELECT price_value FROM daily_prices WHERE ROWNUM = ?) AS price_lookback,
+                ROUND(AVG(price_value) OVER (), 2) AS avg_price_lookback,
+                ROUND(STDDEV(price_value) OVER (), 2) AS std_dev_lookback,
                 CASE
                     WHEN (SELECT prev_price FROM daily_prices WHERE ROWNUM = 1) > 0
                     THEN ROUND(((SELECT price_value FROM daily_prices WHERE ROWNUM = 1)
@@ -79,10 +91,12 @@ def ingest_eia_prices(event):
             WHERE ROWNUM = 1
             """
 
-            response = athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}prices/stats/"},
+            response = _athena_start(
+                athena,
+                query,
+                database,
+                f"{s3_output}prices/stats/",
+                [code, -lookback_days, code, config["name"], lookback_days],
             )
             results.append({
                 "commodity_code": code,

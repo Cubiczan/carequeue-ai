@@ -14,6 +14,17 @@ sys.path.insert(0, "/opt/python")
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
 # Critical mineral HS codes tracked by Scope.Vantage
 MINERAL_HS_CODES = ["2836.90", "8105.20", "7504.00", "7403.11", "2846.90", "2601.20", "8112.19", "7202.60"]
 
@@ -65,18 +76,18 @@ def ingest_trade_flows(event):
         for flow_code in (["M", "X"] if direction == "all" else [{"import": "M", "export": "X"}.get(direction, "M")]):
             try:
                 # Upsert trade flow records into Iceberg via Athena MERGE
-                query = f"""
-                MERGE INTO {database}.trade_flows target
+                query = """
+                MERGE INTO trade_flows target
                 USING (SELECT
-                    '{reporter_code}_{partner_code}_{hs_code}_{year}_{flow_code}' AS flow_id,
-                    '{reporter_code}' AS reporter_code,
-                    '{reporter}' AS reporter_name,
-                    '{partner_code}' AS partner_code,
-                    '{partner}' AS partner_name,
-                    '{hs_code}' AS commodity_code,
-                    '{commodity_name}' AS commodity_name,
-                    '{"Import" if flow_code == "M" else "Export"}' AS trade_direction,
-                    {year} AS trade_year,
+                    ? AS flow_id,
+                    ? AS reporter_code,
+                    ? AS reporter_name,
+                    ? AS partner_code,
+                    ? AS partner_name,
+                    ? AS commodity_code,
+                    ? AS commodity_name,
+                    ? AS trade_direction,
+                    ? AS trade_year,
                     CURRENT_TIMESTAMP AS ingested_at
                 ) source
                 ON target.flow_id = source.flow_id
@@ -93,10 +104,22 @@ def ingest_trade_flows(event):
                             source.commodity_name, source.trade_direction, source.trade_year, source.ingested_at)
                 """
 
-                response = athena.start_query_execution(
-                    QueryString=query,
-                    QueryExecutionContext={"Database": database},
-                    ResultConfiguration={"OutputLocation": f"{s3_output}trade_flows/ingest/"},
+                response = _athena_start(
+                    athena,
+                    query,
+                    database,
+                    f"{s3_output}trade_flows/ingest/",
+                    [
+                        f"{reporter_code}_{partner_code}_{hs_code}_{year}_{flow_code}",
+                        reporter_code,
+                        reporter,
+                        partner_code,
+                        partner,
+                        hs_code,
+                        commodity_name,
+                        "Import" if flow_code == "M" else "Export",
+                        year,
+                    ],
                 )
                 results.append({
                     "hs_code": hs_code,

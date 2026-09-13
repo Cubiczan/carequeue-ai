@@ -19,6 +19,7 @@ Endpoints:
 import os
 import json
 import logging
+import re
 from datetime import datetime, timezone
 from typing import Any, Optional
 
@@ -29,9 +30,10 @@ from fastapi import FastAPI, Request, Query, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from sqlalchemy import create_engine, text, inspect
+from sqlalchemy import bindparam, column, create_engine, func, insert, inspect, select, table, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.pool import QueuePool
+from sqlalchemy.sql import literal_column
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -133,22 +135,75 @@ async def verify_api_key(request: Request):
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _run_query(database: str, sql: str, params: dict | None = None) -> Any:
+_SQL_IDENT_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
+def _sql_ident(name: str) -> str:
+    """Allow only safe SQL identifiers. Never interpolate raw input into SQL."""
+    if not isinstance(name, str) or not _SQL_IDENT_RE.fullmatch(name):
+        raise ValueError("Invalid SQL identifier")
+    return name
+
+
+def _require_ident(name: str, kind: str = "identifier") -> str:
+    try:
+        return _sql_ident(name)
+    except ValueError:
+        raise HTTPException(status_code=400, detail=f"Invalid {kind}")
+
+
+def _as_stmt(sql):
+    return text(sql) if isinstance(sql, str) else sql
+
+
+def _table_ref(name: str):
+    return table(_sql_ident(name))
+
+
+def _count_stmt(tname: str):
+    return select(func.count().label("cnt")).select_from(_table_ref(tname))
+
+
+def _select_all_stmt(tname: str, *, limit: int | None = None, offset: int | None = None):
+    stmt = select(literal_column("*")).select_from(_table_ref(tname)).order_by(column("rowid"))
+    if limit is not None:
+        stmt = stmt.limit(limit)
+    if offset is not None:
+        stmt = stmt.offset(offset)
+    return stmt
+
+
+def _select_by_pk_stmt(tname: str, pk_col: str):
+    return (
+        select(literal_column("*"))
+        .select_from(_table_ref(tname))
+        .where(column(_sql_ident(pk_col)) == bindparam("pkval"))
+        .limit(1)
+    )
+
+
+def _insert_row_stmt(tname: str, columns: list[str]):
+    cols = [_sql_ident(c) for c in columns]
+    target = table(_sql_ident(tname), *[column(c) for c in cols])
+    return insert(target).values({c: bindparam(c) for c in cols})
+
+
+def _run_query(database: str, sql, params: dict | None = None) -> Any:
     """Execute a read query and return results as list of dicts."""
     engine = get_engine(database)
     with engine.connect() as conn:
-        result = conn.execute(text(sql), params or {})
+        result = conn.execute(_as_stmt(sql), params or {})
         if result.returns_rows:
             columns = result.keys()
             return [dict(zip(columns, row)) for row in result.fetchall()]
         return []
 
 
-def _run_write(database: str, sql: str, params: dict | None = None) -> Any:
+def _run_write(database: str, sql, params: dict | None = None) -> Any:
     """Execute a write query within a transaction and commit."""
     engine = get_engine(database)
     with engine.begin() as conn:
-        result = conn.execute(text(sql), params or {})
+        result = conn.execute(_as_stmt(sql), params or {})
         return result
 
 
@@ -363,7 +418,7 @@ async def list_databases():
             for t in tables:
                 tname = t["table_name"]
                 try:
-                    count_rows = _run_query(db, f'SELECT count(*) AS cnt FROM "{tname}"')
+                    count_rows = _run_query(db, _count_stmt(tname))
                     row_count = count_rows[0]["cnt"] if count_rows else 0
                 except Exception:
                     row_count = -1
@@ -409,7 +464,7 @@ async def list_tables(database: str):
             )
             # Get row count
             try:
-                count_rows = _run_query(database, f'SELECT count(*) AS cnt FROM "{tname}"')
+                count_rows = _run_query(database, _count_stmt(tname))
                 row_count = count_rows[0]["cnt"] if count_rows else 0
             except Exception:
                 row_count = -1
@@ -433,9 +488,7 @@ async def get_table_rows(
     """Return rows from a table with pagination."""
     if database not in DATABASES:
         raise HTTPException(status_code=404, detail=f"Unknown database: {database}")
-    # Sanitize table name
-    if not table.replace("_", "").isalnum():
-        raise HTTPException(status_code=400, detail="Invalid table name")
+    table = _require_ident(table, "table name")
     try:
         # Verify table exists
         check = _run_query(
@@ -449,12 +502,8 @@ async def get_table_rows(
         if not check:
             raise HTTPException(status_code=404, detail=f"Table '{table}' not found in '{database}'")
 
-        rows = _run_query(
-            database,
-            f'SELECT * FROM "{table}" ORDER BY rowid LIMIT :lim OFFSET :off',
-            {"lim": limit, "off": offset},
-        )
-        count_rows = _run_query(database, f'SELECT count(*) AS cnt FROM "{table}"')
+        rows = _run_query(database, _select_all_stmt(table, limit=limit, offset=offset))
+        count_rows = _run_query(database, _count_stmt(table))
         total = count_rows[0]["cnt"] if count_rows else 0
         return {
             "database": database,
@@ -473,18 +522,15 @@ async def get_row_by_id(database: str, table: str, record_id: str):
     """Return a single row by primary key."""
     if database not in DATABASES:
         raise HTTPException(status_code=404, detail=f"Unknown database: {database}")
-    if not table.replace("_", "").isalnum():
-        raise HTTPException(status_code=400, detail="Invalid table name")
+    table = _require_ident(table, "table name")
     try:
         pk_cols = _detect_primary_key(database, table)
         if not pk_cols:
             raise HTTPException(status_code=400, detail=f"Cannot detect primary key for table '{table}'")
-        # Build WHERE clause
-        pk_col = pk_cols[0]
-        where = f'"{pk_col}" = :pkval'
+        pk_col = _require_ident(pk_cols[0], "primary key column")
         rows = _run_query(
             database,
-            f'SELECT * FROM "{table}" WHERE {where} LIMIT 1',
+            _select_by_pk_stmt(table, pk_col),
             {"pkval": record_id},
         )
         if not rows:
@@ -505,18 +551,16 @@ async def insert_row(database: str, table: str, body: InsertRowRequest):
     """Insert a new row into a table."""
     if database not in DATABASES:
         raise HTTPException(status_code=404, detail=f"Unknown database: {database}")
-    if not table.replace("_", "").isalnum():
-        raise HTTPException(status_code=400, detail="Invalid table name")
+    table = _require_ident(table, "table name")
     if not body.data:
         raise HTTPException(status_code=400, detail="Request body must contain 'data' object")
     try:
-        columns = list(body.data.keys())
-        placeholders = [f":{c}" for c in columns]
-        col_str = ", ".join(f'"{c}"' for c in columns)
-        ph_str = ", ".join(placeholders)
-        sql = f'INSERT INTO "{table}" ({col_str}) VALUES ({ph_str})'
-        _run_write(database, sql, body.data)
+        columns = [_require_ident(c, "column name") for c in body.data.keys()]
+        params = {c: body.data[c] for c in columns}
+        _run_write(database, _insert_row_stmt(table, columns), params)
         return {"status": "created", "database": database, "table": table, "columns": columns}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -876,7 +920,7 @@ def _fetch_battery_erp_from_db() -> dict | None:
             try:
                 rows = _run_query(
                     "battery_erp",
-                    f'SELECT * FROM "{tname}" ORDER BY rowid LIMIT 100',
+                    _select_all_stmt(tname, limit=100),
                 )
                 if rows:
                     all_data[tname] = _rows_to_json(rows)

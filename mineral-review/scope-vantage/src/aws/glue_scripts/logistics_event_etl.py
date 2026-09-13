@@ -14,6 +14,17 @@ sys.path.insert(0, "/opt/python")
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
 # Cost impact multipliers by severity
 DAILY_COST_MULTIPLIERS = {
     "Low": 10000,
@@ -59,29 +70,32 @@ def process_logistics_events(event):
             daily_cost = DAILY_COST_MULTIPLIERS.get(severity, 10000)
             cost_impact = daily_cost * delay_days
 
-            query = f"""
-            INSERT INTO {database}.logistics_events
+            query = """
+            INSERT INTO logistics_events
             VALUES (
-                '{evt.get("event_id", f"EVT_{event_type}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}")}',
-                '{event_type}',
-                '{evt.get("route", "")}',
-                '{evt.get("origin", "")}',
-                '{evt.get("destination", "")}',
-                '{evt.get("carrier", "")}',
-                '{evt.get("commodity", "")}',
-                'Active',
-                {delay_days},
-                '{severity}',
-                {cost_impact},
-                '{evt.get("description", "")[:2000].replace("'", "''")}',
-                TIMESTAMP '{datetime.utcnow().isoformat()}'
+                ?, ?, ?, ?, ?, ?, ?, 'Active', ?, ?, ?, ?, CAST(? AS TIMESTAMP)
             )
             """
 
-            response = athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}logistics/"},
+            response = _athena_start(
+                athena,
+                query,
+                database,
+                f"{s3_output}logistics/",
+                [
+                    evt.get("event_id", f"EVT_{event_type}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"),
+                    event_type,
+                    evt.get("route", ""),
+                    evt.get("origin", ""),
+                    evt.get("destination", ""),
+                    evt.get("carrier", ""),
+                    evt.get("commodity", ""),
+                    delay_days,
+                    severity,
+                    cost_impact,
+                    evt.get("description", "")[:2000],
+                    datetime.utcnow().isoformat(),
+                ],
             )
             results.append({
                 "event_type": event_type,
@@ -98,8 +112,8 @@ def process_logistics_events(event):
 
     # Compute aggregate disruption metrics
     try:
-        agg_query = f"""
-        INSERT INTO {database}.disruption_summary
+        agg_query = """
+        INSERT INTO disruption_summary
         SELECT
             commodity,
             event_type,
@@ -108,15 +122,11 @@ def process_logistics_events(event):
             SUM(estimated_delay_days) AS total_delay_days,
             SUM(cost_impact_estimate) AS total_cost_impact,
             CURRENT_TIMESTAMP AS computed_at
-        FROM {database}.logistics_events
+        FROM logistics_events
         WHERE status = 'Active'
         GROUP BY commodity, event_type, impact_severity
         """
-        athena.start_query_execution(
-            QueryString=agg_query,
-            QueryExecutionContext={"Database": database},
-            ResultConfiguration={"OutputLocation": f"{s3_output}logistics/summary/"},
-        )
+        _athena_start(athena, agg_query, database, f"{s3_output}logistics/summary/")
     except Exception as e:
         logger.error(f"Error computing disruption summary: {e}")
 
