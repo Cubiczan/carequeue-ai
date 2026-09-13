@@ -18,6 +18,18 @@ import boto3
 logger = logging.getLogger(__name__)
 
 
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    """Run Athena SQL with bound parameters (never interpolate user values)."""
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
+
 def compute_signal_scores(event):
     """Compute composite Sentinel scores for given tickers.
 
@@ -36,7 +48,7 @@ def compute_signal_scores(event):
     for ticker in tickers:
         try:
             # Query for latest financial data
-            query = f"""
+            query = """
             SELECT
                 r.ticker, r.name, r.sector, r.sub_sector,
                 r.dividend_yield, r.payout_ratio,
@@ -44,17 +56,15 @@ def compute_signal_scores(event):
                 fm.same_store_noi_growth, fm.ffo_growth_yoy,
                 fm.net_debt_to_ebitda, fm.interest_coverage,
                 fm.weighted_avg_cap_rate, fm.dividend_growth_yoy
-            FROM {database}.reits r
-            LEFT JOIN {database}.financial_metrics fm
+            FROM reits r
+            LEFT JOIN financial_metrics fm
               ON r.ticker = fm.reit_ticker
-              AND fm.fiscal_year = (SELECT MAX(fiscal_year) FROM {database}.financial_metrics WHERE reit_ticker = '{ticker}')
-              AND fm.quarter = (SELECT MAX(quarter) FROM {database}.financial_metrics WHERE reit_ticker = '{ticker}' AND fiscal_year = fm.fiscal_year)
-            WHERE r.ticker = '{ticker}'
+              AND fm.fiscal_year = (SELECT MAX(fiscal_year) FROM financial_metrics WHERE reit_ticker = ?)
+              AND fm.quarter = (SELECT MAX(quarter) FROM financial_metrics WHERE reit_ticker = ? AND fiscal_year = fm.fiscal_year)
+            WHERE r.ticker = ?
             """
-            response = athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}signals/"},
+            response = _athena_start(
+                athena, query, database, f"{s3_output}signals/", [ticker, ticker, ticker]
             )
             signals.append({
                 "ticker": ticker,
@@ -107,29 +117,33 @@ def write_signals_to_iceberg(signals: list):
             continue
         try:
             ticker = signal["ticker"]
-            query = f"""
-            INSERT INTO {database}.reit_signals
+            query = """
+            INSERT INTO reit_signals
             VALUES (
-                '{ticker}_{datetime.utcnow().strftime("%Y%m%d_%H%M%S")}',
-                '{ticker}',
-                TIMESTAMP '{datetime.utcnow().isoformat()}',
-                {signal.get('sentinel_score', 50)},
-                {signal.get('fundamental_score', 50)},
-                {signal.get('valuation_score', 50)},
-                {signal.get('momentum_score', 50)},
-                {signal.get('macro_score', 50)},
-                {signal.get('sentiment_score', 50)},
-                '{signal.get("signal_rating", "Hold")}',
-                '{signal.get("ai_analysis", "")[:4000].replace("'", "''")}',
-                '{json.dumps(signal.get("key_risks", [])).replace("'", "''")}',
-                '{json.dumps(signal.get("key_opportunities", [])).replace("'", "''")}',
-                {signal.get("confidence_score", 0.5)}
+                ?, ?, CAST(? AS TIMESTAMP), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
             )
             """
-            athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}signals/write/"},
+            _athena_start(
+                athena,
+                query,
+                database,
+                f"{s3_output}signals/write/",
+                [
+                    f"{ticker}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
+                    ticker,
+                    datetime.utcnow().isoformat(),
+                    signal.get("sentinel_score", 50),
+                    signal.get("fundamental_score", 50),
+                    signal.get("valuation_score", 50),
+                    signal.get("momentum_score", 50),
+                    signal.get("macro_score", 50),
+                    signal.get("sentiment_score", 50),
+                    signal.get("signal_rating", "Hold"),
+                    signal.get("ai_analysis", "")[:4000],
+                    json.dumps(signal.get("key_risks", [])),
+                    json.dumps(signal.get("key_opportunities", [])),
+                    signal.get("confidence_score", 0.5),
+                ],
             )
         except Exception as e:
             logger.error(f"Error writing signal for {signal.get('ticker')}: {e}")

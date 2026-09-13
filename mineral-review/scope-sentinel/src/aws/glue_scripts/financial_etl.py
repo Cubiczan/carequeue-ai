@@ -15,6 +15,17 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
+
 def compute_financial_metrics(event):
     """Compute derived financial metrics and benchmarks.
 
@@ -37,7 +48,7 @@ def compute_financial_metrics(event):
     for ticker in tickers:
         try:
             # Compute peer comparison metrics
-            query = f"""
+            query = """
             WITH peer_avg AS (
                 SELECT
                     sub_sector,
@@ -45,9 +56,9 @@ def compute_financial_metrics(event):
                     AVG(same_store_noi_growth) as avg_noi_growth,
                     AVG(net_debt_to_ebitda) as avg_leverage,
                     AVG(dividend_yield) as avg_yield
-                FROM {database}.reits r
-                JOIN {database}.financial_metrics fm ON r.ticker = fm.reit_ticker
-                WHERE fm.fiscal_year = {fiscal_year}
+                FROM reits r
+                JOIN financial_metrics fm ON r.ticker = fm.reit_ticker
+                WHERE fm.fiscal_year = ?
                 GROUP BY sub_sector
             )
             SELECT
@@ -57,17 +68,15 @@ def compute_financial_metrics(event):
                 fm.same_store_noi_growth - pa.avg_noi_growth as noi_vs_peers,
                 fm.net_debt_to_ebitda - pa.avg_leverage as leverage_vs_peers,
                 r.dividend_yield - pa.avg_yield as yield_vs_peers
-            FROM {database}.financial_metrics fm
-            JOIN {database}.reits r ON fm.reit_ticker = r.ticker
+            FROM financial_metrics fm
+            JOIN reits r ON fm.reit_ticker = r.ticker
             JOIN peer_avg pa ON r.sub_sector = pa.sub_sector
-            WHERE fm.reit_ticker = '{ticker}'
-              AND fm.fiscal_year = {fiscal_year}
+            WHERE fm.reit_ticker = ?
+              AND fm.fiscal_year = ?
             """
 
-            response = athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": s3_output},
+            response = _athena_start(
+                athena, query, database, s3_output, [fiscal_year, ticker, fiscal_year]
             )
             results.append({"ticker": ticker, "query_id": response["QueryExecutionId"]})
             logger.info(f"Submitted financial metrics query for {ticker}")
@@ -77,8 +86,8 @@ def compute_financial_metrics(event):
             results.append({"ticker": ticker, "error": str(e)})
 
     # Compute sector benchmarks
-    benchmark_query = f"""
-    INSERT INTO {database}.sector_benchmarks
+    benchmark_query = """
+    INSERT INTO sector_benchmarks
     SELECT
         r.sector,
         COUNT(*) as reit_count,
@@ -88,18 +97,14 @@ def compute_financial_metrics(event):
         AVG(r.dividend_yield) as avg_yield,
         AVG(fm.weighted_avg_cap_rate) as avg_cap_rate,
         CURRENT_TIMESTAMP as computed_at
-    FROM {database}.reits r
-    JOIN {database}.financial_metrics fm ON r.ticker = fm.reit_ticker
-    WHERE fm.fiscal_year = {fiscal_year}
+    FROM reits r
+    JOIN financial_metrics fm ON r.ticker = fm.reit_ticker
+    WHERE fm.fiscal_year = ?
     GROUP BY r.sector
     """
 
     try:
-        athena.start_query_execution(
-            QueryString=benchmark_query,
-            QueryExecutionContext={"Database": database},
-            ResultConfiguration={"OutputLocation": s3_output},
-        )
+        _athena_start(athena, benchmark_query, database, s3_output, [fiscal_year])
         logger.info("Submitted sector benchmark query")
     except Exception as e:
         logger.error(f"Error computing sector benchmarks: {e}")

@@ -19,6 +19,18 @@ logger = logging.getLogger(__name__)
 SCORE_WEIGHTS = {"supply_risk": 0.30, "price_volatility": 0.25, "logistics_risk": 0.25, "policy_risk": 0.20}
 
 
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    """Run Athena SQL with bound parameters (never interpolate user values)."""
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
+
 def compute_composite_scores(event):
     """Compute composite supply chain risk scores for specified commodities.
 
@@ -38,35 +50,35 @@ def compute_composite_scores(event):
     scores = []
     for commodity in commodities:
         try:
-            query = f"""
+            query = """
             WITH trade_data AS (
                 SELECT
                     tf.commodity_code,
                     tf.commodity_name,
                     tf.trade_value_usd,
                     tf.net_weight_kg
-                FROM {database}.trade_flows tf
-                WHERE tf.commodity_name = '{commodity}'
-                  AND tf.trade_year = {year}
+                FROM trade_flows tf
+                WHERE tf.commodity_name = ?
+                  AND tf.trade_year = ?
             ),
             conc AS (
                 SELECT hhi_index, concentration_rating, country_count
-                FROM {database}.concentration_metrics
-                WHERE commodity_name = '{commodity}' AND trade_year = {year}
+                FROM concentration_metrics
+                WHERE commodity_name = ? AND trade_year = ?
                 LIMIT 1
             ),
             disruptions AS (
                 SELECT COUNT(*) AS event_count, SUM(cost_impact_estimate) AS total_impact
-                FROM {database}.logistics_events
-                WHERE commodity = '{commodity}' AND status = 'Active'
+                FROM logistics_events
+                WHERE commodity = ? AND status = 'Active'
             ),
             tariffs AS (
                 SELECT AVG(rate_percent) AS avg_tariff
-                FROM {database}.tariff_regulations
-                WHERE commodity_name = '{commodity}' AND status = 'Active'
+                FROM tariff_regulations
+                WHERE commodity_name = ? AND status = 'Active'
             )
             SELECT
-                '{commodity}' AS commodity,
+                ? AS commodity,
                 COALESCE((SELECT hhi_index FROM conc), 0) AS hhi_index,
                 COALESCE((SELECT concentration_rating FROM conc), 'Unknown') AS concentration_rating,
                 COALESCE((SELECT event_count FROM disruptions), 0) AS active_disruptions,
@@ -74,10 +86,12 @@ def compute_composite_scores(event):
                 COALESCE((SELECT avg_tariff FROM tariffs), 0) AS avg_tariff_rate
             """
 
-            response = athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}intelligence/scores/"},
+            response = _athena_start(
+                athena,
+                query,
+                database,
+                f"{s3_output}intelligence/scores/",
+                [commodity, year, commodity, year, commodity, commodity, commodity],
             )
             scores.append({
                 "commodity": commodity,
@@ -140,25 +154,28 @@ def write_briefings_to_iceberg(briefings: list):
             ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
             briefing_id = f"BRIEF_{commodity.replace(' ', '_')}_{ts}"
 
-            query = f"""
-            INSERT INTO {database}.intelligence_briefings
+            query = """
+            INSERT INTO intelligence_briefings
             VALUES (
-                '{briefing_id}',
-                TIMESTAMP '{datetime.utcnow().isoformat()}',
-                'commodity',
-                '{commodity}',
-                '{summary}',
-                '{briefing.get("risk_assessment", "Medium")}',
-                '{json.dumps(briefing.get("opportunities", [])).replace("'", "''")}',
-                '{json.dumps(briefing.get("recommendations", [])).replace("'", "''")}',
-                {briefing.get("confidence_score", 0.5)},
-                '{json.dumps(briefing.get("sources", [])).replace("'", "''")}'
+                ?, CAST(? AS TIMESTAMP), 'commodity', ?, ?, ?, ?, ?, ?, ?
             )
             """
-            athena.start_query_execution(
-                QueryString=query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}briefings/write/"},
+            _athena_start(
+                athena,
+                query,
+                database,
+                f"{s3_output}briefings/write/",
+                [
+                    briefing_id,
+                    datetime.utcnow().isoformat(),
+                    commodity,
+                    summary,
+                    briefing.get("risk_assessment", "Medium"),
+                    json.dumps(briefing.get("opportunities", [])),
+                    json.dumps(briefing.get("recommendations", [])),
+                    briefing.get("confidence_score", 0.5),
+                    json.dumps(briefing.get("sources", [])),
+                ],
             )
         except Exception as e:
             logger.error(f"Error writing briefing for {commodity}: {e}")

@@ -10,7 +10,7 @@ numpy>=1.26.0
 
 # HTTP requests
 requests>=2.31.0
-aiohttp>=3.9.0
+aiohttp==3.14.2
 
 # Microsoft Fabric / Azure
 msal>=1.30.0
