@@ -15,6 +15,17 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
+
 def compute_supply_demand_metrics(event):
     """Compute supply/demand balance metrics and risk indicators.
 
@@ -35,7 +46,7 @@ def compute_supply_demand_metrics(event):
     for code in commodity_codes:
         try:
             # Compute implied balance and inventory coverage
-            balance_query = f"""
+            balance_query = """
             SELECT
                 commodity_code,
                 period,
@@ -66,16 +77,14 @@ def compute_supply_demand_metrics(event):
                     ELSE 'Comfortable'
                 END AS drawdown_risk,
                 CURRENT_TIMESTAMP AS computed_at
-            FROM {database}.supply_demand_balance
-            WHERE commodity_code = '{code}'
+            FROM supply_demand_balance
+            WHERE commodity_code = ?
             ORDER BY date DESC
             LIMIT 52
             """
 
-            response = athena.start_query_execution(
-                QueryString=balance_query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}supply_demand/"},
+            response = _athena_start(
+                athena, balance_query, database, f"{s3_output}supply_demand/", [code]
             )
             results.append({
                 "commodity_code": code,

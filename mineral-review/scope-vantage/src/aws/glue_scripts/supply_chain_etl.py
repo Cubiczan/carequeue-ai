@@ -15,6 +15,17 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
+def _athena_start(athena, query: str, database: str, output: str, params=None):
+    kwargs = {
+        "QueryString": query,
+        "QueryExecutionContext": {"Database": database},
+        "ResultConfiguration": {"OutputLocation": output},
+    }
+    if params:
+        kwargs["ExecutionParameters"] = [str(p) for p in params]
+    return athena.start_query_execution(**kwargs)
+
+
 def compute_concentration_metrics(event):
     """Compute supply chain concentration metrics from trade flow data.
 
@@ -38,15 +49,15 @@ def compute_concentration_metrics(event):
     for hs_code in commodity_codes:
         try:
             # Compute HHI for each commodity from trade flow data
-            hhi_query = f"""
+            hhi_query = """
             WITH trade_shares AS (
                 SELECT
                     partner_name,
                     SUM(trade_value_usd) AS total_value
-                FROM {database}.trade_flows
-                WHERE commodity_code = '{hs_code}'
-                  AND trade_year = {year}
-                  AND trade_direction = '{direction}'
+                FROM trade_flows
+                WHERE commodity_code = ?
+                  AND trade_year = ?
+                  AND trade_direction = ?
                 GROUP BY partner_name
             ),
             total AS (
@@ -62,9 +73,9 @@ def compute_concentration_metrics(event):
                 CROSS JOIN total t
             )
             SELECT
-                '{hs_code}' AS commodity_code,
-                '{direction}' AS trade_direction,
-                {year} AS trade_year,
+                ? AS commodity_code,
+                ? AS trade_direction,
+                ? AS trade_year,
                 COUNT(*) AS country_count,
                 SUM(hhi_contribution) * 10000 AS hhi_index,
                 CASE
@@ -77,14 +88,16 @@ def compute_concentration_metrics(event):
             FROM shares
             """
 
-            response = athena.start_query_execution(
-                QueryString=hhi_query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}concentration/"},
+            response = _athena_start(
+                athena,
+                hhi_query,
+                database,
+                f"{s3_output}concentration/",
+                [hs_code, year, direction, hs_code, direction, year],
             )
 
             # Also compute top-5 country breakdown
-            top5_query = f"""
+            top5_query = """
             SELECT
                 partner_name,
                 SUM(trade_value_usd) AS total_trade_value,
@@ -92,19 +105,21 @@ def compute_concentration_metrics(event):
                 CASE WHEN SUM(net_weight_kg) > 0
                     THEN SUM(trade_value_usd) / (SUM(net_weight_kg) / 1000.0)
                     ELSE 0 END AS unit_value_usd_per_tonne
-            FROM {database}.trade_flows
-            WHERE commodity_code = '{hs_code}'
-              AND trade_year = {year}
-              AND trade_direction = '{direction}'
+            FROM trade_flows
+            WHERE commodity_code = ?
+              AND trade_year = ?
+              AND trade_direction = ?
             GROUP BY partner_name
             ORDER BY total_trade_value DESC
             LIMIT 5
             """
 
-            athena.start_query_execution(
-                QueryString=top5_query,
-                QueryExecutionContext={"Database": database},
-                ResultConfiguration={"OutputLocation": f"{s3_output}concentration/top5/"},
+            _athena_start(
+                athena,
+                top5_query,
+                database,
+                f"{s3_output}concentration/top5/",
+                [hs_code, year, direction],
             )
 
             results.append({
