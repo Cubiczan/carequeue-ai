@@ -70,17 +70,12 @@ Decisions from the portfolio propagation matrix (SecOps/Gov wave C), recorded
 per the adopt-or-reverse contract. Revisit triggers are binding: when the
 condition appears in this repo, re-evaluate the row.
 
-### Row 31 — typed claim lifecycle: REVERSED
+### Row 31 — typed claim lifecycle: PARTIAL — typed-claim half satisfied, human halves REVERSED
 
-A governed claim lifecycle (typed claims, four-eyes review, human locks,
-lock-gated exports) requires a review step with an actual reviewer on the
-other side. Current state of this repo: claim-shaped strings exist only as
-Agora consult-token plumbing (`src/app/api/consult/token/route.ts`,
-`src/lib/agora/config.ts`); there is no typed claim object, no review queue,
-no second operator, and no export gate. Adding the lifecycle would produce
-review ceremony with nobody assigned to review.
+Correction (wave-C audit; prelint caught the original rationale's false premise): this repo **does** carry the typed-claim half of the row. `src/types.rs` defines `VerificationClaim` with a five-state lifecycle (`VerificationStatus::{Verified, Pending, Failed, Disputed, Expired}`), and `src/verification.rs` implements a `VerificationEngine` that parses claim intensity, verifies claims against actual scores with evidence URLs (`verify_claim`), and assesses greenwashing risk, evidence quality, cross-reference consistency, temporal consistency, and red flags. `src/pipeline.rs` creates and verifies claims on this engine.
 
-**Revisit trigger:** a claims-review workflow (human reviewer role or an
-automated review step consuming claim output) becomes part of the product
-flow. At that point adopt the canonical lifecycle rather than a local one —
-see the erp-control-plane implementation for the reference shape.
+What the row requires beyond that substrate — **four-eyes human review, human locks, an append-only evidence ledger, and lock-gated SHA-256 exports** — does not exist here: every claim's `verifier` is the machine (`greenverify-ai`), no reviewer role or queue exists, and there is no lock or export gate.
+
+**Decision:** the typed-claim half is satisfied organically — credited, and worth keeping in vocabulary sync with the canonical lifecycle (erp-control-plane column 4). The human review/lock/export halves remain **REVERSED**: with no human reviewer in the flow, four-eyes review and locks would be ceremony wired to a machine that already verifies.
+
+**Revisit trigger:** a human reviewer role (or a human-consuming review queue) enters the product flow. Then adopt the canonical review/lock/export halves **against the existing `VerificationClaim` substrate** rather than introducing a second claim type.
